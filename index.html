@@ -199,10 +199,56 @@ textarea:focus{border-color:var(--sage);}
   .rfp{grid-template-columns:1fr;}.rfa{display:none;}
   .wsc{width:23px;height:23px;font-size:.65rem;}
 }
+
+#nav-btn{position:fixed;bottom:1.2rem;right:1rem;z-index:400;background:#1A7A6E;color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.18);display:none;align-items:center;justify-content:center;}
+#nav-btn.show{display:flex;}
+#nav-drawer{display:none;position:fixed;bottom:5rem;right:1rem;z-index:400;background:#FFF8F0;border:1.5px solid #E8DDD0;border-radius:16px;padding:.75rem;box-shadow:0 8px 32px rgba(0,0,0,.18);width:230px;max-height:70vh;overflow-y:auto;}
+#nav-drawer.open{display:block;}
+#nav-drawer h3{font-size:.78rem;font-weight:800;color:#7A6652;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;padding-bottom:.35rem;border-bottom:1px solid #E8DDD0;}
+.nav-item{display:block;width:100%;text-align:left;background:transparent;border:none;padding:.42rem .55rem;border-radius:8px;font-family:"Nunito",sans-serif;font-size:.82rem;font-weight:700;color:#3D2C1E;cursor:pointer;}
+.nav-item:hover{background:#FFF3E0;}
+.nav-section{font-size:.68rem;font-weight:800;color:#7A6652;text-transform:uppercase;letter-spacing:.06em;margin:.5rem 0 .2rem .5rem;}
 </style>
 </head>
 <body>
 <div id="app">
+<button id="nav-btn" aria-label="Menu" onclick="toggleNav()">&#9776;</button>
+<div id="nav-drawer">
+  <h3>Jump to section</h3>
+  <div class="nav-section">Start</div>
+  <button class="nav-item" onclick="navTo('s-welcome')">Home / Welcome</button>
+  <div class="nav-section">Survivor path</div>
+  <button class="nav-item" onclick="navTo('s-adream')">Goal setting</button>
+  <button class="nav-item" onclick="navTo('s-aguilt')">What happened</button>
+  <button class="nav-item" onclick="navTo('s-aground')">Safe place</button>
+  <button class="nav-item" onclick="navTo('s-afears')">Naming fears</button>
+  <button class="nav-item" onclick="navTo('s-atriggers')">Why it feels different</button>
+  <button class="nav-item" onclick="navTo('s-areframe')">New way to see it</button>
+  <button class="nav-item" onclick="navTo('s-asafety')">Safety kit</button>
+  <button class="nav-item" onclick="navTo('s-awordsearch')">Find your strengths</button>
+  <button class="nav-item" onclick="navTo('s-aladder')">Comeback ladder</button>
+  <button class="nav-item" onclick="navTo('s-aimagine')">Picture it</button>
+  <button class="nav-item" onclick="navTo('s-aplan')">Your plan</button>
+  <button class="nav-item" onclick="navTo('s-aptg')">What hard things show us</button>
+  <button class="nav-item" onclick="navTo('s-acookladder')">Cooking ladder</button>
+  <button class="nav-item" onclick="navTo('s-celebrate')">Celebration</button>
+  <div class="nav-section">Witness path</div>
+  <button class="nav-item" onclick="navTo('s-bwelcome')">Witness welcome</button>
+  <button class="nav-item" onclick="navTo('s-bdream')">Witness goal</button>
+  <button class="nav-item" onclick="navTo('s-bguilt')">What you carry</button>
+  <button class="nav-item" onclick="navTo('s-bground')">Safe place</button>
+  <button class="nav-item" onclick="navTo('s-bfears')">What has been hard</button>
+  <button class="nav-item" onclick="navTo('s-breframe')">New way to see it</button>
+  <button class="nav-item" onclick="navTo('s-bladder')">Witness ladder</button>
+  <button class="nav-item" onclick="navTo('s-bimagine')">Picture it</button>
+  <button class="nav-item" onclick="navTo('s-bcelebrate')">Celebration</button>
+  <div class="nav-section">Always available</div>
+  <button class="nav-item" onclick="navTo('s-resources')">Support and resources</button>
+  <button class="nav-item" onclick="openCalm();toggleNav()">Calming tools</button>
+  <button class="nav-item" onclick="goHome();toggleNav()">Back to beginning</button>
+  <button class="nav-item" onclick="clearAndRestart()" style="color:#7A6652;font-size:.76rem">Start completely over</button>
+</div>
+
 <div id="toast" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ok);color:#fff;border-radius:12px;padding:.65rem 1.2rem;font-weight:700;font-size:.86rem;transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:500;white-space:nowrap;box-shadow:0 8px 24px rgba(82,183,136,.3);"></div>
 
 <div id="bar">
@@ -1187,6 +1233,7 @@ const REENTRY_LADDER_NOTE = {
 };
 
 function startGame(){
+  showNavBtn();
   document.getElementById('bar').classList.add('on');
   earn(10,'You showed up! +10 🪙');
   // Set reentry acknowledgment for dream screen
@@ -1677,6 +1724,7 @@ document.getElementById('lv').textContent='Lv '+(S.coins<60?1:S.coins<130?2:S.co
 const skipOnRestore = ['s-resources'];
 const restoreScreen = skipOnRestore.includes(S.screen) ? (S.path==='B'?'s-bcelebrate':'s-celebrate') : S.screen;
 if(restoreScreen&&restoreScreen!=='s-welcome'&&document.getElementById(restoreScreen)){
+  if(typeof showNavBtn==="function")showNavBtn();
   document.getElementById('bar').classList.add('on');
   // Restore reentry acknowledgment if returning mid-session
   const ack = (typeof REENTRY_ACK !== 'undefined') && REENTRY_ACK[S.reentry||'none'];
@@ -1888,6 +1936,11 @@ function clearAndRestart(){
     location.reload();
   }
 }
+
+function toggleNav(){var d=document.getElementById("nav-drawer");if(d)d.classList.toggle("open");}
+function navTo(id){var d=document.getElementById("nav-drawer");if(d)d.classList.remove("open");if(id!=="s-welcome"){document.getElementById("bar").classList.add("on");var nb=document.getElementById("nav-btn");if(nb)nb.classList.add("show");}else{document.getElementById("bar").classList.remove("on");}goTo(id);}
+function showNavBtn(){var nb=document.getElementById("nav-btn");if(nb)nb.classList.add("show");}
+document.addEventListener("click",function(e){var d=document.getElementById("nav-drawer");var b=document.getElementById("nav-btn");if(d&&d.classList.contains("open")&&!d.contains(e.target)&&e.target!==b)d.classList.remove("open");});
 </script>
 </body>
 </html>
