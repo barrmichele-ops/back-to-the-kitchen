@@ -193,10 +193,7 @@ textarea{width:100%;border:1.5px solid var(--border);border-radius:11px;padding:
 textarea:focus{border-color:var(--sage);}
 .confetti{display:flex;justify-content:center;gap:.28rem;font-size:1.25rem;margin:.65rem 0;}
 
-/* TEEN TOGGLE */
-.teen-mode .sci-card{display:none!important;}
-.teen-mode .teen-alt{display:block!important;}
-.teen-alt{display:none;}
+
 
 @media(max-width:420px){
   .rfp{grid-template-columns:1fr;}.rfa{display:none;}
@@ -212,7 +209,7 @@ textarea:focus{border-color:var(--sage);}
   <div class="xpw"><div class="xpl">YOUR COURAGE</div><div class="pb"><div class="pf" id="pf" style="width:0%"></div></div></div>
   <div class="coins">🪙 <span id="cc">0</span></div>
   <div class="lv" id="lv">Lv 1</div>
-  <button id="pbtn" onclick="openCalm()" aria-label="Open calming tools">🌿 Pause</button>
+  <button onclick="goHome()" style="background:transparent;border:1.5px solid var(--border);border-radius:9px;padding:.32rem .55rem;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:800;color:var(--muted);cursor:pointer;white-space:nowrap;" aria-label="Home">🏠</button><button id="pbtn" onclick="openCalm()" aria-label="Open calming tools">🌿 Pause</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -222,7 +219,7 @@ textarea:focus{border-color:var(--sage);}
   <div style="text-align:center;padding:1.8rem 1rem 1.1rem">
     <span style="font-size:2.8rem;display:block;margin-bottom:.45rem" role="img" aria-label="Home">🏠</span>
     <div class="h1">Welcome Home</div>
-    <p style="color:var(--muted);font-size:.92rem;font-weight:600;line-height:1.6;margin-top:.28rem">You made it through something hard.<br>This app walks with you — at your pace, your way.</p>
+    <p style="color:var(--muted);font-size:.92rem;font-weight:600;line-height:1.6;margin-top:.28rem">You made it home. This app walks with you — at your pace, your way.</p>
   </div>
 
   <div class="card cw">
@@ -242,22 +239,26 @@ textarea:focus{border-color:var(--sage);}
     </ul>
   </div>
 
-  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;margin-top:.3rem">
-    <label style="font-size:.8rem;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:.4rem;cursor:pointer">
-      <input type="checkbox" id="teen-toggle" onchange="toggleTeen(this)" style="width:16px;height:16px;cursor:pointer" aria-label="Teen mode - simpler language">
-      <span>Teen mode (simpler language)</span>
-    </label>
-  </div>
-
-  <div class="qb">How are you feeling about the kitchen right now? Choose all that feel true. 💛</div>
-  <button class="ch" data-e="😟" onclick="tog(this,'f-anx')" aria-label="Really anxious">Really anxious. Just thinking about it is hard.</button>
+  <div class="qb">How are you feeling about the kitchen right now? Choose everything that fits — people feel all kinds of ways at this point, and every one of them makes sense. 💛</div>
+  <button class="ch" data-e="😟" onclick="tog(this,'f-uneasy')" aria-label="Really on edge">Really on edge. Just thinking about it is hard.</button>
   <button class="ch" data-e="😬" onclick="tog(this,'f-brave')" aria-label="Uneasy but brave">Uneasy, but trying to be brave.</button>
   <button class="ch" data-e="😐" onclick="tog(this,'f-mixed')" aria-label="Mixed feelings">Mixed — some okay moments, some really hard ones.</button>
   <button class="ch" data-e="😌" onclick="tog(this,'f-ready')" aria-label="Ready to try">I think I can do this. It might take time.</button>
   <button class="ch" data-e="😢" onclick="tog(this,'f-wish')" aria-label="Wish it never happened">I wish this never happened — and I want to cook again.</button>
   <button class="ch" data-e="💪" onclick="tog(this,'f-det')" aria-label="Determined">Determined. Still getting there, but moving forward.</button>
 
-  <div style="margin-top:1rem;padding:1rem;background:var(--cream);border:2px solid var(--border);border-radius:14px;">
+  <!-- BEEN BACK YET? -->
+  <div id="been-back-block" style="display:none;margin-top:1rem;padding:1rem;background:var(--cream);border:2px solid var(--border);border-radius:14px;">
+    <div style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">Have you been back in your kitchen yet?</div>
+    <div style="font-size:.8rem;color:var(--muted);margin-bottom:.65rem;line-height:1.5">No right answer — we just want to meet you where you are.</div>
+    <button class="ch" data-e="🏠" onclick="setReentry('none',this)">Not yet — I haven't been back</button>
+    <button class="ch" data-e="🚶" onclick="setReentry('once',this)">Once or twice — I had to, but it was really hard</button>
+    <button class="ch" data-e="🔄" onclick="setReentry('few',this)">A few times — still really uneasy in there</button>
+    <button class="ch" data-e="✅" onclick="setReentry('regular',this)">Going back regularly — but something still doesn't feel right</button>
+  </div>
+
+  <!-- WHO ARE YOU HERE FOR? -->
+  <div id="path-block" style="display:none;margin-top:1rem;padding:1rem;background:var(--cream);border:2px solid var(--border);border-radius:14px;">
     <div style="font-weight:800;font-size:.9rem;margin-bottom:.6rem">Who are you here for today?</div>
     <button class="ch" data-e="🙋" onclick="setPath('A',this)" aria-label="Survivor path">I was the one who got hurt</button>
     <button class="ch" data-e="💑" onclick="setPath('B',this)" aria-label="Witness path" style="border-color:var(--wine);background:#FFF0F5;">Someone I love was hurt — and I'm struggling too</button>
@@ -275,6 +276,7 @@ textarea:focus{border-color:var(--sage);}
 <div class="screen" id="s-adream">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
+    <div id="reentry-ack" style="display:none;margin-bottom:.85rem"></div>
     <div class="h2">✨ What would feel like success to you?</div>
     <div class="sub">No right answer here. What you're hoping for — that's what we're building toward. You're in charge.</div>
     <div class="qb">Pick everything that fits — or write your own.</div>
@@ -289,6 +291,7 @@ textarea:focus{border-color:var(--sage);}
     <textarea id="adream-text" placeholder="What would feel like getting back to yourself?" aria-label="Write your goal"></textarea>
     <div class="aff" style="margin-top:.75rem"><p>"Every destination you just named is valid. Every single one." 🌿</p></div>
     <button class="btn bsg" onclick="goTo('s-asupport');earn(10,'Goal set! +10 🪙')">That's where I'm headed →</button>
+    <button class="bout" onclick="goTo('s-acookladder')" style="margin-top:.4rem">I'm ready to cook — take me straight to cooking steps 🍳</button>
   </div>
 </div>
 
@@ -308,18 +311,18 @@ textarea:focus{border-color:var(--sage);}
   </div>
 </div>
 
-<!-- A: ANXIETY IN -->
+<!-- A: CHECK-IN -->
 <div class="screen" id="s-aanx">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
-    <div class="h2">📊 Where are you starting?</div>
-    <div class="sub">This is just a check-in — no right answer. We'll check again at the end. Most people are surprised by what changes.</div>
+    <div class="h2">📊 A quick check-in</div>
+    <div class="sub">This is just a check-in — there's no right answer. Wherever you are right now is fine. We'll check in again at the end.</div>
     <div class="axw">
-      <label for="anx1">Right now, how anxious do you feel about your kitchen? (1 = barely any, 10 = overwhelming)</label>
+      <label for="anx1">Right now, how unsettled do you feel when you think about your kitchen? (1 = barely at all, 10 = really hard to think about)</label>
       <div class="axn" id="anx1n">5</div>
-      <div class="axl" id="anx1l">Noticeably anxious</div>
-      <input type="range" min="1" max="10" value="5" id="anx1" oninput="setAnx(1,+this.value)" aria-label="Anxiety level 1-10">
-      <div class="axs"><span>1 — calm</span><span>10 — overwhelming</span></div>
+      <div class="axl" id="anx1l">Noticeably hard</div>
+      <input type="range" min="1" max="10" value="5" id="anx1" oninput="setAnx(1,+this.value)" aria-label="How unsettled you feel, 1-10">
+      <div class="axs"><span>1 — barely at all</span><span>10 — really hard</span></div>
     </div>
     <div id="anx1hi" class="cd" style="display:none;margin-top:.75rem">
       <p style="font-size:.86rem;line-height:1.6">⚠️ <strong>A 10 is a lot to carry.</strong> Before we go on, would you like a calming tool first?</p>
@@ -335,8 +338,8 @@ textarea:focus{border-color:var(--sage);}
 <div class="screen" id="s-aguilt">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
-    <div class="h2">💛 First — what were you trying to do?</div>
-    <div class="sub">Before we think about the kitchen, there's something worth saying out loud. Many survivors carry something nobody talks about.</div>
+    <div class="h2">💛 Something worth saying first</div>
+    <div class="sub">Before we go anywhere near the kitchen, there's something that comes up for a lot of people — and almost nobody talks about it.</div>
     <div class="ca">
       <div style="font-weight:800;margin-bottom:.45rem">In one sentence — what were you trying to do when you got hurt?</div>
       <textarea id="aguilt-text" placeholder="Even one word is enough..." rows="2" aria-label="What were you trying to do"></textarea>
@@ -347,13 +350,13 @@ textarea:focus{border-color:var(--sage);}
     <button class="ch" data-e="😤" onclick="togGF(this)">I feel angry that this happened to me</button>
     <button class="ch" data-e="🤷" onclick="togGF(this)">I keep replaying it, wondering what I should have done differently</button>
     <button class="ch" data-e="💔" onclick="togGF(this)">I feel like the kitchen isn't mine anymore</button>
-    <div id="aguilt-resp" style="display:none" class="card ct" style="margin-top:.75rem">
-      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">🌿 Here's what we know about that moment:</div>
-      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">You were doing what people do — cooking, caring for your home, taking care of someone. <strong>That is not something to carry guilt about.</strong></p>
-      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">Kitchen accidents happen in seconds. Grease fires. Steam. A pot that slipped. Hot water. These happen to careful people all the time. <strong>This does not say anything about who you are.</strong></p>
-      <p style="font-size:.88rem;line-height:1.75">The guilt many survivors feel actually shows something true about them: <strong>they care deeply about the home and people they were taking care of.</strong></p>
+    <div id="aguilt-resp" style="display:none" class="card ct">
+      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">🌿 That feeling makes sense.</div>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">A lot of people who come home after a kitchen injury think: <em>I should have been more careful. I caused this. My family had to deal with this because of me.</em> Those thoughts are very common — and they're worth knowing about, because they can quietly make recovery harder.</p>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">Here's what's also true: you were doing something ordinary — cooking, caring for your home, taking care of someone. Kitchen accidents happen in seconds, to careful people, all the time. <strong>That doesn't say anything about who you are.</strong></p>
+      <p style="font-size:.88rem;line-height:1.75">And the fact that it weighs on you? That usually says you care deeply about the people and home you were taking care of. <strong>That's worth holding onto.</strong></p>
     </div>
-    <div class="aff"><p>"You survived. You came home. You are still someone who takes care of things. That has not changed." 💛</p></div>
+    <div class="aff"><p>"You made it home. You've been through something hard, and you did it. You are still you." 💛</p></div>
     <button class="btn bsg" onclick="goTo('s-aground');earn(15,'Reflected with courage +15 🪙')">I hear that. Keep going →</button>
   </div>
 </div>
@@ -389,18 +392,18 @@ textarea:focus{border-color:var(--sage);}
     <div class="h2">😟 Naming what's hard</div>
     <div class="sub">Naming a fear shrinks it. Research shows it actually calms the brain. Pick everything that feels true — all of it is valid.</div>
     <button class="ch" data-e="🔥" onclick="togFear(this)">I'm scared of another fire or accident</button>
-    <button class="ch" data-e="😰" onclick="togFear(this)">I feel panicky just standing in the kitchen</button>
+    <button class="ch" data-e="😰" onclick="togFear(this)">My body tenses up just being in the kitchen</button>
     <button class="ch" data-e="👃" onclick="togFear(this)">Smells — even normal cooking smells — trigger bad memories</button>
     <button class="ch" data-e="🔊" onclick="togFear(this)">Sounds — sizzling, popping, the hood fan — are really hard</button>
     <button class="ch" data-e="♨️" onclick="togFear(this)">Heat near my skin is difficult — steam, the oven, anything warm</button>
     <button class="ch" data-e="🙈" onclick="togFear(this)">I avoid even looking at the stove</button>
-    <button class="ch" data-e="😔" onclick="togFear(this)">I've lost my confidence in there</button>
+    <button class="ch" data-e="😔" onclick="togFear(this)">I don't feel like myself in there anymore</button>
     <button class="ch" data-e="🤔" onclick="togFear(this)">I wonder if I'll ever feel normal in there again</button>
     <button class="ch" data-e="💔" onclick="togFear(this)">My home doesn't fully feel like mine anymore</button>
     <button class="ch" data-e="😤" onclick="togFear(this)">I feel frustrated or angry that this happened</button>
     <div id="fear-resp-a" class="card cw" style="display:none;margin-top:.75rem">
       <div style="font-weight:800;margin-bottom:.45rem">🌟 You named them. That took real courage.</div>
-      <p style="font-size:.86rem;line-height:1.7">Every fear you named is <strong>completely normal</strong> after a kitchen injury. Many survivors experience anxiety, avoidance, and reactions to sounds and smells — sometimes for months. You are not broken. You are having a normal response to something frightening. <strong>These feelings do get better.</strong></p>
+      <p style="font-size:.86rem;line-height:1.7">Every fear you named is <strong>completely normal</strong> after a kitchen injury. A lot of people feel on edge, avoid the kitchen, or find sounds and smells bring things back — sometimes for months. You are not broken. You are having a normal response to something frightening. <strong>These feelings do get better.</strong></p>
     </div>
     <button class="btn bsg" id="fearnext-a" onclick="goTo('s-atriggers');earn(20,'Named bravely! +20 🪙')" style="display:none">I named them 💪</button>
   </div>
@@ -410,16 +413,14 @@ textarea:focus{border-color:var(--sage);}
 <div class="screen" id="s-atriggers">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
-    <div class="h2">🧠 Understanding what sets you off</div>
+    <div class="h2">🧠 Why the kitchen feels different now</div>
     <div class="sub">This is useful to know — not scary, just helpful. Skip ahead any time.</div>
-    <div class="card ck sci-card">
-      <div style="font-weight:800;margin-bottom:.45rem">What is a trigger?</div>
-      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">A trigger is anything — a smell, a sound, a sight, a feeling of heat — that reminds your nervous system of a frightening moment. Your brain is doing its job: trying to keep you safe by flagging anything that feels like that moment.</p>
-      <p style="font-size:.86rem;line-height:1.75">The tricky part: your brain can't always tell the difference between <em>then</em> and <em>now</em>. So it responds as if the original event is happening again. That's why triggers can feel so sudden and intense — even when you're completely safe right now.</p>
+    <div class="card ck">
+      <div style="font-weight:800;margin-bottom:.45rem">Why does the kitchen feel different now?</div>
+      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">After something frightening, your brain puts itself on alert. It starts watching for anything that reminds it of that moment — a smell, a sound, a feeling of heat, even the light in the room. When it spots something, it sends an alarm. Your heart races, your body tenses. It feels like it's happening again.</p>
+      <p style="font-size:.86rem;line-height:1.75">Your brain is doing what it's supposed to do — keeping you safe. The trouble is, it can't always tell the difference between then and now. So it sounds the alarm even when everything is actually fine. <strong>That's not weakness. That's a brain doing its job too well.</strong></p>
     </div>
-    <div class="card ck teen-alt">
-      <div style="font-weight:800;margin-bottom:.45rem">What makes the anxiety spike?</div>
-      <p style="font-size:.86rem;line-height:1.75">A trigger is anything that reminds your brain of the moment you got hurt. A smell. A sound. Heat. Your brain is trying to protect you — but sometimes it's too sensitive. The good news: once you know what your triggers are, they have less power over you.</p>
+    <p style="font-size:.86rem;line-height:1.75">A trigger is anything that reminds your brain of the moment you got hurt. A smell. A sound. Heat. Your brain is trying to protect you — but sometimes it's too sensitive. The good news: once you know what your triggers are, they have less power over you.</p>
     </div>
     <div class="qb">Common triggers after a kitchen injury:</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:.38rem;margin-bottom:.75rem;font-size:.82rem">
@@ -446,7 +447,7 @@ textarea:focus{border-color:var(--sage);}
       <p style="font-size:.76rem;color:var(--muted);margin-top:.45rem;line-height:1.5">Want to go deeper? Phoenix Society has free resources: <a href="https://resources.phoenix-society.org/tools-for-burn-survivors-and-caregivers" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Phoenix Society resources">phoenix-society.org/resources</a></p>
     </div>
     <button class="btn bsk" id="trig-more" onclick="showTrigDeep()" style="margin-top:.28rem">I want to identify my own trigger and make a plan →</button>
-    <button class="btn bsg" onclick="goTo('s-areframe');earn(15,'Triggers understood! +15 🪙')" style="margin-top:.38rem">Got it — keep going</button>
+    <button class="btn bsg" onclick="goTo('s-areframe');earn(15,'Helpful to know! +15 🪙')" style="margin-top:.38rem">Got it — keep going</button>
   </div>
 </div>
 
@@ -458,9 +459,9 @@ textarea:focus{border-color:var(--sage);}
     <div class="sub">You don't have to believe the new thought yet. Just try it on. 🌱</div>
     <div class="rfp"><div class="rfo">🔴 "The kitchen is dangerous now."</div><div class="rfa">→</div><div class="rfn">🟢 "The kitchen is a tool. Right now it is off and still. I control when it is used."</div></div>
     <div class="rfp"><div class="rfo">🔴 "I'll never feel comfortable in there again."</div><div class="rfa">→</div><div class="rfn">🟢 "Right now is hard. Healing takes time. Many people come back from this — so can I."</div></div>
-    <div class="rfp"><div class="rfo">🔴 "Being anxious means something is wrong with me."</div><div class="rfa">→</div><div class="rfn">🟢 "My nervous system is protecting me. That's love — just turned up too high. I can lower it slowly."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "Feeling on edge means something is wrong with me."</div><div class="rfa">→</div><div class="rfn">🟢 "My body is trying to protect me. That's what bodies do after something hard. I can help it settle down, slowly."</div></div>
     <div class="rfp"><div class="rfo">🔴 "I was careless."</div><div class="rfa">→</div><div class="rfn">🟢 "I was doing what cooks do. These accidents happen. This does not define who I am."</div></div>
-    <div class="rfp"><div class="rfo">🔴 "This took something from me."</div><div class="rfa">→</div><div class="rfn">🟢 "This tested me — and I survived it. I am still here. I am still able to nourish people."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "This took something from me."</div><div class="rfa">→</div><div class="rfn">🟢 "This was hard. I made it through. I am still here, and I am still able to take care of the people I love."</div></div>
     <div class="qb">Which one feels most true right now? Write it in your own words:</div>
     <textarea id="areframe-text" placeholder="Any version is the right version..." aria-label="Your reframe"></textarea>
     <button class="btn bsg" onclick="goTo('s-asafety');earn(20,'New lens! +20 🪙')">I've got a new way to see it 🔄</button>
@@ -528,15 +529,17 @@ textarea:focus{border-color:var(--sage);}
     <span class="path-badge badge-a">Your path 🌿</span>
     <div class="h2">🪜 Your comeback ladder</div>
     <div class="sub">Each step is a real-world try — when you feel ready. Tap a step only after you've actually tried it. No rushing. Every rung matters.</div>
-    <div class="card cy sci-card" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
+    <div class="card ck" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
       💡 <strong>Open floor plan?</strong> If your kitchen doesn't have a door, your starting point is wherever you feel the kitchen begin — the edge of the counter, the change in flooring, wherever the space shifts. That line counts just as much as a door.
     </div>
-    <div class="card ck sci-card" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
-      🧠 <strong>Why small steps work:</strong> Each time you try something small and your anxiety drops even a little, your brain learns "this is safe." Over time it rewires. This is real — it works.
+    <div class="card ck" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
+      🧠 <strong>Why small steps work:</strong> Each time you try something and your body settles down even a little, your brain learns "this is okay." Do it enough times and the alarm starts to quiet on its own. Small steps, done for real, in order — that's what works.
     </div>
     <div class="card cy teen-alt" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
-      💡 Small steps, done for real, in order. Every time anxiety drops even a little — your brain is learning. Keep going at your own pace.
+      💡 Small steps, done for real, in order. Every time your body settles down even a little — your brain is learning. Keep going at your own pace.
     </div>
+    <div id="ladder-reentry-note" style="display:none;margin-bottom:.75rem"></div>
+    <div class="card cw" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">💡 <strong>Some steps may feel easier than others — and that's okay.</strong> Simple is how confidence gets built. If an early step feels too easy, that's good news. Move at whatever pace feels right. There's no wrong speed here.</div>
     <div id="ladder-a"></div>
     <div id="ladder-done-a" style="display:none" class="card cs" style="text-align:center;margin-top:.75rem"><div style="font-size:1.8rem;margin-bottom:.18rem">🏆</div><div style="font-weight:800">You climbed the whole ladder. That is extraordinary.</div></div>
     <button class="btn bsg" id="laddernext-a" onclick="goTo('s-aimagine');earn(30,'Ladder explored! +30 🪙')" style="margin-top:.75rem">Ready to imagine success 🌟</button>
@@ -620,12 +623,12 @@ textarea:focus{border-color:var(--sage);}
 <div class="screen" id="s-aptg">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
-    <div class="h2">🌱 Something unexpected</div>
-    <div class="sub">Research on people who survive serious injuries finds something worth knowing.</div>
+    <div class="h2">🌱 Something worth knowing</div>
+    <div class="sub">Research on people who come through serious injuries finds something that doesn't get talked about enough.</div>
     <div class="ptgc">
-      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">📖 Growing after hard things</div>
-      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">Studies show that many people who go through serious injuries discover unexpected strengths they didn't have before. Not everyone, not always — but more often than most people realize.</p>
-      <p style="font-size:.86rem;line-height:1.75">This doesn't mean the injury was "worth it." It means the human spirit has a remarkable ability to find something real on the other side of hard things.</p>
+      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">📖 What hard things can show us</div>
+      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">Studies show that many people who go through serious injuries find unexpected things about themselves on the other side — patience they didn't know they had, a clearer sense of what matters, or a quiet strength that wasn't visible before.</p>
+      <p style="font-size:.86rem;line-height:1.75">This doesn't mean the injury was okay, or that you have to find a silver lining. It just means that getting through hard things often leaves something behind — and sometimes that something is worth noticing.</p>
     </div>
     <div class="qcard"><p>"You may not control all the events that happen to you, but you can decide not to be reduced by them."</p><div class="qa">— Maya Angelou</div></div>
     <div class="qb">Has anything surprised you about yourself since this happened?</div>
@@ -637,18 +640,18 @@ textarea:focus{border-color:var(--sage);}
   </div>
 </div>
 
-<!-- A: ANXIETY OUT -->
+<!-- A: CHECK-OUT -->
 <div class="screen" id="s-aanx2">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
     <div class="h2">📊 One more check-in</div>
-    <div class="sub">You started at a <strong id="anx1-show">—</strong>. After all of this work — where are you now?</div>
+    <div class="sub">When you first opened this app, you were at a <strong id="anx1-show">—</strong>. After everything you just did — where are you now?</div>
     <div class="axw">
-      <label for="anx2">Right now, how anxious do you feel about your kitchen?</label>
+      <label for="anx2">Right now, how unsettled do you feel when you think about your kitchen?</label>
       <div class="axn" id="anx2n">5</div>
-      <div class="axl" id="anx2l">Noticeably anxious</div>
-      <input type="range" min="1" max="10" value="5" id="anx2" oninput="setAnx(2,+this.value)" aria-label="Current anxiety level">
-      <div class="axs"><span>1 — calm</span><span>10 — overwhelming</span></div>
+      <div class="axl" id="anx2l">Noticeably hard</div>
+      <input type="range" min="1" max="10" value="5" id="anx2" oninput="setAnx(2,+this.value)" aria-label="How unsettled you feel now, 1-10">
+      <div class="axs"><span>1 — barely at all</span><span>10 — really hard</span></div>
     </div>
     <button class="btn bsg" onclick="goTo('s-celebrate');earn(15,'Almost there! +15 🪙');buildCel()">See what changed 🎯</button>
   </div>
@@ -665,11 +668,11 @@ textarea:focus{border-color:var(--sage);}
     <div class="h2">💑 You're here for someone you love</div>
     <div class="sub">What happened to them happened to you too. Your wound may not be visible — but it is real.</div>
     <div class="card cv">
-      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">Watching someone you love get hurt is traumatic. Research shows that people who witness a serious injury can develop the same anxiety, fear, and avoidance as the person who was hurt — sometimes more.</p>
-      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">You may have replayed the moment hundreds of times. You may have taken over cooking — or stopped cooking entirely. You may feel anxious every time someone goes near the stove. <strong>All of this is a normal response to something terrifying.</strong></p>
+      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">Watching someone you love get hurt is traumatic. Research shows that people who witness a serious injury can feel just as unsettled, fearful, and avoidant as the person who was hurt — sometimes more.</p>
+      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">You may have replayed the moment hundreds of times. You may have taken over cooking — or stopped cooking entirely. You may feel on edge every time someone goes near the stove. <strong>All of this is a normal response to something terrifying.</strong></p>
       <p style="font-size:.9rem;line-height:1.75">You deserve support too. This path is for you.</p>
     </div>
-    <div class="aff"><p>"Your feelings are yours — separate from how the person you love is doing. You are allowed to struggle even if they seem okay." 💑</p></div>
+    <div class="aff"><p>"Your feelings belong to you — separate from how the person you love is doing. You are allowed to find this hard even if they seem to be handling it." 💑</p></div>
     <button class="btn bwi" onclick="goTo('s-bdream');earn(10,'You showed up! +10 🪙')">Yes — this is for me →</button>
   </div>
 </div>
@@ -759,7 +762,7 @@ textarea:focus{border-color:var(--sage);}
     <button class="ch" data-e="💔" onclick="togBFear(this)">I feel like something changed in our home that I can't name</button>
     <div id="bfear-resp" class="card cv" style="display:none;margin-top:.75rem">
       <div style="font-weight:800;margin-bottom:.45rem">💑 You named them. That took real courage.</div>
-      <p style="font-size:.86rem;line-height:1.7">Every single thing you checked is a normal response to witnessing a traumatic event. Research shows that people who witness a serious injury can develop the same anxiety, avoidance, and intrusive memories as the person who was hurt. <strong>Your experience is real, and you deserve real support for it.</strong></p>
+      <p style="font-size:.86rem;line-height:1.7">Every single thing you checked is a normal response to witnessing a traumatic event. Research shows that people who witness a serious injury can experience the same unease, avoidance, and unwanted memories as the person who was hurt. <strong>Your experience is real, and you deserve real support for it.</strong></p>
     </div>
     <button class="btn bwi" id="bfearnext" onclick="goTo('s-breframe');earn(20,'Named bravely! +20 🪙')" style="display:none">I named them 💪</button>
   </div>
@@ -774,7 +777,7 @@ textarea:focus{border-color:var(--sage);}
     <div class="rfp"><div class="rfo">🔴 "I should have stopped it."</div><div class="rfa">→</div><div class="rfn">🟢 "It happened in seconds. No one could have predicted it. I was there because I care."</div></div>
     <div class="rfp"><div class="rfo">🔴 "I asked them to help — this is my fault."</div><div class="rfa">→</div><div class="rfn">🟢 "I asked someone I trusted to do something normal. That is not causing an accident."</div></div>
     <div class="rfp"><div class="rfo">🔴 "I shouldn't struggle — they're the one who got hurt."</div><div class="rfa">→</div><div class="rfn">🟢 "Watching someone you love get hurt IS traumatic. My feelings are real and they deserve space."</div></div>
-    <div class="rfp"><div class="rfo">🔴 "I'll never feel safe watching anyone cook again."</div><div class="rfa">→</div><div class="rfn">🟢 "Right now is hard. This kind of anxiety does get better. Many people find their way back to safe kitchens."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I'll never feel safe watching anyone cook again."</div><div class="rfa">→</div><div class="rfn">🟢 "Right now is hard. This kind of unease does get better. Many people find their way back to safe kitchens."</div></div>
     <div class="rfp"><div class="rfo">🔴 "The kitchen isn't safe anymore."</div><div class="rfa">→</div><div class="rfn">🟢 "The kitchen is a tool. Right now it is still. Safety comes from knowledge and practice — not avoidance."</div></div>
     <div class="qb">Which one feels closest to true right now? Write it your way:</div>
     <textarea id="breframe-text" placeholder="Any version is the right version..." aria-label="Your reframe"></textarea>
@@ -871,12 +874,13 @@ textarea:focus{border-color:var(--sage);}
     <div style="font-weight:800">Witnessed Courage — Earned</div>
     <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself, and for the people you love.</div>
   </div>
-  <div class="aff"><p>"Your healing is not separate from theirs. When you feel better, you can show up more fully for everyone you love. That matters." 💑</p></div>
+  <div class="aff"><p>"Taking care of yourself is not selfish. When you feel steadier, you can be more present for the people you love. That matters more than you might think." 💑</p></div>
   <div class="card cw">
     <div style="font-weight:800;margin-bottom:.38rem">📱 Save this app</div>
     <p style="font-size:.83rem;color:var(--muted);line-height:1.65">Bookmark this page or save to your home screen. Come back whenever you need it — no schedule required.</p>
   </div>
   <button class="btn bwi" onclick="goTo('s-resources')">See support & resources 🤝</button>
+  <button class="bout" onclick="goHome()" style="margin-top:.5rem">🏠 Go back to the beginning</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -889,7 +893,7 @@ textarea:focus{border-color:var(--sage);}
     <p style="color:var(--muted);font-size:.9rem;margin-top:.25rem">Look at what changed.</p>
   </div>
   <div class="card" id="delta-card">
-    <div style="font-weight:800;text-align:center;margin-bottom:.65rem">Your anxiety — then vs. now:</div>
+    <div style="font-weight:800;text-align:center;margin-bottom:.65rem">How you felt — then vs. now:</div>
     <div class="dg">
       <div class="db"><div class="dn" id="d-start" style="color:var(--peach)">—</div><div class="dl">When you arrived</div></div>
       <div class="da">→</div>
@@ -920,17 +924,85 @@ textarea:focus{border-color:var(--sage);}
     <div style="font-weight:800">Kitchen Courage — Earned</div>
     <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself when it was hard.</div>
   </div>
-  <div class="aff"><p>"You are still someone who can nourish yourself and the people you love. You overcame something that would have stopped a lot of people. That is who you are." 🏠💛</p></div>
+  <div class="aff"><p>"You made it home. You showed up for yourself. You are still someone who can take care of the people you love — and that hasn't changed one bit." 🏠💛</p></div>
   <div class="card cw">
     <div style="font-weight:800;margin-bottom:.38rem">📱 Save this app</div>
     <p style="font-size:.83rem;color:var(--muted);line-height:1.65">Bookmark this page or save to your home screen. Come back whenever you need it — no schedule required. Your progress is saved on this device.</p>
   </div>
   <div class="card ck" style="font-size:.83rem;line-height:1.65">
     <div style="font-weight:800;margin-bottom:.38rem">💬 For the hard days:</div>
-    <p style="color:var(--muted)">Go back to your safe place first. Then breathe. Then take the tiniest step. Even standing at the edge of your kitchen counts. Every moment of trying is healing happening.</p>
+    <p style="color:var(--muted)">Go back to your safe place first. Then breathe. Then take the tiniest step. Even standing at the edge of your kitchen counts. Every moment of trying counts — even the ones that feel small.</p>
   </div>
   <button class="btn bsg" onclick="goTo('s-resources')">See support & resources 🤝</button>
   <button class="bout" onclick="goTo('s-aladder')">Return to the ladder →</button>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     A: COOKING LADDER
+══════════════════════════════════════ -->
+<div class="screen" id="s-acookladder">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <div class="h2">🍳 Back to actually cooking</div>
+    <div class="sub">This is Phase 2 — the part about real food, real heat, real cooking. Start where it feels right. All steps are here whenever you need them.</div>
+
+    <div class="qb">Where does cooking feel hardest right now? Pick everything that fits:</div>
+    <button class="ch" data-e="🔥" onclick="togCook(this,'stovetop')">The stovetop — burners, open heat, the flame</button>
+    <button class="ch" data-e="🍳" onclick="togCook(this,'grease')">Grease — frying, sautéing, anything that can splatter</button>
+    <button class="ch" data-e="♨️" onclick="togCook(this,'oven')">The oven — enclosed heat, opening the hot door</button>
+    <button class="ch" data-e="🥘" onclick="togCook(this,'multitask')">Managing a whole meal — multiple things going at once</button>
+    <button class="ch" data-e="👶" onclick="togCook(this,'kids')">Cooking with kids or others nearby</button>
+    <button class="ch" data-e="🍽️" onclick="togCook(this,'all')">All of it — just getting back to cooking at all</button>
+
+    <div id="cook-hardest-note" style="display:none;margin-top:.5rem"></div>
+
+    <div style="margin-top:1rem">
+      <div style="font-weight:800;font-size:.88rem;margin-bottom:.5rem">Who can be nearby while you cook? (just for you — not stored)</div>
+      <textarea id="cook-standby" placeholder="A name, a phone number, someone who can be on the other end of a text..." rows="1" style="min-height:44px" aria-label="Cooking standby person"></textarea>
+    </div>
+
+    <div class="card cy" style="margin-top:.75rem;font-size:.83rem;line-height:1.65">
+      <strong>💡 If it gets hard mid-cook:</strong> Turn the heat to its lowest setting or off completely. Step back from the stove. Take three slow breaths. You do not have to finish the meal. Finishing is not the goal — trying is.
+    </div>
+
+    <div class="card ca" style="margin-top:.75rem;font-size:.83rem;line-height:1.65">
+      ⚠️ <strong>If you have recent grafts or healing skin</strong>, check with your care team before any step involving direct heat or grease. No rush.
+    </div>
+
+    <button class="btn bsg" onclick="showCookLadder()" style="margin-top:.75rem">Show me my cooking steps →</button>
+  </div>
+
+  <div id="cook-ladder-steps" style="display:none">
+    <div class="card" style="margin-top:.5rem">
+      <div class="h2" style="margin-bottom:.5rem">🪜 Your cooking ladder</div>
+      <div class="sub">Tap a step only after you've actually tried it. Go at your own pace.</div>
+      <div id="cook-ladder-list"></div>
+      <div id="cook-ladder-done" style="display:none" class="card cs" style="margin-top:.75rem;text-align:center">
+        <div style="font-size:1.8rem;margin-bottom:.2rem">🏆</div>
+        <div style="font-weight:800">You cooked your way back. That is everything.</div>
+        <div style="font-size:.85rem;color:var(--muted);margin-top:.3rem">Every meal from here is proof of what you just did.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COOK STEP MODAL -->
+<div class="ov" id="cook-ov" onclick="closeCookM(event)" role="dialog" aria-modal="true" aria-label="Cooking step details">
+  <div class="pnl" id="cook-pnl">
+    <div class="h2" id="cook-m-title"></div>
+    <p id="cook-m-desc" style="font-size:.84rem;color:var(--muted);line-height:1.6;margin:.45rem 0 .85rem"></p>
+    <div class="card ca" id="cook-m-tip" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem;display:none"></div>
+    <div class="qb" style="margin-top:0">When you've actually tried this — how did it go?</div>
+    <div style="display:flex;gap:.38rem;flex-wrap:wrap;margin:.45rem 0">
+      <button class="ch" style="width:auto;padding:.52rem .82rem" data-e="😰" onclick="rateCook('hard')">Really hard</button>
+      <button class="ch" style="width:auto;padding:.52rem .82rem" data-e="😬" onclick="rateCook('managed')">I managed it</button>
+      <button class="ch" style="width:auto;padding:.52rem .82rem" data-e="😌" onclick="rateCook('ok')">Actually okay</button>
+    </div>
+    <div id="cook-m-resp" class="card cs" style="display:none;font-size:.85rem;line-height:1.65;margin:.45rem 0"></div>
+    <button class="btn bsg" id="cook-m-done" onclick="completeCookStep()" style="display:none">✅ Mark this step done</button>
+    <button class="bout" onclick="closeCookM()" style="margin-top:.28rem">Not yet — I'll come back</button>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -971,14 +1043,16 @@ textarea:focus{border-color:var(--sage);}
     <div class="ri">
       <div class="ric">📱</div>
       <div>
-        <h4>Crisis support — if things feel unmanageable right now</h4>
-        <p><a href="tel:988" aria-label="988 crisis line">988 Suicide & Crisis Lifeline</a> — call or text 988, free, 24/7</p>
+        <h4>If things feel overwhelming right now</h4>
+        <p><strong>988</strong> — America's mental health crisis line. Call or text <a href="tel:988" aria-label="988 crisis line">988</a> any time, day or night. Free, confidential. For emotional distress, mental health struggles, or just needing someone to talk to. Not just for emergencies — for hard moments too.</p>
         <p>Crisis Text Line: Text HOME to 741741</p>
         <p><a href="tel:18006624357" aria-label="SAMHSA helpline">SAMHSA: 1-800-662-4357</a> — free, confidential, 24/7</p>
       </div>
     </div>
   </div>
-  <button class="btn bpe" onclick="history.back()">← Go back</button>
+  <button class="btn bpe" onclick="goTo(S.path==='B'?'s-bcelebrate':'s-celebrate')">← Back to your results</button>
+  <button class="bout" onclick="goHome()" style="margin-top:.5rem">🏠 Go back to the beginning</button>
+  <button class="bout" onclick="clearAndRestart()" style="margin-top:.4rem;font-size:.78rem">↺ Start completely over</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -990,7 +1064,7 @@ textarea:focus{border-color:var(--sage);}
     <p class="sub">Choose what feels right. Nothing is required.</p>
     <div class="co" onclick="showCalm('senses')"><div class="ch2"><span>👋</span>5-4-3-2-1 Senses</div><div class="cd2">Mind spinning? Use your senses to come back to right now.</div></div>
     <div class="co" onclick="showCalm('belly')"><div class="ch2"><span>🌬️</span>Belly breathing</div><div class="cd2">Chest tight? Gentle, slow, hard to do wrong.</div></div>
-    <div class="co" onclick="showCalm('box')"><div class="ch2"><span>⬜</span>Box breathing</div><div class="cd2">Want a rhythm to hold onto? (Try belly breathing if counting spikes anxiety.)</div></div>
+    <div class="co" onclick="showCalm('box')"><div class="ch2"><span>⬜</span>Box breathing</div><div class="cd2">Want a rhythm to hold onto? (Try belly breathing if counting makes it harder.)</div></div>
     <div class="co" onclick="showCalm('nature')"><div class="ch2"><span>🌊</span>Nature moment</div><div class="cd2">Too many words? One quiet minute somewhere peaceful — with sound.</div></div>
     <div class="co" onclick="showCalm('scan')"><div class="ch2"><span>🧘</span>Body scan</div><div class="cd2">Tension somewhere you can't locate? A gentle head-to-feet check-in.</div></div>
     <div class="co" onclick="showCalm('talk')"><div class="ch2"><span>💬</span>Grounding self-talk</div><div class="cd2">Flashback or feeling like it's happening again? Words that bring you back.</div></div>
@@ -1018,7 +1092,7 @@ let S={coins:0,anx1:5,anx2:5,path:'A',teenMode:false,safePlaces:[],fears:[],wsFo
 try{const d=JSON.parse(localStorage.getItem(SK));if(d)S=Object.assign(S,d);}catch(e){}
 function save(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
 
-const ANX={1:'Very calm',2:'Pretty calm',3:'A little uneasy',4:'Somewhat anxious',5:'Noticeably anxious',6:'Quite anxious',7:'Very anxious',8:'Highly anxious',9:'Overwhelmed',10:'At my limit right now'};
+const ANX={1:'Barely at all',2:'Just a little',3:'A bit unsettled',4:'Somewhat on edge',5:'Noticeably hard',6:'Pretty hard',7:'Very hard',8:'Really hard to think about',9:'Overwhelmed',10:'As hard as it gets right now'};
 
 // ══════════════════════════════════════
 // NAV
@@ -1051,10 +1125,13 @@ document.head.appendChild(toastStyle);
 // ══════════════════════════════════════
 // WELCOME / PATH
 // ══════════════════════════════════════
-let pathChosen=false, feelingChosen=false;
+let pathChosen=false, feelingChosen=false, reentryChosen=false;
+S.reentry = S.reentry || 'none'; // none | once | few | regular
 function tog(btn,key){
   btn.classList.toggle('on');
   feelingChosen=true;
+  // Show been-back block once any feeling is picked
+  document.getElementById('been-back-block').style.display='block';
   checkWelcomeNext();
 }
 function setPath(p,btn){
@@ -1064,22 +1141,74 @@ function setPath(p,btn){
   pathChosen=true;
   checkWelcomeNext();
 }
+function setReentry(type,btn){
+  S.reentry=type;save();
+  document.querySelectorAll('#been-back-block .ch').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  reentryChosen=true;
+  // Show who-are-you block
+  document.getElementById('path-block').style.display='block';
+  checkWelcomeNext();
+}
 function checkWelcomeNext(){
-  if(pathChosen)document.getElementById('wnext').style.display='block';
+  if(pathChosen && reentryChosen)document.getElementById('wnext').style.display='block';
 }
-function toggleTeen(cb){
-  S.teenMode=cb.checked;save();
-  document.getElementById('app').classList.toggle('teen-mode',S.teenMode);
-}
+
+// Reentry acknowledgment messages
+const REENTRY_ACK = {
+  none: null,
+  once: {
+    title: "You have already taken the hardest step.",
+    body: "Going back once, even when it was hard, even when you had to — that counts. The fact that it was difficult does not mean you failed. It means you were dealing with something real. This app will help you find a way to be there that feels steadier."
+  },
+  few: {
+    title: "You have been back — and you are still working through it.",
+    body: "That is completely normal. Going back does not automatically make the unease go away. Some people go back regularly and still feel on edge every time. This app is for exactly that — helping your body catch up to where you already are."
+  },
+  regular: {
+    title: "You are in the kitchen — and something still does not feel right.",
+    body: "That makes sense. Being back and feeling okay are two different things. A lot of people return out of necessity long before they feel settled there. You are not behind. Your body is still processing something that was genuinely hard. You are in the right place."
+  }
+};
+
+// Ladder start point by reentry status (skip early steps)
+const REENTRY_LADDER_START = {
+  none: 0,    // start at step 1
+  once: 2,    // start at step 3 — theyve crossed the threshold
+  few: 4,     // start at step 5 — theyve done cold tasks
+  regular: 6  // start at step 7 — theyre dealing with heat
+};
+
+const REENTRY_LADDER_NOTE = {
+  none: null,
+  once: "Since you have already been back once or twice, the first steps may feel familiar. Start wherever feels right — earlier steps are there if you want them.",
+  few: "You have already been back a few times, so feel free to start further up the ladder at a step that matches where you actually are. Earlier steps are always available.",
+  regular: "You are already back in the kitchen regularly — your ladder starts with the harder steps. Earlier rungs are still there any time you want them."
+};
+
 function startGame(){
   document.getElementById('bar').classList.add('on');
   earn(10,'You showed up! +10 🪙');
+  // Set reentry acknowledgment for dream screen
+  const ack = REENTRY_ACK[S.reentry];
+  const ackEl = document.getElementById('reentry-ack');
+  if(ack && ackEl){
+    ackEl.innerHTML = `<div class="card ct" style="margin-bottom:.1rem"><div style="font-weight:800;font-size:.92rem;margin-bottom:.38rem">🌿 \${ack.title}</div><p style="font-size:.86rem;line-height:1.75;">\${ack.body}</p></div>`;
+    ackEl.style.display = 'block';
+  }
+  // Set ladder start note
+  const lnote = REENTRY_LADDER_NOTE[S.reentry];
+  const lnoteEl = document.getElementById('ladder-reentry-note');
+  if(lnote && lnoteEl){
+    lnoteEl.innerHTML = `<div class="card cy" style="font-size:.84rem;line-height:1.65;">💡 \${lnote}</div>`;
+    lnoteEl.style.display = 'block';
+  }
   if(S.path==='B') goTo('s-bwelcome');
   else goTo('s-adream');
 }
 
 // ══════════════════════════════════════
-// ANXIETY
+// CHECK-IN SCALE
 // ══════════════════════════════════════
 function setAnx(n,v){
   if(n===1){S.anx1=v;const s=document.getElementById('anx1-show');if(s)s.textContent=v;}
@@ -1088,7 +1217,7 @@ function setAnx(n,v){
   const nn=document.getElementById('anx'+n+'n'),nl=document.getElementById('anx'+n+'l');
   if(nn)nn.textContent=v;if(nl)nl.textContent=ANX[v]||'';
   if(n===1){
-    const msgs=['That is a calm starting point — wonderful.','Pretty calm. A good place to begin.','A little uneasy — very understandable.','Some anxiety, but manageable. You showed up.','Noticeable anxiety. We\'ll go gently.','Significant anxiety — step by step.','High anxiety is hard to carry. This app will help.','That\'s a lot right now. Let\'s go slowly.','At 9, a calming tool first might really help.','A 10 is overwhelming. Please try the calm toolkit before going on.'];
+    const msgs=["Calm start.","Pretty calm.","A little unsettled.","Some discomfort — you showed up.","Noticeably hard — going gently.","Real and okay.","Hard right now.","A lot right now.","Very hard — try the calm tool.","As hard as it gets."];
     const r=document.getElementById('anx1r'),rt=document.getElementById('anx1rt');
     if(r)r.style.display='block';if(rt)rt.textContent=msgs[v-1];
     const hi=document.getElementById('anx1hi');if(hi)hi.style.display=v>=9?'block':'none';
@@ -1135,8 +1264,8 @@ function pickSup(type,btn){
   btn.classList.add('on');
   const msgs={
     partner:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>Having someone at home is a real advantage.</strong> Ask them to simply be in the house — not in the kitchen — while you try a step. Their presence matters even from another room.</div>`,
-    family:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>Having people nearby genuinely helps.</strong> Even knowing someone is a text away can lower anxiety. You might ask a trusted person to be available by phone for your first few kitchen attempts.</div>`,
-    solo:`<div class="card ct" style="font-size:.85rem;line-height:1.7"><strong>Living alone right now is completely normal — and many people move through this recovery the same way.</strong> It's different, not harder. A few things that help:<br><br>• <strong>Phoenix SOAR</strong> — free, one-on-one support from a trained burn survivor, by phone or video: <a href="https://resources.phoenix-society.org/phoenix-soar" target="_blank" style="color:var(--teal);font-weight:700">phoenix-society.org/phoenix-soar</a><br>• Keep your phone in your pocket during every kitchen attempt<br>• Tell someone your plan: "I'm going to try standing in my kitchen doorway today" — so someone knows<br>• The 🌿 Pause button in this app is always there for you</div>`,
+    family:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>Having people nearby genuinely helps.</strong> Even knowing someone is a text away can help your body settle. You might ask a trusted person to be available by phone for your first few kitchen attempts.</div>`,
+    solo:`<div class="card ct" style="font-size:.85rem;line-height:1.7"><strong>If youre on your own right now, heres what tends to help:</strong><br><br>• <strong>Phoenix SOAR</strong> — free, one-on-one support from someone whos actually been through a burn injury, by phone or video. You dont have to do this alone: <a href="https://resources.phoenix-society.org/phoenix-soar" target="_blank" style="color:var(--teal);font-weight:700">phoenix-society.org/phoenix-soar</a><br>• Keep your phone nearby during your first kitchen attempts<br>• Let one person know what youre trying: "Im going to stand at the kitchen doorway today" — so someone is aware<br>• The 🌿 Pause button in this app is always there, any time</div>`,
     varies:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>This app works both ways.</strong> On days you have support, use it. On solo days, the calming toolkit and Phoenix SOAR peer support are always available.</div>`
   };
   document.getElementById('sup-resp').innerHTML=msgs[type]||'';
@@ -1240,22 +1369,22 @@ function wsCk(a,b){
 // ══════════════════════════════════════
 const LA=[
   {id:'la1',i:'🪑',t:'Sit near the kitchen',d:'Just be near the space — on the couch, at a table nearby. Read, scroll, have tea. Five minutes is a full win.',anx:'Very low',r:{hard:'Just being near the space took something. You stayed.',managed:'You were near your kitchen. That is the beginning.',ok:'Your body is already starting to learn this space is okay.'}},
-  {id:'la2',i:'👁️',t:'Stand at the doorway — or the kitchen\'s edge',d:'Look in without entering. If your kitchen is open-plan, stand where the space begins — the end of the counter, the change in flooring. Notice what you see. Breathe. Step back whenever you want.',anx:'Low',r:{hard:'You looked at the hard thing. That is brave.',managed:'You looked. That matters more than it sounds.',ok:'Already further than you think.'}},
-  {id:'la3',i:'👣',t:'Step inside — stay near the edge',d:'Enter and stay close to where you came in. Look around slowly. Touch the doorframe if you like. Two minutes is a full win.',anx:'Low–moderate',r:{hard:'You crossed the threshold. That\'s the hardest part.',managed:'You were in the kitchen. On your terms.',ok:'Inside your kitchen, breathing normally. Look at that.'}},
-  {id:'la4',i:'🚰',t:'Walk to the sink',d:'Turn on cold water. Let it run over your hands. Feel the temperature and pressure. This brings you right into the present moment.',anx:'Moderate',r:{hard:'Cold water is a proven grounding tool. You felt it.',managed:'Sink reached. Hands in water. You\'re taking it back.',ok:'Something ordinary feels ordinary again. That\'s the goal.'}},
+  {id:'la2',i:'👁️',t:'Stand at the doorway — or the kitchen edge',d:'Look in without entering. If your kitchen is open-plan, stand where the space begins — the end of the counter, the change in flooring. Notice what you see. Breathe. Step back whenever you want.',anx:'Low',r:{hard:'You looked at the hard thing. That is brave.',managed:'You looked. That matters more than it sounds.',ok:'Already further than you think.'}},
+  {id:'la3',i:'👣',t:'Step inside — stay near the edge',d:'Enter and stay close to where you came in. Look around slowly. Touch the doorframe if you like. Two minutes is a full win.',anx:'Low–moderate',r:{hard:'You crossed the threshold. Thats the hardest part.',managed:'You were in the kitchen. On your terms.',ok:'Inside your kitchen, breathing normally. Look at that.'}},
+  {id:'la4',i:'🚰',t:'Walk to the sink',d:'Turn on cold water. Let it run over your hands. Feel the temperature and pressure. This brings you right into the present moment.',anx:'Moderate',r:{hard:'Cold water is a proven grounding tool. You felt it.',managed:'Sink reached. Hands in water. Youre taking it back.',ok:'Something ordinary feels ordinary again. Thats the goal.'}},
   {id:'la5',i:'🫖',t:'Boil the kettle only',d:'Fill it, turn it on, step back to wherever feels comfortable. Watch from across the room if needed. The kettle is enclosed heat — nothing splashes, nothing flames.',anx:'Moderate',r:{hard:'You turned something on and turned it off. You controlled that heat.',managed:'Kettle done. Low heat, managed by you.',ok:'Every time you do this it gets easier.'}},
-  {id:'la6',i:'🔍',t:'Look at the stove — all knobs off',d:'Walk to it. Stand in front. Check each knob: off, off, off. You are in control of this machine. Check as many times as you need.',anx:'Moderate–high',r:{hard:'You stood in front of the thing that hurt you. One of the most powerful things a person can do.',managed:'You checked. You verified. You were in charge.',ok:'You looked at it and it was just a machine. Because that\'s what it is.'}},
-  {id:'la7',i:'♨️',t:'Oven heat — door closed first',d:'Preheat the oven to a low temperature. Stand nearby with the door closed. Feel the warmth. Then open it with long oven mitts and step back. Note: if you have recent grafts or healing skin, check with your care team first.',anx:'High',r:{hard:'Oven heat is a real trigger for many survivors. You faced it.',managed:'Preheated, opened, stepped back. That\'s full mastery.',ok:'Oven heat, managed by you. A huge step.'}},
+  {id:'la6',i:'🔍',t:'Look at the stove — all knobs off',d:'Walk to it. Stand in front. Check each knob: off, off, off. You are in control of this machine. Check as many times as you need.',anx:'Moderate–high',r:{hard:'You stood in front of the thing that hurt you. One of the most powerful things a person can do.',managed:'You checked. You verified. You were in charge.',ok:'You looked at it and it was just a machine. Because thats what it is.'}},
+  {id:'la7',i:'♨️',t:'Oven heat — door closed first',d:'Preheat the oven to a low temperature. Stand nearby with the door closed. Feel the warmth. Then open it with long oven mitts and step back. Note: if you have recent grafts or healing skin, check with your care team first.',anx:'High',r:{hard:'Oven heat is a real trigger for many survivors. You faced it.',managed:'Preheated, opened, stepped back. Thats full mastery.',ok:'Oven heat, managed by you. A huge step.'}},
   {id:'la8',i:'🔥',t:'One burner, very low — then off',d:'With someone nearby if you want. Turn on one burner at its lowest setting. Watch it for a moment from a safe distance. Turn it off. You made heat happen and you made it stop.',anx:'High',r:{hard:'You made fire happen and you made it stop. Extraordinary.',managed:'On. Off. Yours. This is you taking your kitchen back.',ok:'Heat in your kitchen, controlled by you.'}},
-  {id:'la9',i:'🥘',t:'Cook something simple',d:'Scrambled eggs. Soup. Toast. Something with minimal open flame. Use your timer. Use your mitts. Play music. Go slow. Celebrate when it\'s done.',anx:'Full return',r:{hard:'You cooked a meal. In your kitchen. You are still someone who does that.',managed:'Start to finish. Your hands still know what to do.',ok:'That is what this whole ladder was building toward.'}}
+  {id:'la9',i:'🥘',t:'Cook something simple',d:'Scrambled eggs. Soup. Toast. Something with minimal open flame. Use your timer. Use your mitts. Play music. Go slow. Celebrate when its done.',anx:'Full return',r:{hard:'You cooked a meal. In your kitchen. You are still someone who does that.',managed:'Start to finish. Your hands still know what to do.',ok:'That is what this whole ladder was building toward.'}}
 ];
 const LB=[
-  {id:'lb1',i:'🛋️',t:'Sit somewhere you can see the kitchen — from a distance',d:'You don\'t have to go near it. Just be in the same area. A couch, a chair nearby. Notice you\'re okay. Five minutes counts.',r:{hard:'Being in the same space and staying — that\'s real.',managed:'You were near the kitchen. That\'s the whole step.',ok:'Your nervous system is already starting to learn.'}},
-  {id:'lb2',i:'👁️',t:'Watch someone else in the kitchen — from far away',d:'Ask someone you trust to do something simple while you watch from a distance. Or watch a short cooking video. Notice: nothing bad is happening. The kitchen can be normal.',r:{hard:'You watched. You stayed. That\'s exposure doing its job.',managed:'You saw the kitchen in use and you didn\'t leave.',ok:'Watching it be normal is teaching your brain it\'s safe.'}},
-  {id:'lb3',i:'🚶',t:'Stand at the kitchen doorway while someone\'s inside',d:'Someone you trust is cooking or just in the kitchen. You stand at the doorway. You don\'t have to go in. Just be at the edge.',r:{hard:'You stood at the edge while someone was in there. Brave.',managed:'You were at the door. You stayed.',ok:'The doorway felt manageable. That\'s progress.'}},
-  {id:'lb4',i:'🪑',t:'Sit in the kitchen while someone else is there',d:'Someone you trust is with you. You\'re both in the kitchen. You\'re not cooking. You\'re just present. That\'s the whole step.',r:{hard:'You were in the kitchen. The movie didn\'t take you away completely.',managed:'You sat there. That is huge.',ok:'You were present in the kitchen. That was the goal.'}},
+  {id:'lb1',i:'🛋️',t:'Sit somewhere you can see the kitchen — from a distance',d:'You dont have to go near it. Just be in the same area. A couch, a chair nearby. Notice youre okay. Five minutes counts.',r:{hard:'Being in the same space and staying — thats real.',managed:'You were near the kitchen. Thats the whole step.',ok:'Your nervous system is already starting to learn.'}},
+  {id:'lb2',i:'👁️',t:'Watch someone else in the kitchen — from far away',d:'Ask someone you trust to do something simple while you watch from a distance. Or watch a short cooking video. Notice: nothing bad is happening. The kitchen can be normal.',r:{hard:'You watched. You stayed. Thats exposure doing its job.',managed:'You saw the kitchen in use and you didnt leave.',ok:'Watching it be normal is teaching your brain its safe.'}},
+  {id:'lb3',i:'🚶',t:'Stand at the kitchen doorway while someones inside',d:'Someone you trust is cooking or just in the kitchen. You stand at the doorway. You dont have to go in. Just be at the edge.',r:{hard:'You stood at the edge while someone was in there. Brave.',managed:'You were at the door. You stayed.',ok:'The doorway felt manageable. Thats progress.'}},
+  {id:'lb4',i:'🪑',t:'Sit in the kitchen while someone else is there',d:'Someone you trust is with you. Youre both in the kitchen. Youre not cooking. Youre just present. Thats the whole step.',r:{hard:'You were in the kitchen. The movie didnt take you away completely.',managed:'You sat there. That is huge.',ok:'You were present in the kitchen. That was the goal.'}},
   {id:'lb5',i:'☕',t:'Do a cold task in the kitchen — on your own',d:'Get a glass of water. Open the fridge. Make a sandwich. No heat. Just you, in your kitchen, doing something ordinary.',r:{hard:'You were in the kitchen alone and you did something normal.',managed:'Cold task, done. The kitchen can be ordinary again.',ok:'Look at that. Just you and your kitchen, doing something simple.'}},
-  {id:'lb6',i:'🍽️',t:'Be present for a full meal — sitting there, eating together',d:'A meal is being cooked. You\'re at the table or nearby. You stay for the whole thing — from cooking smells to eating together. You don\'t have to cook. You just have to stay.',r:{hard:'You stayed for the whole meal. That\'s the whole goal.',managed:'From cooking to eating, you were there. That\'s it.',ok:'A full meal, together, in a kitchen that felt safe enough. That\'s everything.'}}
+  {id:'lb6',i:'🍽️',t:'Be present for a full meal — sitting there, eating together',d:'A meal is being cooked. Youre at the table or nearby. You stay for the whole thing — from cooking smells to eating together. You dont have to cook. You just have to stay.',r:{hard:'You stayed for the whole meal. Thats the whole goal.',managed:'From cooking to eating, you were there. Thats it.',ok:'A full meal, together, in a kitchen that felt safe enough. Thats everything.'}}
 ];
 
 let pendingStep=null,pendingPath='A';
@@ -1271,7 +1400,7 @@ function renderLadder(path){
     const locked=!isDone&&!isCur;
     const div=document.createElement('div');
     div.className='ls'+(isDone?' done':isCur?' cur':' locked');
-    div.innerHTML=`<div class="li">${step.i}</div><div class="lf"><h4>Step ${i+1}: ${step.t}</h4><p>${step.d}</p><p class="la" style="color:${isDone?'var(--ok)':'var(--muted)'}">${isDone?'✅ Done':step.anx?'Anxiety level: '+step.anx:''}</p></div><div class="lc">${isDone?'✅':isCur?'👈':''}</div>`;
+    div.innerHTML=`<div class="li">${step.i}</div><div class="lf"><h4>Step ${i+1}: ${step.t}</h4><p>${step.d}</p><p class="la" style="color:${isDone?'var(--ok)':'var(--muted)'}">${isDone?'✅ Done':step.anx?'How hard: '+step.anx:''}</p></div><div class="lc">${isDone?'✅':isCur?'👈':''}</div>`;
     if(isCur)div.addEventListener('click',()=>openLM(step,path));
     cont.appendChild(div);
   });
@@ -1328,7 +1457,7 @@ function startVizTimer(secs){
     if(num)num.textContent=fmt(t);
     if(t<=0){
       clearInterval(vizInterval);
-      if(lbl)lbl.textContent='Time\'s up — or take more if you need it';
+      if(lbl)lbl.textContent='Times up — or take more if you need it';
       if(more)more.style.display='block';
       if(num)num.style.color='var(--ok)';
     }
@@ -1348,7 +1477,7 @@ function startVizTimerB(secs){
   vizIntervalB=setInterval(()=>{
     t--;
     if(num)num.textContent=fmt(t);
-    if(t<=0){clearInterval(vizIntervalB);if(lbl)lbl.textContent='Time\'s up — or take more if you need it';if(num)num.style.color='var(--ok)';}
+    if(t<=0){clearInterval(vizIntervalB);if(lbl)lbl.textContent='Times up — or take more if you need it';if(num)num.style.color='var(--ok)';}
   },1000);
 }
 function resetVizTimerB(){clearInterval(vizIntervalB);const n=document.getElementById('viz-timer-num-b');if(n){n.textContent='1:00';n.style.color='var(--teal)';}document.querySelectorAll('#viz-timer-box-b .tbtn').forEach(b=>b.classList.remove('active'));}
@@ -1359,11 +1488,11 @@ function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
 // ══════════════════════════════════════
 const CALM={
   senses:`<div class="card ck"><div style="font-weight:800;margin-bottom:.45rem">👋 5-4-3-2-1 Senses</div><ul style="font-size:.85rem;line-height:2.1;padding-left:1.1rem"><li><strong>5 things you can SEE</strong> — look for small details</li><li><strong>4 things you can FEEL</strong> — fabric, floor, temperature</li><li><strong>3 things you can HEAR</strong> — near and far</li><li><strong>2 things you can SMELL</strong> — or remember a smell you love</li><li><strong>1 thing you can TASTE</strong></li></ul><div class="aff" style="margin-top:.65rem"><p>"You are here. You are safe. That was then. This is now."</p></div></div>`,
-  belly:`<div class="card cs"><div style="font-weight:800;margin-bottom:.45rem">🌬️ Belly breathing</div><p style="font-size:.85rem;margin-bottom:.55rem">Place one hand on your belly, one on your chest.</p><ul style="font-size:.85rem;line-height:2.1;padding-left:1.1rem"><li>Breathe in through your nose — let your <strong>belly</strong> push your hand out</li><li>Breathe out through your mouth — feel your belly fall</li><li>Your chest stays mostly still. Your belly does the work.</li><li>Count exhales: 1… 2… 3… 4… 5</li></ul><p style="font-size:.76rem;color:var(--muted);margin-top:.5rem;font-style:italic">This turns on your body's calm system. It works even when it doesn't feel like it is.</p></div>`,
-  box:`<div class="card cs"><div style="font-weight:800;margin-bottom:.38rem">⬜ Box breathing</div><p style="font-size:.78rem;color:var(--muted);margin-bottom:.65rem">If counting spikes anxiety, try belly breathing instead.</p></div><div class="bring" id="cr" onclick="startCR()">Tap</div><div style="text-align:center;font-size:.83rem;color:var(--muted);margin-top:-.4rem" id="cri">Tap to begin</div><div id="crd" style="display:none" class="card cs" style="margin-top:.65rem"><strong>🌿 Your nervous system just calmed down.</strong></div>`,
+  belly:`<div class="card cs"><div style="font-weight:800;margin-bottom:.45rem">🌬️ Belly breathing</div><p style="font-size:.85rem;margin-bottom:.55rem">Place one hand on your belly, one on your chest.</p><ul style="font-size:.85rem;line-height:2.1;padding-left:1.1rem"><li>Breathe in through your nose — let your <strong>belly</strong> push your hand out</li><li>Breathe out through your mouth — feel your belly fall</li><li>Your chest stays mostly still. Your belly does the work.</li><li>Count exhales: 1… 2… 3… 4… 5</li></ul><p style="font-size:.76rem;color:var(--muted);margin-top:.5rem;font-style:italic">This turns on your bodys calm system. It works even when it doesnt feel like it is.</p></div>`,
+  box:`<div class="card cs"><div style="font-weight:800;margin-bottom:.38rem">⬜ Box breathing</div><p style="font-size:.78rem;color:var(--muted);margin-bottom:.65rem">If counting makes it harder, try belly breathing instead.</p></div><div class="bring" id="cr" onclick="startCR()">Tap</div><div style="text-align:center;font-size:.83rem;color:var(--muted);margin-top:-.4rem" id="cri">Tap to begin</div><div id="crd" style="display:none" class="card cs" style="margin-top:.65rem"><strong>🌿 Your nervous system just calmed down.</strong></div>`,
   nature:`<div><div class="qb" style="margin-top:0">Choose your scene:</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.75rem"><button class="btn bsk" onclick="showNat('beach')" style="margin:0" aria-label="Beach scene">🌊 Beach</button><button class="btn bsk" onclick="showNat('mountain')" style="margin:0" aria-label="Mountain scene">🏔️ Mountain</button></div><div id="nat-d"></div><div id="nat-audio" style="display:none;margin-top:.6rem"></div></div>`,
-  scan:`<div class="card cw"><div style="font-weight:800;margin-bottom:.45rem">🧘 Body scan</div><ul style="font-size:.85rem;line-height:2.2;padding-left:1.1rem"><li><strong>Top of your head</strong> — any tension?</li><li><strong>Your jaw</strong> — let it drop slightly</li><li><strong>Your shoulders</strong> — let them fall away from your ears</li><li><strong>Your hands</strong> — unclench, spread your fingers</li><li><strong>Your belly</strong> — soften it if you can</li><li><strong>Your feet</strong> — feel the floor. You are here.</li></ul><p style="font-size:.76rem;color:var(--muted);margin-top:.45rem;font-style:italic">You don't have to fix the tension. Just noticing it is enough.</p></div>`,
-  talk:`<div class="card cp"><div style="font-weight:800;margin-bottom:.45rem">💬 Grounding self-talk</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;margin-bottom:.42rem;font-size:.86rem;line-height:1.7">"My name is <em>[your name]</em>. I am in <em>[your location]</em>. Today is <em>[today's date]</em>."</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;margin-bottom:.42px;font-size:.86rem;line-height:1.7">"What I'm feeling right now is from the past. I am safe in this moment."</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;font-size:.86rem;line-height:1.7">"I survived the hardest day. I am still here."</div></div>`,
+  scan:`<div class="card cw"><div style="font-weight:800;margin-bottom:.45rem">🧘 Body scan</div><ul style="font-size:.85rem;line-height:2.2;padding-left:1.1rem"><li><strong>Top of your head</strong> — any tension?</li><li><strong>Your jaw</strong> — let it drop slightly</li><li><strong>Your shoulders</strong> — let them fall away from your ears</li><li><strong>Your hands</strong> — unclench, spread your fingers</li><li><strong>Your belly</strong> — soften it if you can</li><li><strong>Your feet</strong> — feel the floor. You are here.</li></ul><p style="font-size:.76rem;color:var(--muted);margin-top:.45rem;font-style:italic">You dont have to fix the tension. Just noticing it is enough.</p></div>`,
+  talk:`<div class="card cp"><div style="font-weight:800;margin-bottom:.45rem">💬 Grounding self-talk</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;margin-bottom:.42rem;font-size:.86rem;line-height:1.7">"My name is <em>[your name]</em>. I am in <em>[your location]</em>. Today is <em>[todays date]</em>."</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;margin-bottom:.42px;font-size:.86rem;line-height:1.7">"What Im feeling right now is from the past. I am safe in this moment."</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;font-size:.86rem;line-height:1.7">"I survived the hardest day. I am still here."</div></div>`,
   joy:`<div><div style="font-weight:800;margin-bottom:.65rem">😄 Something joyful</div><div class="co" onclick="showJoy('pup')"><div class="ch2">🐶 Puppies</div><div class="cd2">Because puppies fix almost everything.</div></div><div class="co" onclick="showJoy('cat')"><div class="ch2">🐱 Kittens</div><div class="cd2">Tiny, fluffy, zero problems.</div></div><div class="co" onclick="showJoy('quote')"><div class="ch2">💬 A great quote</div><div class="cd2">Words that lift.</div></div><div class="co" onclick="showJoy('funny')"><div class="ch2">😂 Something funny</div><div class="cd2">Laughter really is medicine.</div></div><div id="joy-d" style="margin-top:.65rem"></div></div>`
 };
 
@@ -1425,7 +1554,7 @@ function showJoy(key){
     pup:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.35rem">🐶🐕🐾</div><p style="font-size:.83rem;line-height:1.65;color:var(--muted)">You earned this. <a href="https://www.youtube.com/results?search_query=cute+puppy+compilation" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Puppy videos">Watch puppy videos →</a></p></div>`,
     cat:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.35rem">🐱🐈🐾</div><p style="font-size:.83rem;line-height:1.65;color:var(--muted)">Completely valid. <a href="https://www.youtube.com/results?search_query=cute+kitten+videos" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Kitten videos">Watch kitten videos →</a></p></div>`,
     quote:showQ(),
-    funny:`<div class="card cy"><div style="font-weight:800;margin-bottom:.5rem">😂 A little kitchen humor</div><p style="font-size:.86rem;line-height:1.8;margin-bottom:.42rem">🍳 "I'm not a chef. I'm an artist. The kitchen is my studio. And sometimes the smoke alarm is my biggest fan."</p><p style="font-size:.86rem;line-height:1.8;margin-bottom:.42rem">👩‍🍳 "Cooking is like love. It should be entered into with abandon or not at all." — Harriet Van Horne</p><p style="font-size:.86rem;line-height:1.8">⏱️ "I set a timer for dinner. Then I set a timer for the timer. Then I forgot about both. That's basically how cooking works, right?"</p></div>`
+    funny:`<div class="card cy"><div style="font-weight:800;margin-bottom:.5rem">😂 A little kitchen humor</div><p style="font-size:.86rem;line-height:1.8;margin-bottom:.42rem">🍳 "Im not a chef. Im an artist. The kitchen is my studio. And sometimes the smoke alarm is my biggest fan."</p><p style="font-size:.86rem;line-height:1.8;margin-bottom:.42rem">👩‍🍳 "Cooking is like love. It should be entered into with abandon or not at all." — Harriet Van Horne</p><p style="font-size:.86rem;line-height:1.8">⏱️ "I set a timer for dinner. Then I set a timer for the timer. Then I forgot about both. Thats basically how cooking works, right?"</p></div>`
   };
   el.innerHTML=joy[key]||'';
 }
@@ -1454,7 +1583,7 @@ function closeOv(id,e){if(e&&e.target!==document.getElementById(id))return;stopA
 const QS=[
   {q:"You may not control all the events that happen to you, but you can decide not to be reduced by them.",a:"Maya Angelou"},
   {q:"Out of suffering have emerged the strongest souls.",a:"Kahlil Gibran"},
-  {q:"Courage doesn't always roar. Sometimes it's the quiet voice saying 'I will try again tomorrow.'",a:"Mary Anne Radmacher"},
+  {q:"Courage doesnt always roar. Sometimes its the quiet voice saying 'I will try again tomorrow.'",a:"Mary Anne Radmacher"},
   {q:"In the middle of difficulty lies opportunity.",a:"Albert Einstein"},
   {q:"What lies within us is far greater than what lies behind or before us.",a:"Ralph Waldo Emerson"},
   {q:"You are braver than you believe, stronger than you seem.",a:"A.A. Milne"},
@@ -1472,16 +1601,16 @@ function showQ(){const q=QS[qI%QS.length];qI++;return `<div class="qcard"><p>${q
 const BRK={
   1:{h:`<div style="font-weight:800;font-size:1rem;margin-bottom:.25rem">🎉 You earned a break!</div><p class="sub">Your plan is ready. Choose your reward:</p>
     <div class="co" onclick="showBX('trivia')"><div class="ch2">🍳 Kitchen trivia</div><div class="cd2">A fun fact about the long human history of kitchens.</div></div>
-    <div class="co" onclick="showBX('v1')"><div class="ch2">💬 A survivor's words</div><div class="cd2">Something real from someone who's been through this.</div></div>
+    <div class="co" onclick="showBX('v1')"><div class="ch2">💬 A survivors words</div><div class="cd2">Something real from someone whos been through this.</div></div>
     <div class="co" onclick="showBX('j1')"><div class="ch2">📓 One word</div><div class="cd2">Write one word that describes how you feel right now.</div></div>
     <div class="co" onclick="showBX('q')"><div class="ch2">✨ A great quote</div><div class="cd2">Words that lift.</div></div>`,next:'s-aptg'},
   2:{h:`<div style="font-weight:800;font-size:1rem;margin-bottom:.25rem">🌟 Halfway up the ladder!</div><p class="sub">Three steps done. Real progress. Your choice:</p>
     <div class="co" onclick="showBX('mem')"><div class="ch2">🍽️ A food memory</div><div class="cd2">A meal from your life that meant something.</div></div>
     <div class="co" onclick="showBX('beach')"><div class="ch2">🌊 Nature moment + sound</div><div class="cd2">One quiet minute somewhere peaceful — with ambient sound.</div></div>
-    <div class="co" onclick="showBX('v2')"><div class="ch2">💬 Another survivor's voice</div><div class="cd2">Someone else who came back to their kitchen.</div></div>
-    <div class="co" onclick="showBX('pup')"><div class="ch2">🐶 Puppies</div><div class="cd2">Because you've earned it.</div></div>`,next:null},
+    <div class="co" onclick="showBX('v2')"><div class="ch2">💬 Another survivors voice</div><div class="cd2">Someone else who came back to their kitchen.</div></div>
+    <div class="co" onclick="showBX('pup')"><div class="ch2">🐶 Puppies</div><div class="cd2">Because youve earned it.</div></div>`,next:null},
   3:{h:`<div style="font-weight:800;font-size:1rem;margin-bottom:.25rem">🏆 Almost at the top!</div><p class="sub">You faced the stove. You deserve this:</p>
-    <div class="co" onclick="showBX('proud')"><div class="ch2">🌱 Three things I'm proud of</div><div class="cd2">Name them. Write them. Own them.</div></div>
+    <div class="co" onclick="showBX('proud')"><div class="ch2">🌱 Three things Im proud of</div><div class="cd2">Name them. Write them. Own them.</div></div>
     <div class="co" onclick="showBX('v3')"><div class="ch2">💬 Someone who got all the way back</div><div class="cd2">Their words, from the other side.</div></div>
     <div class="co" onclick="showBX('mtn')"><div class="ch2">🏔️ Mountain moment + sound</div><div class="cd2">One quiet minute in the mountains — with ambient sound.</div></div>
     <div class="co" onclick="showBX('cat')"><div class="ch2">🐱 Kittens</div><div class="cd2">Completely valid reward.</div></div>`,next:null}
@@ -1493,12 +1622,12 @@ const BX={
   v3:`<div class="qcard"><p>"Two years later, I teach my kids to cook. Every Sunday. My hands remembered before my brain did."</p><div class="qa">— Burn survivor, shared with permission</div></div>`,
   j1:`<div class="qb">Write one word that describes how you feel right now.</div><textarea placeholder="Just one word is enough..." rows="2" style="margin-top:.4rem" aria-label="One word journal"></textarea><p style="font-size:.75rem;color:var(--muted);margin-top:.28rem">Just for you.</p>`,
   q:'',
-  mem:`<div class="qb">What's a meal from your life that meant something? Who made it? Where were you?</div><textarea placeholder="Any memory, any meal..." rows="3" style="margin-top:.4rem" aria-label="Food memory"></textarea><div class="card cw" style="margin-top:.55rem;font-size:.83rem;line-height:1.6">That memory is still yours. The ability to create those moments is still yours too.</div>`,
+  mem:`<div class="qb">Whats a meal from your life that meant something? Who made it? Where were you?</div><textarea placeholder="Any memory, any meal..." rows="3" style="margin-top:.4rem" aria-label="Food memory"></textarea><div class="card cw" style="margin-top:.55rem;font-size:.83rem;line-height:1.6">That memory is still yours. The ability to create those moments is still yours too.</div>`,
   beach:`<div class="nat nb"><div class="ne">🌊</div><div class="nt">Close your eyes.<br>Gentle waves. Warm air. Sand.<br><br>You are safe. You are here.</div></div><div id="bx-audio" style="margin-top:.55rem"></div>`,
   mtn:`<div class="nat nm"><div class="ne">🏔️</div><div class="nt">Close your eyes.<br>Cool mountain breeze. Tall trees.<br><br>You are safe. You are here.</div></div><div id="bx-audio" style="margin-top:.55rem"></div>`,
   pup:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.32rem">🐶🐕🐾</div><p style="font-size:.83rem;color:var(--muted)">You earned this. <a href="https://www.youtube.com/results?search_query=cute+puppy+compilation" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Puppy videos">Watch puppy videos →</a></p></div>`,
   cat:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.32rem">🐱🐈🐾</div><p style="font-size:.83rem;color:var(--muted)">Completely valid. <a href="https://www.youtube.com/results?search_query=cute+kitten+videos" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Kitten videos">Watch kitten videos →</a></p></div>`,
-  proud:`<div class="qb">Three things from this journey you're proud of:</div><textarea placeholder="1. I showed up&#10;2. &#10;3. " rows="4" style="margin-top:.4rem" aria-label="Proud of list"></textarea><div class="aff" style="margin-top:.65rem"><p>"You don't have to be grateful for what happened. You are allowed to be proud of how you're handling it." 🌱</p></div>`
+  proud:`<div class="qb">Three things from this journey youre proud of:</div><textarea placeholder="1. I showed up&#10;2. &#10;3. " rows="4" style="margin-top:.4rem" aria-label="Proud of list"></textarea><div class="aff" style="margin-top:.65rem"><p>"You dont have to be grateful for what happened. You are allowed to be proud of how youre handling it." 🌱</p></div>`
 };
 
 let curBreak=null;
@@ -1527,7 +1656,7 @@ function buildCel(){
   document.getElementById('d-end').textContent=S.anx2;
   document.getElementById('final-coins').textContent=S.coins;
   const delta=S.anx1-S.anx2;
-  document.getElementById('d-msg').textContent=delta>2?`A drop of ${delta} points. Your nervous system learning it's safe. That change is real.`:delta>0?`Even a small drop matters. You started anxious and you're still here.`:delta===0?`Your number held steady — and you made it through anyway.`:`Anxiety can go up and down. You came, you did the work. That always counts.`;
+  document.getElementById('d-msg').textContent=delta>2?`Down ${delta} points. That shift is real — your body learned something today.`:delta>0?`Even a small shift matters. You came in unsettled and youre still here.`:delta===0?`Your number held steady — and you did the work anyway. That takes something.`:`Numbers go up and down. What matters is you showed up and kept going.`;
 }
 function buildBCel(){document.getElementById('bfinal-coins').textContent=S.coins;}
 
@@ -1543,13 +1672,222 @@ setAnx(2,S.anx2||5);
 document.getElementById('cc').textContent=S.coins;
 document.getElementById('pf').style.width=Math.min(S.coins/300*100,100)+'%';
 document.getElementById('lv').textContent='Lv '+(S.coins<60?1:S.coins<130?2:S.coins<220?3:4);
-if(S.teenMode){document.getElementById('teen-toggle').checked=true;document.getElementById('app').classList.add('teen-mode');}
-// Restore session
-if(S.screen&&S.screen!=='s-welcome'&&document.getElementById(S.screen)){
+
+// Restore session — skip resources screen on fresh load (go to celebrate instead)
+const skipOnRestore = ['s-resources'];
+const restoreScreen = skipOnRestore.includes(S.screen) ? (S.path==='B'?'s-bcelebrate':'s-celebrate') : S.screen;
+if(restoreScreen&&restoreScreen!=='s-welcome'&&document.getElementById(restoreScreen)){
   document.getElementById('bar').classList.add('on');
-  goTo(S.screen);
+  // Restore reentry acknowledgment if returning mid-session
+  const ack = (typeof REENTRY_ACK !== 'undefined') && REENTRY_ACK[S.reentry||'none'];
+  const ackEl = document.getElementById('reentry-ack');
+  if(ack && ackEl){ackEl.innerHTML=`<div class="card ct" style="margin-bottom:.1rem"><div style="font-weight:800;font-size:.92rem;margin-bottom:.38rem">🌿 \${ack.title}</div><p style="font-size:.86rem;line-height:1.75;">\${ack.body}</p></div>`;ackEl.style.display='block';}
+  const lnote = (typeof REENTRY_LADDER_NOTE !== 'undefined') && REENTRY_LADDER_NOTE[S.reentry||'none'];
+  const lnoteEl = document.getElementById('ladder-reentry-note');
+  if(lnote && lnoteEl){lnoteEl.innerHTML=`<div class="card cy" style="font-size:.84rem;line-height:1.65;">💡 \${lnote}</div>`;lnoteEl.style.display='block';}
+  goTo(restoreScreen);
 }
 document.getElementById('lm-ov').addEventListener('click',e=>{if(e.target===document.getElementById('lm-ov'))closeLM(e);});
+
+// ══════════════════════════════════════
+// COOKING LADDER
+// ══════════════════════════════════════
+const COOK_STEPS = [
+  {
+    id:"ck1", i:"🫖", t:"Microwave or kettle only",
+    d:"Start with zero open heat. Warm soup in the microwave. Boil water in the kettle. Make oatmeal, instant noodles, anything that needs only enclosed heat. This is cooking — it counts.",
+    tip:"The microwave and kettle are tools, not shortcuts. A lot of great meals start here.",
+    hardest:["all","multitask"],
+    r:{hard:"You made something warm. That is cooking.",managed:"Microwave or kettle, done. Your kitchen made you a meal.",ok:"Easy start. Build from here."}
+  },
+  {
+    id:"ck2", i:"🍞", t:"Toast — just the toaster",
+    d:"Put bread in. Push the lever. Wait. Pull it out. No stove, no flame, no grease. But you stood in your kitchen and made food. That is the whole point of this step.",
+    tip:"If the pop of the toaster makes you jump — that is normal. It startled you before any of this happened too.",
+    hardest:["all"],
+    r:{hard:"You made toast in your kitchen. That is real.",managed:"Toast done. Your kitchen fed you.",ok:"Simple and solid. Keep going."}
+  },
+  {
+    id:"ck3", i:"🥚", t:"Scrambled eggs — low heat, no grease",
+    d:"Use a non-stick pan. A tiny bit of butter or cooking spray — not oil. Low heat only. Scramble them slowly. This is stovetop cooking with minimal splatter risk. Have a lid nearby just in case.",
+    tip:"If the sizzle feels like too much: turn the heat down. Eggs cook fine on very low heat. You control the stove — not the other way around.",
+    hardest:["stovetop","all"],
+    r:{hard:"You cooked on the stovetop. Hot pan, your hands, real food. That took something.",managed:"Scrambled eggs done. Low heat, your control.",ok:"Stovetop cooking, steady. Your hands still know what to do."}
+  },
+  {
+    id:"ck4", i:"🍝", t:"Boiling pasta or rice",
+    d:"A pot of water. Bring it to a boil. Add pasta or rice. Stir occasionally. Use oven mitts when draining. Go slowly. This is stovetop cooking with steam — one step up from the kettle.",
+    tip:"When steam rises near your face — tilt the lid away from you when you lift it, and step back. That is just good cooking practice.",
+    hardest:["stovetop","all","multitask"],
+    r:{hard:"Boiling water, stovetop, drained it safely. That is real skill.",managed:"Pasta or rice done. Stovetop, steam, your hands.",ok:"A full pot of food, cooked by you. That is dinner."}
+  },
+  {
+    id:"ck5", i:"♨️", t:"Oven baking — low temperature",
+    d:"Preheat to 350 degrees. Put something simple in — frozen vegetables, a piece of chicken, anything that does not need attention. Set a timer. Use long oven mitts when you take it out. Step back when you open the door.",
+    tip:"The heat that comes out when you open the oven door can feel intense. Open it slowly, step to the side, let the first wave pass. Then reach in.",
+    hardest:["oven","all"],
+    r:{hard:"You opened a hot oven and got food out safely. That is mastery.",managed:"Oven baking done. Heat managed, food ready.",ok:"Oven cooking, no issues. Your kitchen is working for you."}
+  },
+  {
+    id:"ck6", i:"🍳", t:"Stovetop with a small amount of oil",
+    d:"Use a non-stick pan. A small amount of oil — just enough to coat the bottom. Medium-low heat only. Keep a lid nearby to cover if needed. Cook something simple: sautéed vegetables, a piece of chicken, one egg. This step is the closest to where many kitchen injuries happen — so we go slowly.",
+    tip:"Before you start: lid on the counter, mitts nearby, phone in your pocket. You are prepared. If anything splatters more than you expected — lid on, heat off, step back.",
+    hardest:["grease","stovetop","all"],
+    r:{hard:"Oil in a pan, heat on, food cooked. You did the thing that felt impossible.",managed:"Stovetop with oil, done. Controlled, careful, yours.",ok:"That step is the one that mattered most. You owned it."}
+  },
+  {
+    id:"ck7", i:"🥘", t:"A simple full meal — start to finish",
+    d:"Pick something you know how to make. Simple. One or two components. Cook it from start to finish without stopping. Use your timer. Use your mitts. Play music if it helps. When it is ready — sit down and eat it.",
+    tip:"If it gets hard in the middle: lowest heat or off, step back, breathe, come back. You can always come back. The meal will wait.",
+    hardest:["multitask","all","stovetop"],
+    r:{hard:"You cooked a whole meal. Start to finish. In your kitchen.",managed:"A complete meal, made by you. That is everything this ladder was building toward.",ok:"Look at that. Your kitchen made you dinner. You made your kitchen yours again."}
+  },
+  {
+    id:"ck8", i:"👶", t:"Cooking with someone else nearby",
+    d:"Cook something simple while another person is in the kitchen or nearby — a child, a partner, a friend. You do not have to teach them or manage them. They just exist in the same space while you cook. This is the full picture: you, your kitchen, your people.",
+    tip:"If having others nearby makes it harder — that is very common. Let them know: I am working on something. Stay close but give me some space. Most people will understand.",
+    hardest:["kids","multitask","all"],
+    r:{hard:"You cooked with someone else in the space. That is the full return.",managed:"Kitchen, food, people you love — all at the same time. That is everything.",ok:"That is the whole picture. You got all the way back."}
+  }
+];
+
+let cookHardest = new Set();
+let pendingCookStep = null;
+
+function togCook(btn, key) {
+  btn.classList.toggle('on');
+  if (btn.classList.contains('on')) cookHardest.add(key);
+  else cookHardest.delete(key);
+
+  const note = document.getElementById('cook-hardest-note');
+  if (cookHardest.size > 0) {
+    const msgs = {
+      grease: "Grease and splatter are the most common source of kitchen injuries — and the most common fear after. We have specific steps for that.",
+      stovetop: "The stovetop is the heart of it. Well build up to it carefully, with the right tools in place first.",
+      oven: "Oven heat feels different from stovetop heat — more contained, but still intense. Well go slowly.",
+      multitask: "Managing a whole meal at once is genuinely hard even without anxiety. Well break it into pieces.",
+      kids: "Cooking with kids nearby adds a whole other layer. That gets its own step — when youre ready.",
+      all: "Starting from the beginning is exactly right. Well build from the easiest step up."
+    };
+    const first = [...cookHardest][0];
+    const msg = msgs[first] || "Your cooking ladder will focus on exactly whats hard for you.";
+    note.innerHTML = '<div class="card ct" style="font-size:.84rem;line-height:1.65">' + msg + '</div>';
+    note.style.display = 'block';
+  } else {
+    note.style.display = 'none';
+  }
+}
+
+function showCookLadder() {
+  S.cookDone = S.cookDone || [];
+  save();
+
+  // Sort steps so hardest-relevant ones come first
+  const hardArr = [...cookHardest];
+  const relevant = COOK_STEPS.filter(s => s.hardest.some(h => hardArr.includes(h)) || hardArr.includes('all'));
+  const others = COOK_STEPS.filter(s => !relevant.includes(s));
+  // Always show all 8 but relevant ones highlighted
+  const ordered = [...relevant, ...others].filter((s,i,a) => a.indexOf(s) === i);
+  // Actually just show all in original order — mark relevant ones
+  renderCookLadder(hardArr);
+  document.getElementById('cook-ladder-steps').style.display = 'block';
+  document.getElementById('cook-ladder-steps').scrollIntoView({behavior:'smooth'});
+}
+
+function renderCookLadder(hardArr) {
+  const cont = document.getElementById('cook-ladder-list');
+  if (!cont) return;
+  cont.innerHTML = '';
+  const done = S.cookDone || [];
+
+  COOK_STEPS.forEach((step, i) => {
+    const isDone = done.includes(step.id);
+    const isCur = !isDone && (i === 0 || done.includes(COOK_STEPS[i-1].id));
+    const locked = !isDone && !isCur;
+    const isRelevant = step.hardest.some(h => hardArr.includes(h)) || hardArr.includes('all');
+
+    const div = document.createElement('div');
+    div.className = 'ls' + (isDone ? ' done' : isCur ? ' cur' : ' locked');
+    if (isRelevant && isCur) div.style.boxShadow = '0 0 0 2px var(--teal)';
+
+    div.innerHTML =
+      '<div class="li">' + step.i + '</div>' +
+      '<div class="lf">' +
+        '<h4>Step ' + (i+1) + ': ' + step.t + (isRelevant && !isDone ? ' <span style="font-size:.68rem;background:#E0F4F1;color:var(--teal);border-radius:4px;padding:.1rem .35rem;font-weight:800;vertical-align:middle">relevant to you</span>' : '') + '</h4>' +
+        '<p>' + step.d.substring(0, 80) + '...</p>' +
+      '</div>' +
+      '<div class="lc">' + (isDone ? '✅' : isCur ? '👈' : '') + '</div>';
+
+    if (isCur) div.addEventListener('click', () => openCookM(step));
+    cont.appendChild(div);
+  });
+
+  const allDone = (S.cookDone || []).length === COOK_STEPS.length;
+  const doneEl = document.getElementById('cook-ladder-done');
+  if (doneEl) doneEl.style.display = allDone ? 'block' : 'none';
+}
+
+function openCookM(step) {
+  pendingCookStep = step;
+  document.getElementById('cook-m-title').textContent = step.i + ' ' + step.t;
+  document.getElementById('cook-m-desc').textContent = step.d;
+  const tipEl = document.getElementById('cook-m-tip');
+  if (step.tip) { tipEl.innerHTML = '💡 <strong>Tip:</strong> ' + step.tip; tipEl.style.display = 'block'; }
+  else tipEl.style.display = 'none';
+  document.getElementById('cook-m-resp').style.display = 'none';
+  document.getElementById('cook-m-done').style.display = 'none';
+  document.querySelectorAll('#cook-pnl .ch').forEach(b => b.classList.remove('on'));
+  document.getElementById('cook-ov').classList.add('open');
+}
+function closeCookM(e) {
+  if (e && e.target !== document.getElementById('cook-ov')) return;
+  document.getElementById('cook-ov').classList.remove('open');
+  pendingCookStep = null;
+}
+function rateCook(rating) {
+  if (!pendingCookStep) return;
+  document.querySelectorAll('#cook-pnl .ch').forEach(b => b.classList.remove('on'));
+  event.currentTarget.classList.add('on');
+  const r = document.getElementById('cook-m-resp');
+  r.textContent = pendingCookStep.r[rating] || 'You did it.';
+  r.style.display = 'block';
+  document.getElementById('cook-m-done').style.display = 'block';
+}
+function completeCookStep() {
+  if (!pendingCookStep) return;
+  S.cookDone = S.cookDone || [];
+  if (!S.cookDone.includes(pendingCookStep.id)) S.cookDone.push(pendingCookStep.id);
+  save();
+  earn(15, pendingCookStep.t + ' done! +15 🪙');
+  document.getElementById('cook-ov').classList.remove('open');
+  renderCookLadder([...cookHardest]);
+  pendingCookStep = null;
+}
+
+// Close cook modal on background click
+document.addEventListener('DOMContentLoaded', () => {
+  const co = document.getElementById('cook-ov');
+  if (co) co.addEventListener('click', e => { if (e.target === co) closeCookM(e); });
+});
+
+
+// ══════════════════════════════════════
+// HOME / RESTART
+// ══════════════════════════════════════
+function goHome(){
+  S.screen='s-welcome';
+  save();
+  document.getElementById('bar').classList.remove('on');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-welcome').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function clearAndRestart(){
+  if(confirm('Start over from the beginning? Your progress will be cleared.')){
+    try{localStorage.removeItem('bttk_v4a');}catch(e){}
+    location.reload();
+  }
+}
 </script>
 </body>
 </html>
