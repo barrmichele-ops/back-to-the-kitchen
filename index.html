@@ -220,7 +220,7 @@ textarea:focus{border-color:var(--sage);}
   <div class="nav-section">Survivor path</div>
   <button class="nav-item" onclick="navTo('s-adream')">Goal setting</button>
   <button class="nav-item" onclick="navTo('s-aguilt')">What happened</button>
-  <button class="nav-item" onclick="navTo('s-aground')">Safe place</button>
+  <button class="nav-item" onclick="navTo('s-aground')">Calm place</button>
   <button class="nav-item" onclick="navTo('s-afears')">Naming fears</button>
   <button class="nav-item" onclick="navTo('s-atriggers')">Why it feels different</button>
   <button class="nav-item" onclick="navTo('s-areframe')">New way to see it</button>
@@ -236,7 +236,7 @@ textarea:focus{border-color:var(--sage);}
   <button class="nav-item" onclick="navTo('s-bwelcome')">Witness welcome</button>
   <button class="nav-item" onclick="navTo('s-bdream')">Witness goal</button>
   <button class="nav-item" onclick="navTo('s-bguilt')">What you carry</button>
-  <button class="nav-item" onclick="navTo('s-bground')">Safe place</button>
+  <button class="nav-item" onclick="navTo('s-bground')">Calm place</button>
   <button class="nav-item" onclick="navTo('s-bfears')">What has been hard</button>
   <button class="nav-item" onclick="navTo('s-breframe')">New way to see it</button>
   <button class="nav-item" onclick="navTo('s-bladder')">Witness ladder</button>
@@ -270,7 +270,7 @@ textarea:focus{border-color:var(--sage);}
 
   <div class="card cw">
     <p style="font-size:.93rem;line-height:1.75;margin-bottom:.75rem">Coming home after a kitchen injury is a big moment. Your kitchen is waiting — and you get to decide exactly how and when you return to it. <strong>There is no rush and no one best way.</strong></p>
-    <p style="font-size:.93rem;line-height:1.75;margin-bottom:.75rem">Kitchens feed people. They hold memories. They are the heart of a home. <strong>You are still that person.</strong> This app is here to help you find your way back — toward your best quality of life.</p>
+    <p style="font-size:.93rem;line-height:1.75;margin-bottom:.75rem">Kitchens feed people. They hold memories. They are the heart of many homes. This app is here to help you find your way back — toward your best quality of life.</p>
     <p style="font-size:.93rem;line-height:1.75">You choose every step. You set the pace. <strong>All paths through this app are the right path.</strong></p>
   </div>
 
@@ -282,6 +282,7 @@ textarea:focus{border-color:var(--sage);}
       <li>🌿 Pause button is always at the top — calming tools any time</li>
       <li>Fun breaks earned along the way</li>
       <li>Your progress is saved on this device</li>
+        <li>Tap the 🏠 button any time to go back to the start</li>
     </ul>
   </div>
 
@@ -307,7 +308,7 @@ textarea:focus{border-color:var(--sage);}
   <div id="path-block" style="display:none;margin-top:1rem;padding:1rem;background:var(--cream);border:2px solid var(--border);border-radius:14px;">
     <div style="font-weight:800;font-size:.9rem;margin-bottom:.6rem">Who are you here for today?</div>
     <button class="ch" data-e="🙋" onclick="setPath('A',this)" aria-label="Survivor path">I was the one who got hurt</button>
-    <button class="ch" data-e="💑" onclick="setPath('B',this)" aria-label="Witness path" style="border-color:var(--wine);background:#FFF0F5;">Someone I love was hurt — and I'm struggling too</button>
+    <button class="ch" data-e="💑" onclick="setPath('B',this)" aria-label="Witness path" style="border-color:var(--wine);background:#FFF0F5;">Someone I care about was hurt — and I'm struggling too</button>
   </div>
 
   <button class="btn bsg" id="wnext" onclick="startGame()" style="display:none" aria-label="Begin">Let's begin, one step at a time 🌿</button>
@@ -407,11 +408,11 @@ textarea:focus{border-color:var(--sage);}
   </div>
 </div>
 
-<!-- A: SAFE PLACE -->
+<!-- A: CALM PLACE -->
 <div class="screen" id="s-aground">
   <div class="card">
     <span class="path-badge badge-a">Your path 🌿</span>
-    <div class="h2">🌈 Build your safe place</div>
+    <div class="h2">🌈 Find your calm place</div>
     <div class="sub">Before we think about the kitchen at all, let's create a mental home base — somewhere calm and safe, just for you. You can return here any time.</div>
     <div class="qb">Where do you feel most safe and relaxed? Pick all that fit ✨</div>
     <div id="safe-a">
@@ -426,8 +427,8 @@ textarea:focus{border-color:var(--sage);}
       <div class="si" onclick="togSafe(this,'water')"><span class="se">🌊</span><span class="st">Near water — ocean, lake, river</span><span class="sc">✅</span></div>
       <div class="si" onclick="togSafe(this,'bed')"><span class="se">🛏️</span><span class="st">In my own bed, warm and comfortable</span><span class="sc">✅</span></div>
     </div>
-    <div id="safe-resp-a" style="display:none" class="aff"><p>That place is real. It lives inside you. You can return there any time — just close your eyes and breathe.</p></div>
-    <button class="btn bsg" id="safenext-a" onclick="goTo('s-afears');earn(15,'Safe place built! +15 🪙')" style="display:none">I've found my safe place ✨</button>
+    <div id="safe-resp-a" style="display:none" class="aff"><p>That place is real. It lives inside you. Pick as many as feel right — the more you have, the more you can draw on. You can return to any of them any time.</p></div>
+    <button class="btn bsg" id="safenext-a" onclick="goTo('s-afears');earn(15,'Calm place built! +15 🪙')" style="display:none">I've found my calm place ✨</button>
   </div>
 </div>
 
@@ -680,7 +681,7 @@ textarea:focus{border-color:var(--sage);}
     <div class="qb">Has anything surprised you about yourself since this happened?</div>
     <textarea id="aptg-text" placeholder="You don't have to answer. But if something comes up, it might be worth writing down..." aria-label="PTG reflection"></textarea>
     <div class="qb" style="margin-top:.65rem">You now know things about kitchen safety that most people don't. Is there someone — a child, a neighbor, a friend — who could benefit from what you've learned?</div>
-    <textarea id="ateach-text" placeholder="Teaching others is part of healing — and it protects the people you love." aria-label="Teaching others"></textarea>
+    <textarea id="ateach-text" placeholder="Teaching others is part of healing — and it protects the people you care about." aria-label="Teaching others"></textarea>
     <div class="aff"><p>"You don't have to be grateful for what happened. You are allowed to be proud of how you're handling it." 🌱</p></div>
     <button class="btn bsg" onclick="goTo('s-aanx2');earn(20,'Growth recognized! +20 🪙')">Keep going →</button>
   </div>
@@ -711,14 +712,14 @@ textarea:focus{border-color:var(--sage);}
 <div class="screen" id="s-bwelcome">
   <div class="card">
     <span class="path-badge badge-b">Your path 💑</span>
-    <div class="h2">💑 You're here for someone you love</div>
+    <div class="h2">💑 You're here for someone you care about</div>
     <div class="sub">What happened to them happened to you too. Your wound may not be visible — but it is real.</div>
     <div class="card cv">
-      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">Watching someone you love get hurt is traumatic. Research shows that people who witness a serious injury can feel just as unsettled, fearful, and avoidant as the person who was hurt — sometimes more.</p>
+      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">Watching someone you care about get hurt is traumatic. Research shows that people who witness a serious injury can feel just as unsettled, fearful, and avoidant as the person who was hurt — sometimes more.</p>
       <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">You may have replayed the moment hundreds of times. You may have taken over cooking — or stopped cooking entirely. You may feel on edge every time someone goes near the stove. <strong>All of this is a normal response to something terrifying.</strong></p>
       <p style="font-size:.9rem;line-height:1.75">You deserve support too. This path is for you.</p>
     </div>
-    <div class="aff"><p>"Your feelings belong to you — separate from how the person you love is doing. You are allowed to find this hard even if they seem to be handling it." 💑</p></div>
+    <div class="aff"><p>"Your feelings belong to you — separate from how the person you care about is doing. You are allowed to find this hard even if they seem to be handling it." 💑</p></div>
     <button class="btn bwi" onclick="goTo('s-bdream');earn(10,'You showed up! +10 🪙')">Yes — this is for me →</button>
   </div>
 </div>
@@ -760,20 +761,20 @@ textarea:focus{border-color:var(--sage);}
     <button class="ch" data-e="😶" onclick="togBGF(this)">I haven't told anyone how much I'm struggling — I don't want to make it about me</button>
     <div id="bguilt-resp" style="display:none" class="card cv">
       <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">💑 Here's what we know:</div>
-      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">What you watched was traumatic. Your nervous system responded the way it was designed to — by trying to protect you and the person you love. <strong>That is not a failure. That is love.</strong></p>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">What you watched was traumatic. Your nervous system responded the way it was designed to — by trying to protect you and the person you care about. <strong>That is not a failure. That is love.</strong></p>
       <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">If you called them in, if you asked them to help — you did not cause this. Kitchen accidents happen in seconds. You could not have predicted it.</p>
-      <p style="font-size:.88rem;line-height:1.75"><strong>Your feelings are real, and they deserve space. This is not "making it about you." This is taking care of yourself so you can show up for the people you love.</strong></p>
+      <p style="font-size:.88rem;line-height:1.75"><strong>Your feelings are real, and they deserve space. This is not "making it about you." This is taking care of yourself so you can show up for the people you care about.</strong></p>
     </div>
     <div class="aff"><p>"You are allowed to struggle even if they seem okay. Your healing matters too." 💛</p></div>
     <button class="btn bwi" onclick="goTo('s-bground');earn(15,'Reflected with courage +15 🪙')">I hear that. Keep going →</button>
   </div>
 </div>
 
-<!-- B: SAFE PLACE -->
+<!-- B: CALM PLACE -->
 <div class="screen" id="s-bground">
   <div class="card">
     <span class="path-badge badge-b">Your path 💑</span>
-    <div class="h2">🌈 Find your safe place</div>
+    <div class="h2">🌈 Find your calm place</div>
     <div class="sub">Before we think about the kitchen, let's build a mental home base — somewhere calm and safe, just for you.</div>
     <div class="qb">Where do you feel most safe and relaxed? Pick all that fit ✨</div>
     <div id="safe-b">
@@ -786,8 +787,8 @@ textarea:focus{border-color:var(--sage);}
       <div class="si" onclick="togSafe(this,'water-b')"><span class="se">🌊</span><span class="st">Near water — ocean, lake, river</span><span class="sc">✅</span></div>
       <div class="si" onclick="togSafe(this,'bed-b')"><span class="se">🛏️</span><span class="st">In my own bed, warm and comfortable</span><span class="sc">✅</span></div>
     </div>
-    <div id="safe-resp-b" style="display:none" class="aff"><p>That place is real. It lives inside you. You can return there any time — just close your eyes and breathe.</p></div>
-    <button class="btn bwi" id="safenext-b" onclick="goTo('s-bfears');earn(15,'Safe place built! +15 🪙')" style="display:none">I've found my safe place ✨</button>
+    <div id="safe-resp-b" style="display:none" class="aff"><p>That place is real. It lives inside you. Pick as many as feel right — the more you have, the more you can draw on. You can return to any of them any time.</p></div>
+    <button class="btn bwi" id="safenext-b" onclick="goTo('s-bfears');earn(15,'Calm place built! +15 🪙')" style="display:none">I've found my calm place ✨</button>
   </div>
 </div>
 
@@ -822,7 +823,7 @@ textarea:focus{border-color:var(--sage);}
     <div class="sub">You don't have to believe the new thought yet. Just try it on.</div>
     <div class="rfp"><div class="rfo">🔴 "I should have stopped it."</div><div class="rfa">→</div><div class="rfn">🟢 "It happened in seconds. No one could have predicted it. I was there because I care."</div></div>
     <div class="rfp"><div class="rfo">🔴 "I asked them to help — this is my fault."</div><div class="rfa">→</div><div class="rfn">🟢 "I asked someone I trusted to do something normal. That is not causing an accident."</div></div>
-    <div class="rfp"><div class="rfo">🔴 "I shouldn't struggle — they're the one who got hurt."</div><div class="rfa">→</div><div class="rfn">🟢 "Watching someone you love get hurt IS traumatic. My feelings are real and they deserve space."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I shouldn't struggle — they're the one who got hurt."</div><div class="rfa">→</div><div class="rfn">🟢 "Watching someone you care about get hurt IS traumatic. My feelings are real and they deserve space."</div></div>
     <div class="rfp"><div class="rfo">🔴 "I'll never feel safe watching anyone cook again."</div><div class="rfa">→</div><div class="rfn">🟢 "Right now is hard. This kind of unease does get better. Many people find their way back to safe kitchens."</div></div>
     <div class="rfp"><div class="rfo">🔴 "The kitchen isn't safe anymore."</div><div class="rfa">→</div><div class="rfn">🟢 "The kitchen is a tool. Right now it is still. Safety comes from knowledge and practice — not avoidance."</div></div>
     <div class="qb">Which one feels closest to true right now? Write it your way:</div>
@@ -904,7 +905,7 @@ textarea:focus{border-color:var(--sage);}
     <ul style="font-size:.86rem;line-height:2;padding-left:1.1rem">
       <li>Said out loud that this has been hard for you too</li>
       <li>Named what you've been carrying — without minimizing it</li>
-      <li>Found a safe place inside yourself</li>
+      <li>Found a calm place inside yourself</li>
       <li>Explored your own ladder — at your pace</li>
       <li>Pictured a kitchen that feels safe again</li>
       <li>Recognized your own strength</li>
@@ -918,9 +919,9 @@ textarea:focus{border-color:var(--sage);}
   <div class="card cy" style="text-align:center;padding:1.2rem">
     <div style="font-size:3rem;margin-bottom:.28rem">🏅</div>
     <div style="font-weight:800">Witnessed Courage — Earned</div>
-    <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself, and for the people you love.</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself, and for the people you care about.</div>
   </div>
-  <div class="aff"><p>"Taking care of yourself is not selfish. When you feel steadier, you can be more present for the people you love. That matters more than you might think." 💑</p></div>
+  <div class="aff"><p>"Taking care of yourself is not selfish. When you feel steadier, you can be more present for the people you care about. That matters more than you might think." 💑</p></div>
   <div class="card cw">
     <div style="font-weight:800;margin-bottom:.38rem">📱 Save this app</div>
     <p style="font-size:.83rem;color:var(--muted);line-height:1.65">Bookmark this page or save to your home screen. Come back whenever you need it — no schedule required.</p>
@@ -970,14 +971,14 @@ textarea:focus{border-color:var(--sage);}
     <div style="font-weight:800">Kitchen Courage — Earned</div>
     <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself when it was hard.</div>
   </div>
-  <div class="aff"><p>"You made it home. You showed up for yourself. You are still someone who can take care of the people you love — and that hasn't changed one bit." 🏠💛</p></div>
+  <div class="aff"><p>"You made it home. You showed up for yourself. You are still someone who can take care of the people you care about — and that hasn't changed one bit." 🏠💛</p></div>
   <div class="card cw">
     <div style="font-weight:800;margin-bottom:.38rem">📱 Save this app</div>
     <p style="font-size:.83rem;color:var(--muted);line-height:1.65">Bookmark this page or save to your home screen. Come back whenever you need it — no schedule required. Your progress is saved on this device.</p>
   </div>
   <div class="card ck" style="font-size:.83rem;line-height:1.65">
     <div style="font-weight:800;margin-bottom:.38rem">💬 For the hard days:</div>
-    <p style="color:var(--muted)">Go back to your safe place first. Then breathe. Then take the tiniest step. Even standing at the edge of your kitchen counts. Every moment of trying counts — even the ones that feel small.</p>
+    <p style="color:var(--muted)">Go back to your calm place first. Then breathe. Then take the tiniest step. Even standing at the edge of your kitchen counts. Every moment of trying counts — even the ones that feel small.</p>
   </div>
   <button class="btn bsg" onclick="goTo('s-resources')">See support & resources 🤝</button>
   <button class="bout" onclick="goTo('s-aladder')">Return to the ladder →</button>
@@ -1273,7 +1274,7 @@ function setAnx(n,v){
 }
 
 // ══════════════════════════════════════
-// SAFE PLACE
+// CALM PLACE
 // ══════════════════════════════════════
 function togSafe(el,key){
   el.classList.toggle('on');
@@ -1281,7 +1282,7 @@ function togSafe(el,key){
   const pathSuffix=S.path==='B'?'-b':'-a';
   const resp=document.getElementById('safe-resp'+pathSuffix);
   const nxt=document.getElementById('safenext'+pathSuffix);
-  if(S.safePlaces.filter(k=>S.path==='B'?k.endsWith('-b'):!k.endsWith('-b')).length>=2){
+  if(S.safePlaces.filter(k=>S.path==='B'?k.endsWith('-b'):!k.endsWith('-b')).length>=1){
     if(resp)resp.style.display='block';if(nxt)nxt.style.display='block';
   }
 }
@@ -1795,7 +1796,7 @@ const COOK_STEPS = [
     d:"Cook something simple while another person is in the kitchen or nearby — a child, a partner, a friend. You do not have to teach them or manage them. They just exist in the same space while you cook. This is the full picture: you, your kitchen, your people.",
     tip:"If having others nearby makes it harder — that is very common. Let them know: I am working on something. Stay close but give me some space. Most people will understand.",
     hardest:["kids","multitask","all"],
-    r:{hard:"You cooked with someone else in the space. That is the full return.",managed:"Kitchen, food, people you love — all at the same time. That is everything.",ok:"That is the whole picture. You got all the way back."}
+    r:{hard:"You cooked with someone else in the space. That is the full return.",managed:"Kitchen, food, people you care about — all at the same time. That is everything.",ok:"That is the whole picture. You got all the way back."}
   }
 ];
 
