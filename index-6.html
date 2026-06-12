@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back to the Kitchen 🌿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --sun:#FFD166;--sage:#357A4C;--sky:#7BBFDB;--peach:#C2542B;
+  --warm:#FFF8F0;--cream:#FFF3E0;--text:#3D2C1E;--muted:#7A6652;
+  --card:#FFFFFF;--border:#E8DDD0;--ok:#27764E;--bad:#C0392B;
+  --bg:#FFF8F0;--purple:#8B7ABF;--teal:#1A7A6E;--wine:#8B3A5A;
+}
+html{font-size:112.5%;}
+html,body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;}
+#app{max-width:680px;margin:0 auto;padding:1rem 1rem 6rem;}
+.screen{display:none;}
+.screen.active{display:block;animation:up .4s ease;}
+@keyframes up{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* TOP BAR */
+#bar{display:none;position:sticky;top:0;z-index:50;background:var(--warm);border-bottom:1.5px solid var(--border);padding:.55rem 1rem;margin:0 -1rem .9rem;align-items:center;gap:.7rem;}
+#bar.on{display:flex;}
+.xpw{flex:1;}
+.xpl{font-size:.72rem;color:var(--muted);font-weight:700;margin-bottom:2px;}
+.pb{height:8px;background:#E8DDD0;border-radius:99px;overflow:hidden;}
+.pf{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--sage),var(--sky));transition:width .6s ease;}
+.coins{font-size:.88rem;font-weight:800;}
+.lv{background:var(--sun);color:var(--text);font-size:.7rem;font-weight:800;padding:.18rem .48rem;border-radius:7px;}
+#pbtn{background:var(--cream);border:1.5px solid var(--border);border-radius:9px;padding:.32rem .7rem;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:800;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s;}
+#pbtn:hover{border-color:var(--sage);color:var(--sage);}
+
+/* CARDS */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:1.3rem;margin-bottom:.9rem;box-shadow:0 2px 10px rgba(61,44,30,.05);}
+.cw{background:#FFF9F0;border-color:#F4A26133;}
+.cs{background:#F0FAF2;border-color:#5FAD7644;}
+.ck{background:#F0F8FF;border-color:#7BBFDB55;}
+.cy{background:#FFFBEE;border-color:#FFD16655;}
+.cp{background:#F5F3FF;border-color:#8B7ABF44;}
+.ct{background:#E8F7F5;border-color:#1A7A6E55;}
+.cv{background:#FFF0F5;border-color:#8B3A5A44;}
+.ca{background:#FFF0EE;border-color:#E8825A99;border-left:4px solid var(--peach);}
+.cd{background:#FFF0EE;border:1.5px solid var(--bad);border-left:4px solid var(--bad);}
+
+/* TYPE */
+.h1{font-family:'Playfair Display',serif;font-size:1.9rem;line-height:1.2;margin-bottom:.3rem;}
+.h2{font-family:'Playfair Display',serif;font-size:1.25rem;line-height:1.3;margin-bottom:.22rem;}
+.sub{color:var(--text);font-size:.92rem;line-height:1.65;margin-bottom:.85rem;}
+.qb{background:var(--cream);border-left:4px solid var(--peach);border-radius:0 11px 11px 0;padding:.85rem 1.05rem;margin:.85rem 0;font-size:.9rem;line-height:1.65;}
+.aff{background:linear-gradient(135deg,#FFF3DC,#F0FAF2);border:2px solid var(--sun);border-radius:15px;padding:1.2rem;text-align:center;margin:.75rem 0;}
+.aff p{font-family:'Playfair Display',serif;font-style:normal;font-size:1rem;line-height:1.7;}
+.aff .at{font-family:'Nunito',sans-serif;font-style:normal;font-size:.73rem;color:var(--muted);margin-top:.35rem;}
+.disc{font-size:.8rem;color:var(--muted);text-align:center;line-height:1.5;padding:.45rem 0;border-top:1px solid var(--border);margin-top:.4rem;}
+.path-badge{display:inline-block;padding:.25rem .75rem;border-radius:99px;font-size:.72rem;font-weight:800;margin-bottom:.5rem;}
+.badge-a{background:#E8F5ED;color:#2A6040;}
+.badge-b{background:#FFF0F5;color:#8B3A5A;}
+
+/* BTNS */
+.btn{display:block;width:100%;border:none;border-radius:12px;padding:.88rem;font-family:'Nunito',sans-serif;font-size:.98rem;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;transition:transform .15s,box-shadow .15s;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12);}
+.bsg{background:var(--sage);color:#fff;margin-top:.75rem;}
+.bpe{background:var(--peach);color:#fff;margin-top:.5rem;}
+.bsk{background:var(--sky);color:var(--text);margin-top:.5rem;}
+.bwi{background:var(--wine);color:#fff;margin-top:.75rem;}
+.bout{background:transparent;border:2px solid var(--border);color:var(--muted);margin-top:.5rem;padding:.7rem;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;border-radius:12px;width:100%;}
+.bout:hover{border-color:var(--sage);}
+.ch{display:block;width:100%;background:var(--cream);border:2px solid var(--border);color:var(--text);text-align:left;padding:.82rem .98rem;margin-bottom:.42rem;border-radius:11px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.ch:hover{border-color:var(--sage);background:#F0FAF2;transform:translateX(3px);}
+.ch.on{border-color:var(--ok);background:#E8F5ED;color:#2A6040;}
+.ch::before{content:attr(data-e);margin-right:.48rem;}
+.si{display:flex;align-items:center;gap:.68rem;background:var(--cream);border:1.5px solid var(--border);border-radius:9px;padding:.65rem .85rem;margin-bottom:.42rem;cursor:pointer;transition:all .2s;}
+.si:hover{border-color:var(--sage);background:#F0FAF2;}
+.si.on{border-color:var(--ok);background:#E8F5ED;}
+.si .se{font-size:1.25rem;}
+.si .st{font-size:.86rem;font-weight:700;flex:1;}
+.si .sc{font-size:.95rem;opacity:0;transition:opacity .2s;}
+.si.on .sc{opacity:1;}
+
+/* SLIDER */
+.axw{margin:.75rem 0;}
+.axw label{display:block;font-weight:700;font-size:.86rem;color:var(--muted);margin-bottom:.38rem;}
+.axn{text-align:center;font-size:2.1rem;font-weight:900;margin:.28rem 0;}
+.axl{text-align:center;font-size:.8rem;color:var(--muted);margin-bottom:.38rem;}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--sage),var(--sun),var(--peach),var(--bad));outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--text);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.axs{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+
+/* BREATH */
+.bring{width:115px;height:115px;border-radius:50%;border:3px solid var(--sage);display:flex;align-items:center;justify-content:center;margin:1.2rem auto;font-weight:800;font-size:.92rem;color:var(--sage);transition:all 1s ease;background:rgba(95,173,118,.07);cursor:pointer;user-select:none;}
+.bring.expand{transform:scale(1.5);background:rgba(95,173,118,.18);border-color:var(--ok);}
+.bring.hold{transform:scale(1.5);background:rgba(95,173,118,.12);}
+.bring.shrink{transform:scale(1);background:rgba(95,173,118,.04);}
+
+/* AUDIO */
+.audio-bar{display:flex;align-items:center;gap:.75rem;background:var(--cream);border:1.5px solid var(--border);border-radius:12px;padding:.7rem 1rem;margin:.8rem 0;}
+.audio-bar .al{font-size:.83rem;font-weight:700;flex:1;}
+.audio-bar .av{width:80px;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--sage),#E8DDD0);outline:none;cursor:pointer;}
+.audio-bar .av::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--sage);cursor:pointer;border:2px solid #fff;}
+.audio-bar button{background:var(--sage);border:none;border-radius:8px;padding:.3rem .6rem;color:#fff;font-size:.78rem;font-weight:800;cursor:pointer;}
+
+/* TIMER */
+.timer-box{text-align:center;background:var(--cream);border:2px solid var(--border);border-radius:14px;padding:1rem;margin:.8rem 0;}
+.timer-num{font-size:2.8rem;font-weight:900;color:var(--teal);font-family:'Playfair Display',serif;}
+.timer-lbl{font-size:.82rem;color:var(--muted);margin-top:.2rem;}
+.timer-btns{display:flex;gap:.5rem;justify-content:center;margin-top:.7rem;flex-wrap:wrap;}
+.tbtn{background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:.38rem .8rem;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--text);transition:all .2s;}
+.tbtn:hover{border-color:var(--sage);}
+.tbtn.active{background:var(--sage);color:#fff;border-color:var(--sage);}
+
+/* NATURE */
+.nat{border-radius:13px;padding:1.6rem 1.2rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.65rem;}
+.nb{background:linear-gradient(180deg,#B8E4F9 0%,#7BBFDB 40%,#F4E4C1 70%,#E8D4A8 100%);}
+.nm{background:linear-gradient(180deg,#C8E6F0 0%,#A8CFC0 40%,#7A9E7E 70%,#4A7A5A 100%);}
+.nat .ne{font-size:2rem;}
+.nat .nt{font-size:.84rem;color:rgba(20,40,20,.72);font-weight:600;line-height:1.65;}
+
+/* QUOTE */
+.qcard{background:var(--cream);border-left:4px solid var(--sage);border-radius:0 13px 13px 0;padding:1rem 1.1rem;margin:.65rem 0;}
+.qcard p{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;line-height:1.7;}
+.qcard .qa{font-family:'Nunito',sans-serif;font-style:normal;font-size:.72rem;color:var(--muted);margin-top:.35rem;}
+
+/* CALM OPT */
+.co{background:var(--cream);border:2px solid var(--border);border-radius:12px;padding:.85rem 1rem;margin-bottom:.55rem;cursor:pointer;transition:all .2s;}
+.co:hover{border-color:var(--sky);background:#F0F8FF;}
+.co .ch2{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:.87rem;margin-bottom:.12rem;}
+.co .cd2{font-size:.78rem;color:var(--muted);line-height:1.5;}
+
+/* WORD SEARCH */
+.wsg{display:grid;gap:2px;margin:.75rem auto;width:fit-content;}
+.wsc{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;border-radius:5px;background:var(--warm);border:1.5px solid #E8DDD0;cursor:pointer;user-select:none;transition:all .15s;text-transform:uppercase;color:var(--text);}
+.wsc:hover{background:#E8F5ED;border-color:var(--sage);}
+.wsc.sel{background:var(--sun);border-color:var(--peach);}
+.wsc.found{background:var(--sage);border-color:var(--ok);color:#fff;}
+.wl{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.65rem;}
+.wb{padding:.22rem .65rem;border-radius:99px;font-size:.77rem;font-weight:700;background:var(--cream);border:1.5px solid var(--border);color:var(--muted);transition:all .3s;}
+.wb.found{background:var(--sage);border-color:var(--ok);color:#fff;text-decoration:line-through;}
+
+/* LADDER */
+.ls{display:flex;align-items:flex-start;gap:.85rem;padding:.8rem .88rem;border-radius:11px;border:2px solid transparent;margin-bottom:.42rem;transition:all .2s;background:var(--cream);}
+.ls.locked{opacity:.35;cursor:not-allowed;}
+.ls.done{background:#E8F5ED;border-color:var(--ok);}
+.ls.cur{background:#FFF0E0;border-color:var(--peach);box-shadow:0 2px 10px rgba(232,130,90,.15);cursor:pointer;}
+.ls.cur:hover{transform:translateX(3px);}
+.ls .li{font-size:1.35rem;flex-shrink:0;}
+.ls .lf h4{font-size:.88rem;font-weight:800;margin-bottom:.13rem;}
+.ls .lf p{font-size:.79rem;color:var(--muted);line-height:1.5;}
+.ls .lf .la{font-size:.71rem;font-weight:700;margin-top:.22rem;}
+.ls .lc{margin-left:auto;font-size:1.05rem;flex-shrink:0;}
+
+/* REFRAME */
+.rfp{display:grid;grid-template-columns:1fr 24px 1fr;gap:.42rem;margin:.48rem 0;align-items:center;}
+.rfo{background:#FFF0F0;border:1.5px solid #F0CCCC;border-radius:9px;padding:.65rem;font-size:.8rem;line-height:1.5;color:#8B4545;}
+.rfn{background:#F0FAF2;border:1.5px solid var(--sage);border-radius:9px;padding:.65rem;font-size:.8rem;line-height:1.5;color:#2D6B3E;}
+.rfa{text-align:center;font-size:1.05rem;color:var(--peach);}
+
+/* IMAGINE */
+.ims{display:flex;gap:.7rem;align-items:flex-start;padding:.62rem 0;border-bottom:1px solid var(--border);}
+.ims:last-child{border-bottom:none;}
+.ims .inn{background:var(--sun);color:var(--text);border-radius:7px;width:23px;height:23px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.76rem;flex-shrink:0;}
+.ims p{font-size:.84rem;line-height:1.6;padding-top:.08rem;}
+
+/* DELTA */
+.dg{display:grid;grid-template-columns:1fr auto 1fr;gap:.48rem;align-items:center;margin:.75rem 0;}
+.db{background:var(--cream);border-radius:11px;padding:.85rem;text-align:center;}
+.dn{font-size:2.2rem;font-weight:900;}
+.dl{font-size:.7rem;color:var(--muted);font-weight:700;margin-top:.12rem;}
+.da{font-size:1.3rem;color:var(--sage);text-align:center;}
+
+/* RESOURCE */
+.ri{display:flex;gap:.75rem;align-items:flex-start;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.ri:last-child{border-bottom:none;}
+.ri .ric{font-size:1.4rem;flex-shrink:0;}
+.ri h4{font-size:.86rem;font-weight:800;margin-bottom:.18rem;}
+.ri p,.ri a{font-size:.78rem;color:var(--muted);line-height:1.55;}
+.ri a{color:var(--teal);font-weight:700;}
+
+/* PTG */
+.ptgc{background:linear-gradient(135deg,#E8F7F5,#F5F3FF);border:2px solid var(--teal);border-radius:15px;padding:1.2rem;margin:.75rem 0;}
+
+/* OVERLAY */
+.ov{display:none;position:fixed;inset:0;background:rgba(61,44,30,.52);z-index:200;align-items:flex-end;justify-content:center;}
+.ov.open{display:flex;animation:fi .25s ease;}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
+.pnl{background:var(--warm);border-radius:21px 21px 0 0;padding:1.3rem;width:100%;max-width:680px;max-height:88vh;overflow-y:auto;animation:su .3s ease;}
+@keyframes su{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.mc{display:none;position:fixed;inset:0;background:rgba(61,44,30,.52);z-index:200;align-items:center;justify-content:center;padding:1rem;}
+.mc.open{display:flex;animation:fi .25s ease;}
+.mb{background:var(--warm);border-radius:17px;padding:1.3rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
+
+textarea{width:100%;border:1.5px solid var(--border);border-radius:11px;padding:.82rem;font-family:'Nunito',sans-serif;font-size:.88rem;color:var(--text);background:var(--cream);resize:vertical;min-height:72px;outline:none;transition:border-color .2s;}
+textarea:focus{border-color:var(--sage);}
+.confetti{display:flex;justify-content:center;gap:.28rem;font-size:1.25rem;margin:.65rem 0;}
+
+
+
+@media(max-width:420px){
+  .rfp{grid-template-columns:1fr;}.rfa{display:none;}
+  .wsc{width:30px;height:30px;font-size:.78rem;}#ws-grid{grid-template-columns:repeat(10,30px)!important;}
+}
+button:focus-visible,textarea:focus-visible,input[type=range]:focus-visible,.si:focus-visible,.co:focus-visible{outline:3px solid var(--sky);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="toast" role="status" aria-live="polite" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ok);color:#fff;border-radius:12px;padding:.65rem 1.2rem;font-weight:700;font-size:.86rem;transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:500;white-space:nowrap;box-shadow:0 8px 24px rgba(82,183,136,.3);"></div>
+
+<div id="bar">
+  <div class="xpw"><div class="xpl">YOUR COURAGE</div><div class="pb"><div class="pf" id="pf" style="width:0%"></div></div></div>
+  <div class="coins">🪙 <span id="cc">0</span></div>
+  <div class="lv" id="lv">Lv 1</div>
+  <button id="pbtn" onclick="openCalm()" aria-label="Open calming tools">🌿 Pause</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCREEN: WELCOME
+══════════════════════════════════════ -->
+<div class="screen active" id="s-welcome" role="main">
+  <div style="text-align:center;padding:1.8rem 1rem 1.1rem">
+    <span style="font-size:2.8rem;display:block;margin-bottom:.45rem" role="img" aria-label="Home">🏠</span>
+    <h1 class="h1">Welcome Home</h1>
+    <p style="color:var(--muted);font-size:.92rem;font-weight:600;line-height:1.6;margin-top:.28rem">You made it home. This app walks with you — at your pace, your way.</p>
+  </div>
+
+  <div class="card cw">
+    <p style="font-size:.93rem;line-height:1.75;margin-bottom:.75rem">Coming home after a kitchen injury is a big moment. Your kitchen is waiting — and you get to decide exactly how and when you return to it. <strong>There is no rush and no one best way.</strong></p>
+    <p style="font-size:.93rem;line-height:1.75;margin-bottom:.75rem">Kitchens feed people. They hold memories. They are necessary — and they can be yours again. <strong>You are still that person.</strong> This app is here to walk alongside you, offering suggestions and encouragement — never to tell you what your experience means.</p>
+    <p style="font-size:.93rem;line-height:1.75">You choose every step. You set the pace. <strong>All paths through this app are the right path.</strong></p>
+  </div>
+
+  <div class="card cs" style="font-size:.86rem;line-height:1.88">
+    <div style="font-weight:800;margin-bottom:.38rem">🌱 How this works:</div>
+    <ul style="padding-left:1.1rem;color:var(--muted)">
+      <li>Every answer you give is exactly the right one — you decide what fits</li>
+      <li>Earn 🪙 Courage Coins for every step you take</li>
+      <li>🌿 Pause button is always at the top — calming tools any time</li>
+      <li>Fun breaks earned along the way</li>
+      <li>Your progress is saved on this device</li>
+    </ul>
+  </div>
+
+  <div class="qb">How are you feeling about the kitchen right now? Choose everything that fits — people feel all kinds of ways at this point, and every one of them makes sense. 💛</div>
+  <button class="ch" data-e="😟" onclick="tog(this,'f-uneasy')" aria-label="Really on edge">Really on edge. Just thinking about it is hard.</button>
+  <button class="ch" data-e="😬" onclick="tog(this,'f-brave')" aria-label="Uneasy but brave">Uneasy, but trying to be brave.</button>
+  <button class="ch" data-e="😐" onclick="tog(this,'f-mixed')" aria-label="Mixed feelings">Mixed — some okay moments, some really hard ones.</button>
+  <button class="ch" data-e="😌" onclick="tog(this,'f-ready')" aria-label="Ready to try">I think I can do this. It might take time.</button>
+  <button class="ch" data-e="😢" onclick="tog(this,'f-wish')" aria-label="Wish it never happened">I wish this never happened — and I want to cook again.</button>
+  <button class="ch" data-e="💪" onclick="tog(this,'f-det')" aria-label="Determined">Determined. Still getting there, but moving forward.</button>
+
+  <!-- BEEN BACK YET? -->
+  <div id="been-back-block" style="display:none;margin-top:1rem;padding:1rem;background:var(--cream);border:2px solid var(--border);border-radius:14px;">
+    <div style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">Have you been back in your kitchen yet?</div>
+    <div style="font-size:.8rem;color:var(--muted);margin-bottom:.65rem;line-height:1.5">Every answer is exactly right — we just want to meet you where you are.</div>
+    <button class="ch" data-e="🏠" onclick="setReentry('none',this)">Not yet — I haven't been back</button>
+    <button class="ch" data-e="🚶" onclick="setReentry('once',this)">Once or twice — I had to, but it was really hard</button>
+    <button class="ch" data-e="🔄" onclick="setReentry('few',this)">A few times — still really uneasy in there</button>
+    <button class="ch" data-e="✅" onclick="setReentry('regular',this)">Going back regularly — but something still doesn't feel right</button>
+  </div>
+
+  <!-- WHO ARE YOU HERE FOR? -->
+  <div id="path-block" style="display:none;margin-top:1rem;padding:1rem;background:var(--cream);border:2px solid var(--border);border-radius:14px;">
+    <div style="font-weight:800;font-size:.9rem;margin-bottom:.6rem">Who are you here for today?</div>
+    <button class="ch" data-e="🙋" onclick="setPath('A',this)" aria-label="Survivor path">I was the one who got hurt</button>
+    <button class="ch" data-e="💑" onclick="setPath('B',this)" aria-label="Witness path" style="border-color:var(--wine);background:#FFF0F5;">Someone I love was hurt — and I'm struggling too</button>
+  </div>
+
+  <button class="btn bsg" id="wnext" onclick="startGame()" style="display:none" aria-label="Begin">Let's begin, one step at a time 🌿</button>
+  <p class="disc">This app is a wellness companion made with care. It's not medical advice or a replacement for professional support — and you deserve both. If you're in crisis, please contact your care team or call 988.</p>
+  <p style="text-align:center;font-size:.7rem;color:var(--muted);opacity:.7;margin-top:.4rem">v9</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     PATH A: SURVIVOR SCREENS
+══════════════════════════════════════ -->
+
+<!-- A: DREAM -->
+<div class="screen" id="s-adream">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <div id="reentry-ack" style="display:none;margin-bottom:.85rem"></div>
+    <h2 class="h2">✨ What would feel like success to you?</h2>
+    <div class="sub">Every answer you give is exactly the right one. What you're hoping for — that's what we're building toward. You're in charge.</div>
+    <div class="qb">Pick everything that fits — or write your own.</div>
+    <button class="ch" data-e="🏠" onclick="tog(this,'d-safe')">Feel safe and comfortable in my kitchen again</button>
+    <button class="ch" data-e="🍳" onclick="tog(this,'d-simple')">Cook simple meals on my own</button>
+    <button class="ch" data-e="🔥" onclick="tog(this,'d-full')">Fully back — stovetop, grease, everything</button>
+    <button class="ch" data-e="🌬️" onclick="tog(this,'d-air')">Air fryer and oven only — that works great for me</button>
+    <button class="ch" data-e="👨‍👩‍👧" onclick="tog(this,'d-fam')">Cook for my family again</button>
+    <button class="ch" data-e="🎉" onclick="tog(this,'d-hol')">Holiday meals, big gatherings — the whole thing</button>
+    <button class="ch" data-e="🤷" onclick="tog(this,'d-idk')">Not sure yet — I'll figure it out as I go</button>
+    <div class="qb" style="margin-top:.7rem">Or in your own words:</div>
+    <textarea id="adream-text" placeholder="What would feel like getting back to yourself?" aria-label="Write your goal"></textarea>
+    <div class="aff" style="margin-top:.75rem"><p>"Every destination you just named is valid. Every single one." 🌿</p></div>
+    <button class="btn bsg" onclick="goTo('s-asupport');earn(10,'Goal set! +10 🪙')">That's where I'm headed →</button>
+  </div>
+</div>
+
+<!-- A: SUPPORT -->
+<div class="screen" id="s-asupport">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🤝 Who's with you on this?</h2>
+    <div class="sub">Recovery looks different for everyone — and all of it is normal.</div>
+    <div class="qb">What's your situation at home right now?</div>
+    <button class="ch" data-e="👫" onclick="pickSup('partner',this)">I live with a partner, spouse, or family</button>
+    <button class="ch" data-e="👨‍👩‍👧" onclick="pickSup('family',this)">Family or friends are nearby and can help</button>
+    <button class="ch" data-e="🏠" onclick="pickSup('solo',this)">I live alone right now</button>
+    <button class="ch" data-e="🔀" onclick="pickSup('varies',this)">It varies — sometimes support, sometimes not</button>
+    <div id="sup-resp" style="display:none;margin-top:.75rem"></div>
+    <button class="btn bsg" id="supnext" onclick="goTo('s-aanx');earn(10,'Path set! +10 🪙')" style="display:none">Got it →</button>
+  </div>
+</div>
+
+<!-- A: CHECK-IN -->
+<div class="screen" id="s-aanx">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">📊 A quick check-in</h2>
+    <div class="sub">This is just a check-in — wherever you are right now is exactly right. We'll check in again at the end.</div>
+    <div class="axw">
+      <label for="anx1">Right now, how unsettled do you feel when you think about your kitchen? (1 = barely at all, 10 = really hard to think about)</label>
+      <div class="axn" id="anx1n">5</div>
+      <div class="axl" id="anx1l">Noticeably hard</div>
+      <input type="range" min="1" max="10" value="5" id="anx1" oninput="setAnx(1,+this.value)" aria-label="How unsettled you feel, 1-10">
+      <div class="axs"><span>1 — barely at all</span><span>10 — really hard</span></div>
+    </div>
+    <div id="anx1hi" class="cd" style="display:none;margin-top:.75rem">
+      <p style="font-size:.86rem;line-height:1.6">⚠️ <strong>A 10 is a lot to carry.</strong> Before we go on, would you like a calming tool first?</p>
+      <button class="btn bsk" onclick="openCalm()" style="margin-top:.55rem">🌿 Yes, help me first</button>
+      <button class="bout" onclick="this.parentElement.style.display='none'" style="margin-top:.38rem">I'm okay to continue</button>
+    </div>
+    <div id="anx1r" class="aff" style="display:none;margin-top:.75rem"><p id="anx1rt"></p></div>
+    <button class="btn bsg" id="anx1next" onclick="goTo('s-aguilt');earn(10,'Check-in done! +10 🪙')" style="display:none">That's where I am today →</button>
+  </div>
+</div>
+
+<!-- A: GUILT -->
+<div class="screen" id="s-aguilt">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">💛 Something worth saying first</h2>
+    <div class="sub">Before we go anywhere near the kitchen, there's something that comes up for a lot of people — and almost nobody talks about it.</div>
+    <div class="ca">
+      <div style="font-weight:800;margin-bottom:.45rem">In one sentence — what were you trying to do when you got hurt?</div>
+      <textarea id="aguilt-text" placeholder="Even one word is enough..." rows="2" aria-label="What were you trying to do"></textarea>
+    </div>
+    <div class="qb">Does any of this feel true?</div>
+    <button class="ch" data-e="😔" onclick="togGF(this)">I feel guilty about what happened</button>
+    <button class="ch" data-e="🔥" onclick="togGF(this)">I was trying to protect my home or family</button>
+    <button class="ch" data-e="😤" onclick="togGF(this)">I feel angry that this happened to me</button>
+    <button class="ch" data-e="🤷" onclick="togGF(this)">I keep replaying it, wondering what I should have done differently</button>
+    <button class="ch" data-e="💔" onclick="togGF(this)">I feel like the kitchen isn't mine anymore</button>
+    <div id="aguilt-resp" style="display:none" class="card ct">
+      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">🌿 That feeling makes sense.</div>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">A lot of people who come home after a kitchen injury think: <em>I should have been more careful. I caused this. My family had to deal with this because of me.</em> Those thoughts are very common — and they're worth knowing about, because they can quietly make recovery harder.</p>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">Here's what's also true: you were doing something ordinary — cooking, caring for your home, taking care of someone. Kitchen accidents happen in seconds, to careful people, all the time. <strong>That doesn't say anything about who you are.</strong></p>
+      <p style="font-size:.88rem;line-height:1.75">And the fact that it weighs on you? That usually says you care deeply about the people and home you were taking care of. <strong>That's worth holding onto.</strong></p>
+    </div>
+    <div class="aff"><p>"You made it home. You've been through something hard, and you did it. You are still you." 💛</p></div>
+    <button class="btn bsg" onclick="goTo('s-aground');earn(15,'Reflected with courage +15 🪙')">I hear that. Keep going →</button>
+  </div>
+</div>
+
+<!-- A: SAFE PLACE -->
+<div class="screen" id="s-aground">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🌈 Build your calm place</h2>
+    <div class="sub">Before we think about the kitchen at all, let's create a mental home base — somewhere calm and steady, just for you. You can return here any time.</div>
+    <div class="qb">Where do you feel most calm and at ease? Pick all that fit ✨</div>
+    <div id="safe-a">
+      <div class="si" onclick="togSafe(this,'trees')"><span class="se">🌲</span><span class="st">Outside, near trees or nature</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'couch')"><span class="se">🛋️</span><span class="st">On a cozy couch</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'window')"><span class="se">☀️</span><span class="st">By a warm sunny window</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'garden')"><span class="se">🌸</span><span class="st">In a garden or green space</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'pet')"><span class="se">🐾</span><span class="st">With a pet nearby</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'music')"><span class="se">🎵</span><span class="st">With calm music playing</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'drink')"><span class="se">☕</span><span class="st">Holding a warm drink</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'person')"><span class="se">🤝</span><span class="st">With someone I trust</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'water')"><span class="se">🌊</span><span class="st">Near water — ocean, lake, river</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'bed')"><span class="se">🛏️</span><span class="st">In my own bed, warm and comfortable</span><span class="sc">✅</span></div>
+    </div>
+    <div id="safe-resp-a" style="display:none" class="aff"><p>That place is real. It lives inside you. You can return there any time — just close your eyes and breathe.</p></div>
+    <button class="btn bsg" id="safenext-a" onclick="goTo('s-afears');earn(15,'Calm place found! +15 🪙')" style="display:none">I've found my calm place ✨</button>
+  </div>
+</div>
+
+<!-- A: FEARS -->
+<div class="screen" id="s-afears">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">😟 Naming what's hard</h2>
+    <div class="sub">Naming a fear shrinks it. Research shows it actually calms the brain. Pick everything that feels true — all of it is valid.</div>
+    <button class="ch" data-e="🔥" onclick="togFear(this)">I'm scared of another fire or accident</button>
+    <button class="ch" data-e="😰" onclick="togFear(this)">My body tenses up just being in the kitchen</button>
+    <button class="ch" data-e="👃" onclick="togFear(this)">Smells — even normal cooking smells — trigger bad memories</button>
+    <button class="ch" data-e="🔊" onclick="togFear(this)">Sounds — sizzling, popping, the hood fan — are really hard</button>
+    <button class="ch" data-e="♨️" onclick="togFear(this)">Heat near my skin is difficult — steam, the oven, anything warm</button>
+    <button class="ch" data-e="🙈" onclick="togFear(this)">I avoid even looking at the stove</button>
+    <button class="ch" data-e="😔" onclick="togFear(this)">I don't feel like myself in there anymore</button>
+    <button class="ch" data-e="🤔" onclick="togFear(this)">I wonder if I'll ever feel normal in there again</button>
+    <button class="ch" data-e="💔" onclick="togFear(this)">My home doesn't fully feel like mine anymore</button>
+    <button class="ch" data-e="😤" onclick="togFear(this)">I feel frustrated or angry that this happened</button>
+    <div id="fear-resp-a" class="card cw" style="display:none;margin-top:.75rem">
+      <div style="font-weight:800;margin-bottom:.45rem">🌟 You named them. That took real courage.</div>
+      <p style="font-size:.86rem;line-height:1.7">Every fear you named is <strong>completely normal</strong> after a kitchen injury. A lot of people feel on edge, avoid the kitchen, or find sounds and smells bring things back — sometimes for months. What you are feeling is a normal response to something frightening. <strong>These feelings do get better.</strong></p>
+    </div>
+    <button class="btn bsg" id="fearnext-a" onclick="goTo('s-atriggers');earn(20,'Named bravely! +20 🪙')" style="display:none">I named them 💪</button>
+  </div>
+</div>
+
+<!-- A: TRIGGERS -->
+<div class="screen" id="s-atriggers">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🧠 Why the kitchen feels different now</h2>
+    <div class="sub">This is useful to know — not scary, just helpful. Skip ahead any time.</div>
+    <div class="card ck">
+      <div style="font-weight:800;margin-bottom:.45rem">Why does the kitchen feel different now?</div>
+      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">After something frightening, your brain puts itself on alert. It starts watching for anything that reminds it of that moment — a smell, a sound, a feeling of heat, even the light in the room. When it spots something, it sends an alarm. Your heart races, your body tenses. It feels like it's happening again.</p>
+      <p style="font-size:.86rem;line-height:1.75">Your brain is doing what it's supposed to do — keeping you safe. The trouble is, it can't always tell the difference between then and now. So it sounds the alarm even when everything is actually fine. <strong>That's a brain doing its job too well.</strong></p>
+    </div>
+    <p style="font-size:.86rem;line-height:1.75">A trigger is anything that reminds your brain of the moment you got hurt. A smell. A sound. Heat. Your brain is trying to protect you — but sometimes it's too sensitive. The good news: once you know what your triggers are, they have less power over you.</p>
+    <div class="qb">Common triggers after a kitchen injury:</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.38rem;margin-bottom:.75rem;font-size:.82rem">
+      <div class="card cw" style="padding:.55rem .75rem;margin-bottom:0">🔥 Sight of a flame</div>
+      <div class="card cw" style="padding:.55rem .75rem;margin-bottom:0">🔊 Sizzling or popping</div>
+      <div class="card cw" style="padding:.55rem .75rem;margin-bottom:0">👃 Smoke or burning smell</div>
+      <div class="card cw" style="padding:.55rem .75rem;margin-bottom:0">♨️ Steam or heat on skin</div>
+      <div class="card cw" style="padding:.55rem .75rem;margin-bottom:0">🍳 The feel of a pan handle</div>
+      <div class="card cw" style="padding:.55rem .75rem;margin-bottom:0">💡 Bright overhead light</div>
+    </div>
+    <div style="font-weight:800;margin-bottom:.45rem">When a trigger hits — what helps:</div>
+    <ul style="font-size:.85rem;line-height:2;padding-left:1.1rem;color:var(--muted);margin-bottom:.75rem">
+      <li>Name it: <em>"That's a trigger. My brain is protecting me."</em></li>
+      <li>Use a calming tool (🌿 Pause button — always there)</li>
+      <li>Say: <em>"That was then. This is now. I am safe."</em></li>
+      <li>Step away if you need to — that's always okay</li>
+    </ul>
+    <div id="trig-deep" style="display:none">
+      <div class="qb">What's one thing you know triggers you?</div>
+      <textarea id="trig-mine" placeholder="A smell, a sound, a feeling..." rows="2" aria-label="Your trigger"></textarea>
+      <div class="qb" style="margin-top:.65rem">When it hits, what's one thing you could do?</div>
+      <textarea id="trig-plan" placeholder="My plan: I could..." rows="2" aria-label="Your coping plan"></textarea>
+      <div class="card cs" style="margin-top:.65rem;font-size:.84rem;line-height:1.65">✅ <strong>You just made a coping plan.</strong> Having it ready before you need it means you won't have to think in the moment.</div>
+      <p style="font-size:.76rem;color:var(--muted);margin-top:.45rem;line-height:1.5">Want to go deeper? Phoenix Society has free resources: <a href="https://resources.phoenix-society.org/tools-for-burn-survivors-and-caregivers" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Phoenix Society resources">phoenix-society.org/resources</a></p>
+    </div>
+    <button class="btn bsk" id="trig-more" onclick="showTrigDeep()" style="margin-top:.28rem">I want to identify my own trigger and make a plan →</button>
+    <button class="btn bsg" onclick="goTo('s-areframe');earn(15,'Helpful to know! +15 🪙')" style="margin-top:.38rem">Got it — keep going</button>
+  </div>
+</div>
+
+<!-- A: REFRAME -->
+<div class="screen" id="s-areframe">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🔄 A different way to see it</h2>
+    <div class="sub">You don't have to believe the new thought yet. Just try it on. 🌱</div>
+    <div class="rfp"><div class="rfo">🔴 "The kitchen is dangerous now."</div><div class="rfa">→</div><div class="rfn">🟢 "The kitchen is a tool. Right now it is off and still. I control when it is used."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I'll never feel comfortable in there again."</div><div class="rfa">→</div><div class="rfn">🟢 "Right now is hard. Healing takes time. Many people come back from this — so can I."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "Feeling on edge means something is wrong with me."</div><div class="rfa">→</div><div class="rfn">🟢 "My body is trying to protect me. That's what bodies do after something hard. I can help it settle down, slowly."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I was careless."</div><div class="rfa">→</div><div class="rfn">🟢 "I was doing what cooks do. These accidents happen. This does not define who I am."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "This took something from me."</div><div class="rfa">→</div><div class="rfn">🟢 "This was hard. I made it through. I am still here, and I am still able to take care of the people I love."</div></div>
+    <div class="qb">Which one feels most true right now? Write it in your own words:</div>
+    <textarea id="areframe-text" placeholder="Any version is the right version..." aria-label="Your reframe"></textarea>
+    <button class="btn bsg" onclick="goTo('s-asafety');earn(20,'New lens! +20 🪙')">I've got a new way to see it 🔄</button>
+  </div>
+</div>
+
+<!-- A: SAFETY KIT -->
+<div class="screen" id="s-asafety">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🧤 Your kitchen safety kit</h2>
+    <div class="sub">Before you start climbing, here are the tools that make every step safer. Smart cooks use all of these.</div>
+    <div class="card cy" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.48rem">🧤 Long oven mitts — up to the elbow</div>
+      <p style="font-size:.85rem;line-height:1.7">Regular pot holders only protect your hands. Long mitts protect your forearms — the area most at risk from splatter and steam. Put them on <em>before</em> you touch anything hot. Take your time. No rush. If you have scarring or limited grip, ask your care team about adaptive equipment that works for you.</p>
+    </div>
+    <div class="card cs" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.48rem">⏱️ Kitchen timers — for attention, not just cooking</div>
+      <p style="font-size:.85rem;line-height:1.7">Here's something every cook does: you mean to be right back, then life happens — a phone call, a child, a thought — and more time passes than you realized. A timer means the kitchen reminds <em>you</em> it needs attention. Use it every single time. Even experienced cooks do.</p>
+    </div>
+    <div class="card ck" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.48rem">🍳 Lids, not water — for grease fires</div>
+      <p style="font-size:.85rem;line-height:1.7">If a grease fire starts in a pan, slide a lid over it carefully — that smothers it. Never water on grease. Keep a lid near the stove before you start. This one piece of knowledge changes everything.</p>
+    </div>
+    <div class="card cw" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.48rem">🌬️ Air fryer or oven first</div>
+      <p style="font-size:.85rem;line-height:1.7">Air fryers and ovens use enclosed heat — no open flame, no splatter. For foods you used to fry, an air fryer gives great results with much less risk. Starting here is a smart way to return. Some people use their air fryer forever. That's a great outcome too.</p>
+    </div>
+    <div class="card cp" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.48rem">📞 Ask someone to stand by</div>
+      <p style="font-size:.85rem;line-height:1.7;margin-bottom:.55rem">For your first few attempts, ask someone to be available — even just by phone or text. Not to watch you. Not to help. Just to know you're trying, and to be reachable. This is good strategy.</p>
+      <div class="qb" style="margin-top:0;margin-bottom:.45rem">Who is your standby person? (just for you — not stored anywhere)</div>
+      <textarea id="standby-name" placeholder="A name, a number, whoever comes to mind..." rows="1" style="min-height:44px" aria-label="Standby person name"></textarea>
+    </div>
+    <div class="card cv" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.48rem">👨‍👩‍👧 When others are in the kitchen with you</div>
+      <p style="font-size:.85rem;line-height:1.7;margin-bottom:.48rem"><strong>Children:</strong> Give older kids a job — keeping younger ones occupied, setting the table, something in another room. You don't have to manage the kitchen and the children at the same time.</p>
+      <p style="font-size:.85rem;line-height:1.7"><strong>What you know now:</strong> You know things about kitchen safety that most people don't. Teaching others — your kids, your friends, your neighbors — what you've learned is one of the most powerful things a survivor can do. And it helps you heal too.</p>
+    </div>
+    <div class="card ca" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.35rem">⚠️ A note before heat steps</div>
+      <p style="font-size:.83rem;line-height:1.65">If you have recent grafts or areas where your skin is still healing, please check with your care team before trying any heat-related steps. Heat sensitivity varies a lot depending on where you are in recovery. There is no rush.</p>
+    </div>
+    <button class="btn bsg" onclick="goTo('s-awordsearch');earn(15,'Safety kit ready! +15 🪙')">I've got my kit →</button>
+  </div>
+</div>
+
+<!-- A: WORD SEARCH -->
+<div class="screen" id="s-awordsearch">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🔍 Find your strengths</h2>
+    <div class="sub">These words are all things you carry with you. Find them — each one is already true about you.</div>
+    <div class="wsg" id="ws-grid" style="grid-template-columns:repeat(10,34px)" role="grid" aria-label="Word search puzzle"></div>
+    <div class="wl" id="ws-list" role="list" aria-label="Words to find"></div>
+    <div id="ws-done" style="display:none" class="aff"><p>Every one of those words is <strong>already you</strong>. You brought them here. 🌟</p></div>
+    <button class="btn bsg" id="wsnext" onclick="goTo('s-aladder');earn(25,'Strengths found! +25 🪙')" style="display:none">I found my strengths ✨</button>
+    <button class="bout" onclick="goTo('s-aladder')">Continue anyway →</button>
+  </div>
+</div>
+
+<!-- A: LADDER -->
+<div class="screen" id="s-aladder">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🪜 Your comeback ladder</h2>
+    <div class="sub">Each step is a real-world try — when you feel ready. Tap a step only after you've actually tried it. No rushing. Every rung matters.</div>
+    <div class="card ck" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
+      💡 <strong>Open floor plan?</strong> If your kitchen doesn't have a door, your starting point is wherever you feel the kitchen begin — the edge of the counter, the change in flooring, wherever the space shifts. That line counts just as much as a door.
+    </div>
+    <div class="card ck" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
+      🧠 <strong>Why small steps work:</strong> Each time you try something and your body settles down even a little, your brain learns "this is okay." Do it enough times and the alarm starts to quiet on its own. Small steps, done for real, in order — that's what works.
+    </div>
+    <div class="card cy teen-alt" style="font-size:.83rem;line-height:1.65;margin-bottom:.75rem">
+      💡 Small steps, done for real, in order. Every time your body settles down even a little — your brain is learning. Keep going at your own pace.
+    </div>
+    <div id="ladder-reentry-note" style="display:none;margin-bottom:.75rem"></div>
+    <div id="ladder-a"></div>
+    <div id="ladder-done-a" style="display:none" class="card cs" style="text-align:center;margin-top:.75rem"><div style="font-size:1.8rem;margin-bottom:.18rem">🏆</div><div style="font-weight:800">You climbed the whole ladder. That is extraordinary.</div></div>
+    <button class="btn bsg" id="laddernext-a" onclick="goTo('s-aimagine');earn(30,'Ladder explored! +30 🪙')" style="margin-top:.75rem">Ready to imagine success 🌟</button>
+  </div>
+</div>
+
+<!-- LADDER MODAL -->
+<div class="ov" id="lm-ov" onclick="closeLM(event)" role="dialog" aria-modal="true" aria-label="Ladder step details">
+  <div class="pnl" id="lm-pnl">
+    <h2 class="h2" id="lm-title"></h2>
+    <p id="lm-desc" style="font-size:.84rem;color:var(--muted);line-height:1.6;margin:.45rem 0 .85rem"></p>
+    <div class="qb" style="margin-top:0">When you've actually tried this — how did it go?</div>
+    <div style="display:flex;gap:.38rem;flex-wrap:wrap;margin:.45rem 0">
+      <button class="ch" style="width:auto;padding:.52rem .82rem" data-e="😰" onclick="rateL('hard')">Really hard</button>
+      <button class="ch" style="width:auto;padding:.52rem .82rem" data-e="😬" onclick="rateL('managed')">I managed it</button>
+      <button class="ch" style="width:auto;padding:.52rem .82rem" data-e="😌" onclick="rateL('ok')">Actually okay</button>
+    </div>
+    <div id="lm-resp" class="card cs" style="display:none;font-size:.85rem;line-height:1.65;margin:.45rem 0"></div>
+    <button class="btn bsg" id="lm-done" onclick="completeL()" style="display:none">✅ Mark this step done</button>
+    <button class="bout" onclick="closeLM()" style="margin-top:.28rem">Not yet — I'll come back</button>
+  </div>
+</div>
+
+<!-- A: IMAGINE -->
+<div class="screen" id="s-aimagine">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">✨ Picture it going well</h2>
+    <div class="sub">Your brain practices when you imagine something vividly. Let's use that. Read each step, then close your eyes and picture it for at least 60 seconds before moving on.</div>
+    <div class="card ck" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.55rem">🎬 Take your time with each step.</div>
+      <div class="ims"><div class="inn">1</div><p>You're just outside your kitchen. You feel a little nervous — that's okay. You take one breath.</p></div>
+      <div class="ims"><div class="inn">2</div><p>You step in. The floor is solid. The air smells clean and ordinary. You look around. Everything is still.</p></div>
+      <div class="ims"><div class="inn">3</div><p>You walk to the counter and touch it. Cool, steady, familiar. You're here. Nothing happened.</p></div>
+      <div class="ims"><div class="inn">4</div><p>You fill the kettle. You hear water running. Normal sounds. Safe sounds. Your shoulders drop a little.</p></div>
+      <div class="ims"><div class="inn">5</div><p>You sit with something warm. You did it. You came back. You're still someone who can do this.</p></div>
+    </div>
+
+    <div class="timer-box" id="viz-timer-box">
+      <div class="timer-num" id="viz-timer-num">1:00</div>
+      <div class="timer-lbl" id="viz-timer-lbl">Take your time with the pictures above</div>
+      <div class="timer-btns">
+        <button class="tbtn" onclick="startVizTimer(60)" id="tstart">Start 60 seconds</button>
+        <button class="tbtn" onclick="startVizTimer(90)">90 seconds</button>
+        <button class="tbtn" onclick="startVizTimer(120)">2 minutes</button>
+        <button class="tbtn" onclick="resetVizTimer()">Reset</button>
+      </div>
+      <div id="viz-more" style="display:none;margin-top:.6rem;font-size:.8rem;color:var(--muted)">Take as much time as you need. Tap "Reset" and start again any time.</div>
+    </div>
+
+    <div class="qb">How did that feel? What part felt most possible right now?</div>
+    <textarea id="aimagine-text" placeholder="Even step 1 counts. Even being willing to imagine it counts..." aria-label="Visualization reflection"></textarea>
+    <div class="aff"><p>"I am allowed to go slowly. Slow is still forward. Every step toward my kitchen is a step toward my life." 🏠</p></div>
+    <button class="btn bsg" onclick="goTo('s-aplan');earn(25,'Visualized! +25 🪙')">I can picture it 🌟</button>
+  </div>
+</div>
+
+<!-- A: PLAN -->
+<div class="screen" id="s-aplan">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">📋 Your personal plan</h2>
+    <div class="sub">Pick what feels right for you. Nothing is required.</div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🧑‍🤝‍🧑</span><span class="st">Have someone I trust nearby the first time</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🕐</span><span class="st">Only stay 5 minutes the first visit — that's enough</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🎵</span><span class="st">Play music I love — change the energy in there</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🌸</span><span class="st">Put flowers or a plant on the counter — make it mine again</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">☕</span><span class="st">Start with just the kettle — nothing on the stove yet</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">⏱️</span><span class="st">Use a timer every single time I cook — no exceptions</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🧤</span><span class="st">Long oven mitts — on before I touch anything hot</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🌿</span><span class="st">Do a calming exercise before entering</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🌬️</span><span class="st">Start with air fryer or oven instead of stovetop</span><span class="sc">✅</span></div>
+    <div class="si" onclick="this.classList.toggle('on')"><span class="se">🏆</span><span class="st">Celebrate every single visit, no matter how short</span><span class="sc">✅</span></div>
+    <div class="qb">What else might help? Your ideas:</div>
+    <textarea id="aplan-text" placeholder="Anything goes..." aria-label="Your plan ideas"></textarea>
+    <button class="btn bsg" onclick="showBreak(1)">This is my plan — what do I win? 🎉</button>
+  </div>
+</div>
+
+<!-- A: PTG -->
+<div class="screen" id="s-aptg">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">🌱 Something worth knowing</h2>
+    <div class="sub">Research on people who come through serious injuries finds something that doesn't get talked about enough.</div>
+    <div class="ptgc">
+      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">📖 What hard things can show us</div>
+      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">Studies show that many people who go through serious injuries find unexpected things about themselves on the other side — patience they didn't know they had, a clearer sense of what matters, or a quiet strength that wasn't visible before.</p>
+      <p style="font-size:.86rem;line-height:1.75">This doesn't mean the injury was okay, or that you have to find a silver lining. It just means that getting through hard things often leaves something behind — and sometimes that something is worth noticing.</p>
+    </div>
+    <div class="qcard"><p>"You may not control all the events that happen to you, but you can decide not to be reduced by them."</p><div class="qa">— Maya Angelou</div></div>
+    <div class="qb">Has anything surprised you about yourself since this happened?</div>
+    <textarea id="aptg-text" placeholder="You don't have to answer. But if something comes up, it might be worth writing down..." aria-label="PTG reflection"></textarea>
+    <div class="qb" style="margin-top:.65rem">You now know things about kitchen safety that most people don't. Is there someone — a child, a neighbor, a friend — who could benefit from what you've learned?</div>
+    <textarea id="ateach-text" placeholder="Teaching others is part of healing — and it protects the people you love." aria-label="Teaching others"></textarea>
+    <div class="aff"><p>"You don't have to be grateful for what happened. You are allowed to be proud of how you're handling it." 🌱</p></div>
+    <button class="btn bsg" onclick="goTo('s-aanx2');earn(20,'Growth recognized! +20 🪙')">Keep going →</button>
+  </div>
+</div>
+
+<!-- A: CHECK-OUT -->
+<div class="screen" id="s-aanx2">
+  <div class="card">
+    <span class="path-badge badge-a">Your path 🌿</span>
+    <h2 class="h2">📊 One more check-in</h2>
+    <div class="sub">When you first opened this app, you were at a <strong id="anx1-show">—</strong>. After everything you just did — where are you now?</div>
+    <div class="axw">
+      <label for="anx2">Right now, how unsettled do you feel when you think about your kitchen?</label>
+      <div class="axn" id="anx2n">5</div>
+      <div class="axl" id="anx2l">Noticeably hard</div>
+      <input type="range" min="1" max="10" value="5" id="anx2" oninput="setAnx(2,+this.value)" aria-label="How unsettled you feel now, 1-10">
+      <div class="axs"><span>1 — barely at all</span><span>10 — really hard</span></div>
+    </div>
+    <button class="btn bsg" onclick="goTo('s-celebrate');earn(15,'Almost there! +15 🪙');buildCel()">See what changed 🎯</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PATH B: WITNESS SCREENS
+══════════════════════════════════════ -->
+
+<!-- B: WELCOME WITNESS -->
+<div class="screen" id="s-bwelcome">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">💑 You're here for someone you love</h2>
+    <div class="sub">What happened to them happened to you too. Your wound may not be visible — but it is real.</div>
+    <div class="card cv">
+      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">Watching someone you love get hurt is traumatic. Research shows that people who witness a serious injury can feel just as unsettled, fearful, and avoidant as the person who was hurt — sometimes more.</p>
+      <p style="font-size:.9rem;line-height:1.75;margin-bottom:.65rem">You may have replayed the moment hundreds of times. You may have taken over cooking — or stopped cooking entirely. You may feel on edge every time someone goes near the stove. <strong>All of this is a normal response to something terrifying.</strong></p>
+      <p style="font-size:.9rem;line-height:1.75">You deserve support too. This path is for you.</p>
+    </div>
+    <div class="aff"><p>"Your feelings belong to you — separate from how the person you love is doing. You are allowed to find this hard even if they seem to be handling it." 💑</p></div>
+    <button class="btn bwi" onclick="goTo('s-bdream');earn(10,'You showed up! +10 🪙')">Yes — this is for me →</button>
+  </div>
+</div>
+
+<!-- B: DREAM -->
+<div class="screen" id="s-bdream">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">✨ How do you want to feel?</h2>
+    <div class="sub">Your goal isn't about cooking — it's about how you feel when you're in or near your kitchen. Pick what fits, or write your own.</div>
+    <div class="qb">When you walk into your kitchen, how do you want to feel?</div>
+    <button class="ch" data-e="😌" onclick="tog(this,'bdf-calm')">Calm — just calm, without the images</button>
+    <button class="ch" data-e="🏠" onclick="tog(this,'bdf-safe')">Safe — like it's just a kitchen again</button>
+    <button class="ch" data-e="🧘" onclick="tog(this,'bdf-present')">Present — able to be there without my mind going somewhere else</button>
+    <button class="ch" data-e="😊" onclick="tog(this,'bdf-normal')">Normal — like before it happened</button>
+    <button class="ch" data-e="💪" onclick="tog(this,'bdf-strong')">Strong — ready to take back the space</button>
+    <button class="ch" data-e="👁️" onclick="tog(this,'bdf-watch')">Able to watch someone else cook without panicking</button>
+    <button class="ch" data-e="🍽️" onclick="tog(this,'bdf-meal')">Present for a full meal — sitting there, eating together</button>
+    <button class="ch" data-e="🤷" onclick="tog(this,'bdf-idk')">I don't know yet — I'll figure it out as I go</button>
+    <div class="qb" style="margin-top:.65rem">Or in your own words:</div>
+    <textarea id="bdream-text" placeholder="How do you want to feel? What would feel like getting better?" aria-label="Your goal"></textarea>
+    <div class="aff"><p>"Every feeling you just named is a valid destination. You get to choose what success looks like." 🌿</p></div>
+    <button class="btn bwi" onclick="goTo('s-bguilt');earn(10,'Goal set! +10 🪙')">That's where I'm headed →</button>
+  </div>
+</div>
+
+<!-- B: GUILT/WITNESS -->
+<div class="screen" id="s-bguilt">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">💛 What you might be carrying</h2>
+    <div class="sub">Witnesses often carry things nobody asks about. Let's name them.</div>
+    <div class="qb">Does any of this feel true?</div>
+    <button class="ch" data-e="😔" onclick="togBGF(this)">I feel guilty — like I could have stopped it</button>
+    <button class="ch" data-e="🔥" onclick="togBGF(this)">I called them in. I asked them to help. I feel responsible.</button>
+    <button class="ch" data-e="😢" onclick="togBGF(this)">I watched it happen and I couldn't do anything</button>
+    <button class="ch" data-e="😤" onclick="togBGF(this)">I feel angry — at myself, at the situation, at everything</button>
+    <button class="ch" data-e="🤷" onclick="togBGF(this)">I keep replaying it, wondering what I should have done differently</button>
+    <button class="ch" data-e="😶" onclick="togBGF(this)">I haven't told anyone how much I'm struggling — I don't want to make it about me</button>
+    <div id="bguilt-resp" style="display:none" class="card cv">
+      <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">💑 Here's what we know:</div>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">What you watched was traumatic. Your nervous system responded the way it was designed to — by trying to protect you and the person you love. <strong>That is love, doing what love does.</strong></p>
+      <p style="font-size:.88rem;line-height:1.75;margin-bottom:.45rem">If you called them in, if you asked them to help — you did not cause this. Kitchen accidents happen in seconds. You could not have predicted it.</p>
+      <p style="font-size:.88rem;line-height:1.75"><strong>Your feelings are real, and they deserve space. This is taking care of yourself so you can show up for the people you love.</strong></p>
+    </div>
+    <div class="aff"><p>"You are allowed to struggle even if they seem okay. Your healing matters too." 💛</p></div>
+    <button class="btn bwi" onclick="goTo('s-bground');earn(15,'Reflected with courage +15 🪙')">I hear that. Keep going →</button>
+  </div>
+</div>
+
+<!-- B: SAFE PLACE -->
+<div class="screen" id="s-bground">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">🌈 Find your calm place</h2>
+    <div class="sub">Before we think about the kitchen, let's build a mental home base — somewhere calm and steady, just for you.</div>
+    <div class="qb">Where do you feel most calm and at ease? Pick all that fit ✨</div>
+    <div id="safe-b">
+      <div class="si" onclick="togSafe(this,'trees-b')"><span class="se">🌲</span><span class="st">Outside, near trees or nature</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'couch-b')"><span class="se">🛋️</span><span class="st">On a cozy couch</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'window-b')"><span class="se">☀️</span><span class="st">By a warm sunny window</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'pet-b')"><span class="se">🐾</span><span class="st">With a pet nearby</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'person-b')"><span class="se">🤝</span><span class="st">With someone I trust</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'music-b')"><span class="se">🎵</span><span class="st">With calm music playing</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'water-b')"><span class="se">🌊</span><span class="st">Near water — ocean, lake, river</span><span class="sc">✅</span></div>
+      <div class="si" onclick="togSafe(this,'bed-b')"><span class="se">🛏️</span><span class="st">In my own bed, warm and comfortable</span><span class="sc">✅</span></div>
+    </div>
+    <div id="safe-resp-b" style="display:none" class="aff"><p>That place is real. It lives inside you. You can return there any time — just close your eyes and breathe.</p></div>
+    <button class="btn bwi" id="safenext-b" onclick="goTo('s-bfears');earn(15,'Calm place found! +15 🪙')" style="display:none">I've found my calm place ✨</button>
+  </div>
+</div>
+
+<!-- B: FEARS -->
+<div class="screen" id="s-bfears">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">😟 What's been hard</h2>
+    <div class="sub">Naming a fear takes some of its power away. Pick everything that feels true.</div>
+    <button class="ch" data-e="🔁" onclick="togBFear(this)">I keep seeing it happen — even when I'm not in the kitchen</button>
+    <button class="ch" data-e="😰" onclick="togBFear(this)">I feel panicky when anyone goes near the stove</button>
+    <button class="ch" data-e="👃" onclick="togBFear(this)">Smells — even normal cooking smells — bring it all back</button>
+    <button class="ch" data-e="🔊" onclick="togBFear(this)">Sounds — sizzling, popping — make me freeze</button>
+    <button class="ch" data-e="♨️" onclick="togBFear(this)">Heat or steam near anyone I love is really hard to watch</button>
+    <button class="ch" data-e="🚫" onclick="togBFear(this)">I've taken over cooking so the person I love doesn't have to</button>
+    <button class="ch" data-e="🙈" onclick="togBFear(this)">I avoid the kitchen or find reasons not to be in there</button>
+    <button class="ch" data-e="😔" onclick="togBFear(this)">I feel like I have to hold it together for them — and I'm exhausted</button>
+    <button class="ch" data-e="💔" onclick="togBFear(this)">I feel like something changed in our home that I can't name</button>
+    <div id="bfear-resp" class="card cv" style="display:none;margin-top:.75rem">
+      <div style="font-weight:800;margin-bottom:.45rem">💑 You named them. That took real courage.</div>
+      <p style="font-size:.86rem;line-height:1.7">Every single thing you checked is a normal response to witnessing a traumatic event. Research shows that people who witness a serious injury can experience the same unease, avoidance, and unwanted memories as the person who was hurt. <strong>Your experience is real, and you deserve real support for it.</strong></p>
+    </div>
+    <button class="btn bwi" id="bfearnext" onclick="goTo('s-breframe');earn(20,'Named bravely! +20 🪙')" style="display:none">I named them 💪</button>
+  </div>
+</div>
+
+<!-- B: REFRAME -->
+<div class="screen" id="s-breframe">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">🔄 A different way to see it</h2>
+    <div class="sub">You don't have to believe the new thought yet. Just try it on.</div>
+    <div class="rfp"><div class="rfo">🔴 "I should have stopped it."</div><div class="rfa">→</div><div class="rfn">🟢 "It happened in seconds. No one could have predicted it. I was there because I care."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I asked them to help — this is my fault."</div><div class="rfa">→</div><div class="rfn">🟢 "I asked someone I trusted to do something normal. That is not causing an accident."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I shouldn't struggle — they're the one who got hurt."</div><div class="rfa">→</div><div class="rfn">🟢 "Watching someone you love get hurt IS traumatic. My feelings are real and they deserve space."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "I'll never feel safe watching anyone cook again."</div><div class="rfa">→</div><div class="rfn">🟢 "Right now is hard. This kind of unease does get better. Many people find their way back to safe kitchens."</div></div>
+    <div class="rfp"><div class="rfo">🔴 "The kitchen isn't safe anymore."</div><div class="rfa">→</div><div class="rfn">🟢 "The kitchen is a tool. Right now it is still. Safety comes from knowledge and practice — not avoidance."</div></div>
+    <div class="qb">Which one feels closest to true right now? Write it your way:</div>
+    <textarea id="breframe-text" placeholder="Any version is the right version..." aria-label="Your reframe"></textarea>
+    <button class="btn bwi" onclick="goTo('s-bladder');earn(20,'New lens! +20 🪙')">I've got a new way to see it 🔄</button>
+  </div>
+</div>
+
+<!-- B: LADDER -->
+<div class="screen" id="s-bladder">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">🪜 Your ladder — toward feeling better</h2>
+    <div class="sub">Your goal is a feeling, not a task. Each step here is about being present — not about cooking. Tap a step only after you've actually tried it. No rushing.</div>
+    <div id="ladder-b"></div>
+    <div id="ladder-done-b" style="display:none" class="card cv" style="text-align:center;margin-top:.75rem"><div style="font-size:1.8rem;margin-bottom:.18rem">🏆</div><div style="font-weight:800">You climbed your whole ladder. That is extraordinary.</div></div>
+    <button class="btn bwi" id="laddernext-b" onclick="goTo('s-bimagine');earn(30,'Ladder explored! +30 🪙')" style="margin-top:.75rem">Ready to imagine it →</button>
+  </div>
+</div>
+
+<!-- B: IMAGINE -->
+<div class="screen" id="s-bimagine">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">✨ Picture it going well</h2>
+    <div class="sub">Read each step, then close your eyes and picture it for at least 60 seconds. Take as much time as you need.</div>
+    <div class="card ck" style="margin-bottom:.75rem">
+      <div style="font-weight:800;margin-bottom:.55rem">🎬 Take your time with each step.</div>
+      <div class="ims"><div class="inn">1</div><p>You're near your kitchen. You feel a little on edge. That's okay. You breathe once. You remind yourself: right now, everyone is safe.</p></div>
+      <div class="ims"><div class="inn">2</div><p>Someone you trust is in the kitchen. You watch from a distance. Their movements are calm and normal. Nothing bad is happening.</p></div>
+      <div class="ims"><div class="inn">3</div><p>You step closer. You lean against the doorframe. You're here. The kitchen smells ordinary. Everything is still.</p></div>
+      <div class="ims"><div class="inn">4</div><p>You sit at the table while a meal is being made. You hear normal sounds. You notice your shoulders drop a little. You're okay.</p></div>
+      <div class="ims"><div class="inn">5</div><p>The meal is ready. You're still here. You made it through without leaving. That's the whole step.</p></div>
+    </div>
+    <div class="timer-box" id="viz-timer-box-b">
+      <div class="timer-num" id="viz-timer-num-b">1:00</div>
+      <div class="timer-lbl" id="viz-timer-lbl-b">Take your time with the pictures above</div>
+      <div class="timer-btns">
+        <button class="tbtn" onclick="startVizTimerB(60)" id="tstartB">Start 60 seconds</button>
+        <button class="tbtn" onclick="startVizTimerB(90)">90 seconds</button>
+        <button class="tbtn" onclick="startVizTimerB(120)">2 minutes</button>
+        <button class="tbtn" onclick="resetVizTimerB()">Reset</button>
+      </div>
+    </div>
+    <div class="qb">How did that feel? What part felt most possible right now?</div>
+    <textarea id="bimagine-text" placeholder="Even step 1 counts..." aria-label="Witness visualization reflection"></textarea>
+    <div class="aff"><p>"Being present in the same space as the kitchen — that's real progress. You don't have to cook. You just have to be there." 💑</p></div>
+    <button class="btn bwi" onclick="goTo('s-bptg');earn(25,'Visualized! +25 🪙')">I can picture it 🌟</button>
+  </div>
+</div>
+
+<!-- B: PTG -->
+<div class="screen" id="s-bptg">
+  <div class="card">
+    <span class="path-badge badge-b">Your path 💑</span>
+    <h2 class="h2">🌱 What this has shown you</h2>
+    <div class="sub">Witnesses often discover things about themselves they didn't expect.</div>
+    <div class="ptgc">
+      <p style="font-size:.86rem;line-height:1.75;margin-bottom:.45rem">Research shows that people who witness a traumatic event — not just those who experience it directly — often develop new strengths and perspectives they didn't have before. It happens to caregivers, partners, parents, and witnesses.</p>
+      <p style="font-size:.86rem;line-height:1.75">It doesn't mean what happened was okay. It means you are more than what happened.</p>
+    </div>
+    <div class="qcard"><p>"Courage is not the absence of fear, but the judgment that something else is more important than fear."</p><div class="qa">— Ambrose Redmoon</div></div>
+    <div class="qb">Has anything surprised you about yourself since this happened?</div>
+    <textarea id="bptg-text" placeholder="You don't have to answer. But if something comes up, it might be worth writing down..." aria-label="PTG reflection witness"></textarea>
+    <div class="aff"><p>"You have been carrying something heavy — and you showed up today anyway. That took real strength." 💑</p></div>
+    <button class="btn bwi" onclick="goTo('s-bcelebrate');earn(20,'Growth recognized! +20 🪙');buildBCel()">See how far you've come →</button>
+  </div>
+</div>
+
+<!-- B: CELEBRATE -->
+<div class="screen" id="s-bcelebrate">
+  <div style="text-align:center;padding:1.5rem 0 .5rem">
+    <div class="confetti">🎉💑🏆🌸✨</div>
+    <h1 class="h1" style="text-align:center">You did this.</h1>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:.25rem">Look at what just happened.</p>
+  </div>
+  <div class="card cv">
+    <div style="font-weight:800;margin-bottom:.6rem">💑 Today you:</div>
+    <ul style="font-size:.86rem;line-height:2;padding-left:1.1rem">
+      <li>Said out loud that this has been hard for you too</li>
+      <li>Named what you've been carrying — without minimizing it</li>
+      <li>Found a calm place inside yourself</li>
+      <li>Explored your own ladder — at your pace</li>
+      <li>Pictured a kitchen that feels safe again</li>
+      <li>Recognized your own strength</li>
+    </ul>
+  </div>
+  <div class="card" style="text-align:center">
+    <div style="font-size:2.2rem">🪙</div>
+    <div style="font-weight:800;font-size:1.1rem">Courage Coins: <span id="bfinal-coins" style="color:var(--peach)">0</span></div>
+    <div style="font-size:.8rem;color:var(--muted);margin-top:.12rem">Every coin is a real step you took today.</div>
+  </div>
+  <div class="card cy" style="text-align:center;padding:1.2rem">
+    <div style="font-size:3rem;margin-bottom:.28rem">🏅</div>
+    <div style="font-weight:800">Witnessed Courage — Earned</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself, and for the people you love.</div>
+  </div>
+  <div class="aff"><p>"Taking care of yourself is part of caring for them. When you feel steadier, you can be more present for the people you love. That matters more than you might think." 💑</p></div>
+  <div class="card cw">
+    <div style="font-weight:800;margin-bottom:.38rem">📱 Save this app</div>
+    <p style="font-size:.83rem;color:var(--muted);line-height:1.65">Bookmark this page or save to your home screen. Come back whenever you need it — no schedule required.</p>
+  </div>
+  <button class="btn bwi" onclick="goTo('s-resources')">See support & resources 🤝</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     SHARED: CELEBRATION (Path A)
+══════════════════════════════════════ -->
+<div class="screen" id="s-celebrate">
+  <div style="text-align:center;padding:1.5rem 0 .5rem">
+    <div class="confetti">🎉🌿🏆🌸✨🍳</div>
+    <h1 class="h1" style="text-align:center">You did this.</h1>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:.25rem">Look at what changed.</p>
+  </div>
+  <div class="card" id="delta-card">
+    <div style="font-weight:800;text-align:center;margin-bottom:.65rem">How you felt — then vs. now:</div>
+    <div class="dg">
+      <div class="db"><div class="dn" id="d-start" style="color:var(--peach)">—</div><div class="dl">When you arrived</div></div>
+      <div class="da">→</div>
+      <div class="db"><div class="dn" id="d-end" style="color:var(--sage)">—</div><div class="dl">Right now</div></div>
+    </div>
+    <p id="d-msg" style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:.45rem;font-style:italic"></p>
+  </div>
+  <div class="card cs">
+    <div style="font-weight:800;margin-bottom:.55rem">🌟 Today you:</div>
+    <ul style="font-size:.85rem;line-height:2;padding-left:1.1rem">
+      <li>Reflected on what happened — and found a kinder way to see it</li>
+      <li>Identified your triggers and made a plan for them</li>
+      <li>Named your fears — that is a real clinical tool</li>
+      <li>Built your own safe mental space</li>
+      <li>Learned your safety kit — mitts, timers, lids</li>
+      <li>Worked your comeback ladder at your own pace</li>
+      <li>Pictured yourself succeeding</li>
+      <li>Made a plan that fits you</li>
+    </ul>
+  </div>
+  <div class="card" style="text-align:center">
+    <div style="font-size:2.3rem">🪙</div>
+    <div style="font-weight:800;font-size:1.1rem">Courage Coins: <span id="final-coins" style="color:var(--peach)">0</span></div>
+    <div style="font-size:.8rem;color:var(--muted);margin-top:.12rem">Every coin is a real step you took today.</div>
+  </div>
+  <div class="card cy" style="text-align:center;padding:1.2rem">
+    <div style="font-size:3rem;margin-bottom:.28rem">🏅</div>
+    <div style="font-weight:800">Kitchen Courage — Earned</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-top:.18rem">For showing up for yourself when it was hard.</div>
+  </div>
+  <div class="aff"><p>"You made it home. You showed up for yourself. You are still someone who can take care of the people you love — and that hasn't changed one bit." 🏠💛</p></div>
+  <div class="card cw">
+    <div style="font-weight:800;margin-bottom:.38rem">📱 Save this app</div>
+    <p style="font-size:.83rem;color:var(--muted);line-height:1.65">Bookmark this page or save to your home screen. Come back whenever you need it — no schedule required. Your progress is saved on this device.</p>
+  </div>
+  <div class="card ck" style="font-size:.83rem;line-height:1.65">
+    <div style="font-weight:800;margin-bottom:.38rem">💬 For the hard days:</div>
+    <p style="color:var(--muted)">Go back to your calm place first. Then breathe. Then take the tiniest step. Even standing at the edge of your kitchen counts. Every moment of trying counts — even the ones that feel small.</p>
+  </div>
+  <button class="btn bsg" onclick="goTo('s-resources')">See support & resources 🤝</button>
+  <button class="bout" onclick="goTo('s-aladder')">Return to the ladder →</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     SHARED: RESOURCES
+══════════════════════════════════════ -->
+<div class="screen" id="s-resources">
+  <div class="card">
+    <h2 class="h2">🤝 You deserve real support</h2>
+    <div class="sub">This app is a companion — not a replacement for professional care. Here's who can help.</div>
+    <div class="ri">
+      <div class="ric">🏥</div>
+      <div>
+        <h4>North Carolina Jaycee Burn Center — Aftercare Program</h4>
+        <p>Your aftercare team is still here for you — questions about healing, anxiety, returning to daily life, peer support, or just checking in. All welcome.</p>
+        <p><a href="https://www.med.unc.edu/surgery/burn/" target="_blank" aria-label="NC Jaycee Burn Center website">med.unc.edu/surgery/burn</a></p>
+        <p>Email: <a href="mailto:burn_aftercare@med.unc.edu" aria-label="Email burn aftercare">burn_aftercare@med.unc.edu</a></p>
+      </div>
+    </div>
+    <div class="ri">
+      <div class="ric">🦅</div>
+      <div>
+        <h4>Phoenix Society for Burn Survivors</h4>
+        <p>The leading national nonprofit for burn survivors and their families. Peer support, community, and hundreds of free resources.</p>
+        <p><a href="https://phoenix-society.org" target="_blank" aria-label="Phoenix Society website">phoenix-society.org</a> · <a href="tel:18008882876" aria-label="Phoenix Society phone">1-800-888-2876</a></p>
+        <p><strong>Phoenix SOAR:</strong> One-on-one peer support from trained burn survivor volunteers — free, available to survivors <em>and</em> witnesses. <a href="https://resources.phoenix-society.org/phoenix-soar" target="_blank" aria-label="Phoenix SOAR">Request a visit →</a></p>
+        <p><strong>Free survivor toolkit:</strong> <a href="https://resources.phoenix-society.org/burn-survivor-toolkit" target="_blank" aria-label="Survivor toolkit">Download →</a></p>
+      </div>
+    </div>
+    <div class="ri">
+      <div class="ric">🧠</div>
+      <div>
+        <h4>Find a therapist</h4>
+        <p>A therapist trained in trauma — CBT, EMDR, or CPT — can help significantly with kitchen anxiety, PTSD symptoms, and secondary trauma. Your burn team can refer you, or search directly:</p>
+        <p><a href="https://www.psychologytoday.com/us/therapists" target="_blank" aria-label="Psychology Today therapist finder">Psychology Today therapist finder →</a></p>
+        <p><a href="https://www.samhsa.gov/find-help/national-helpline" target="_blank" aria-label="SAMHSA treatment locator">SAMHSA treatment locator →</a></p>
+      </div>
+    </div>
+    <div class="ri">
+      <div class="ric">📱</div>
+      <div>
+        <h4>Crisis support — if things feel unmanageable right now</h4>
+        <p><a href="tel:988" aria-label="988 crisis line">988 Suicide & Crisis Lifeline</a> — call or text 988, free, 24/7</p>
+        <p>Crisis Text Line: Text HOME to 741741</p>
+        <p><a href="tel:18006624357" aria-label="SAMHSA helpline">SAMHSA: 1-800-662-4357</a> — free, confidential, 24/7</p>
+      </div>
+    </div>
+  </div>
+  <button class="btn bpe" onclick="history.back()">← Go back</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     CALM OVERLAY
+══════════════════════════════════════ -->
+<div class="ov" id="calm-ov" onclick="closeOv('calm-ov',event)" role="dialog" aria-modal="true" aria-label="Calming tools">
+  <div class="pnl">
+    <h2 class="h2" style="margin-bottom:.12rem">🌿 Take a moment</h2>
+    <p class="sub">Choose what feels right. Nothing is required.</p>
+    <div class="co" onclick="showCalm('senses')"><div class="ch2"><span>👋</span>5-4-3-2-1 Senses</div><div class="cd2">Mind spinning? Use your senses to come back to right now.</div></div>
+    <div class="co" onclick="showCalm('belly')"><div class="ch2"><span>🌬️</span>Belly breathing</div><div class="cd2">Chest tight? Gentle, slow, hard to do wrong.</div></div>
+    <div class="co" onclick="showCalm('box')"><div class="ch2"><span>⬜</span>Box breathing</div><div class="cd2">Want a rhythm to hold onto? (Try belly breathing if counting makes it harder.)</div></div>
+    <div class="co" onclick="showCalm('nature')"><div class="ch2"><span>🌊</span>Nature moment</div><div class="cd2">Too many words? One quiet minute somewhere peaceful — with sound.</div></div>
+    <div class="co" onclick="showCalm('scan')"><div class="ch2"><span>🧘</span>Body scan</div><div class="cd2">Tension somewhere you can't locate? A gentle head-to-feet check-in.</div></div>
+    <div class="co" onclick="showCalm('talk')"><div class="ch2"><span>💬</span>Grounding self-talk</div><div class="cd2">Flashback or feeling like it's happening again? Words that bring you back.</div></div>
+    <div class="co" onclick="showCalm('joy')"><div class="ch2"><span>😄</span>Something joyful</div><div class="cd2">Puppies, kittens, a great quote, or something funny. Sometimes that's the medicine.</div></div>
+    <div id="calm-content" style="display:none;margin-top:.75rem"></div>
+    <button class="bout" onclick="closeOv('calm-ov')" style="margin-top:.75rem" aria-label="Close calming tools">Close</button>
+  </div>
+</div>
+
+<!-- FUN BREAK MODAL -->
+<div class="mc" id="break-mc" onclick="closeOv('break-mc',event)" role="dialog" aria-modal="true" aria-label="Fun break">
+  <div class="mb">
+    <div id="break-content"></div>
+    <div id="break-extra" style="display:none;margin-top:.75rem"></div>
+    <button class="btn bsg" id="break-cont" onclick="continueBreak()">Continue →</button>
+  </div>
+</div>
+
+</div>
+<script>
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+const SK='bttk_v4a';
+let S={coins:0,anx1:5,anx2:5,path:'A',teenMode:false,safePlaces:[],fears:[],wsFound:[],ladderADone:[],ladderBDone:[],screen:'s-welcome'};
+try{const d=JSON.parse(localStorage.getItem(SK));if(d)S=Object.assign(S,d);}catch(e){}
+function save(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+
+const ANX={1:'Barely at all',2:'Just a little',3:'A bit unsettled',4:'Somewhat on edge',5:'Noticeably hard',6:'Pretty hard',7:'Very hard',8:'Really hard to think about',9:'Overwhelmed',10:'As hard as it gets right now'};
+
+// ══════════════════════════════════════
+// NAV
+// ══════════════════════════════════════
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el){el.classList.add('active');S.screen=id;save();window.scrollTo({top:0,behavior:'smooth'});}
+}
+
+// ══════════════════════════════════════
+// COINS
+// ══════════════════════════════════════
+function earn(n,msg){
+  S.coins+=n;save();
+  document.getElementById('cc').textContent=S.coins;
+  document.getElementById('pf').style.width=Math.min(S.coins/300*100,100)+'%';
+  document.getElementById('lv').textContent='Lv '+(S.coins<60?1:S.coins<130?2:S.coins<220?3:4);
+  toast('✨ '+msg);
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+// Use show class
+document.getElementById('toast').style.transition='transform .4s cubic-bezier(.4,0,.2,1)';
+document.getElementById('toast').addEventListener('transitionend',function(){});
+// Inject show rule
+const toastStyle=document.createElement('style');
+toastStyle.textContent='#toast.show{transform:translateX(-50%) translateY(0)!important;}';
+document.head.appendChild(toastStyle);
+
+// ══════════════════════════════════════
+// WELCOME / PATH
+// ══════════════════════════════════════
+let pathChosen=false, feelingChosen=false, reentryChosen=false;
+S.reentry = S.reentry || 'none'; // none | once | few | regular
+function tog(btn,key){
+  btn.classList.toggle('on');
+  feelingChosen=true;
+  // Show been-back block once any feeling is picked
+  document.getElementById('been-back-block').style.display='block';
+  checkWelcomeNext();
+}
+function setPath(p,btn){
+  S.path=p;save();
+  document.querySelectorAll('#s-welcome .ch[onclick^="setPath"]').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  pathChosen=true;
+  checkWelcomeNext();
+}
+function setReentry(type,btn){
+  S.reentry=type;save();
+  document.querySelectorAll('#been-back-block .ch').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  reentryChosen=true;
+  // Show who-are-you block
+  document.getElementById('path-block').style.display='block';
+  checkWelcomeNext();
+}
+function checkWelcomeNext(){
+  if(pathChosen && reentryChosen)document.getElementById('wnext').style.display='block';
+}
+
+// Reentry acknowledgment messages
+const REENTRY_ACK = {
+  none: null,
+  once: {
+    title: "You have already taken the hardest step.",
+    body: "Going back once, even when it was hard, even when you had to — that counts. The fact that it was difficult does not mean you failed. It means you were dealing with something real. This app will help you find a way to be there that feels steadier."
+  },
+  few: {
+    title: "You have been back — and you are still working through it.",
+    body: "That is completely normal. Going back does not automatically make the unease go away. Some people go back regularly and still feel on edge every time. This app is for exactly that — helping your body catch up to where you already are."
+  },
+  regular: {
+    title: "You are in the kitchen — and something still does not feel right.",
+    body: "That makes sense. Being back and feeling okay are two different things. A lot of people return out of necessity long before they feel settled there. You are not behind. Your body is still processing something that was genuinely hard. You are in the right place."
+  }
+};
+
+// Ladder start point by reentry status (skip early steps)
+const REENTRY_LADDER_START = {
+  none: 0,    // start at step 1
+  once: 2,    // start at step 3 — they've crossed the threshold
+  few: 4,     // start at step 5 — they've done cold tasks
+  regular: 6  // start at step 7 — they're dealing with heat
+};
+
+const REENTRY_LADDER_NOTE = {
+  none: null,
+  once: "Since you have already been back once or twice, the first steps may feel familiar. Start wherever feels right — earlier steps are there if you want them.",
+  few: "You have already been back a few times, so feel free to start further up the ladder at a step that matches where you actually are. Earlier steps are always available.",
+  regular: "You are already back in the kitchen regularly — your ladder starts with the harder steps. Earlier rungs are still there any time you want them."
+};
+
+function startGame(){
+  document.getElementById('bar').classList.add('on');
+  earn(10,'You showed up! +10 🪙');
+  // Set reentry acknowledgment for dream screen
+  const ack = REENTRY_ACK[S.reentry];
+  const ackEl = document.getElementById('reentry-ack');
+  if(ack && ackEl){
+    ackEl.innerHTML = `<div class="card ct" style="margin-bottom:.1rem"><div style="font-weight:800;font-size:.92rem;margin-bottom:.38rem">🌿 ${ack.title}</div><p style="font-size:.86rem;line-height:1.75;">${ack.body}</p></div>`;
+    ackEl.style.display = 'block';
+  }
+  // Set ladder start note
+  const lnote = REENTRY_LADDER_NOTE[S.reentry];
+  const lnoteEl = document.getElementById('ladder-reentry-note');
+  if(lnote && lnoteEl){
+    lnoteEl.innerHTML = `<div class="card cy" style="font-size:.84rem;line-height:1.65;">💡 ${lnote}</div>`;
+    lnoteEl.style.display = 'block';
+  }
+  if(S.path==='B') goTo('s-bwelcome');
+  else goTo('s-adream');
+}
+
+// ══════════════════════════════════════
+// CHECK-IN SCALE
+// ══════════════════════════════════════
+function setAnx(n,v){
+  if(n===1){S.anx1=v;const s=document.getElementById('anx1-show');if(s)s.textContent=v;}
+  else S.anx2=v;
+  save();
+  const nn=document.getElementById('anx'+n+'n'),nl=document.getElementById('anx'+n+'l');
+  if(nn)nn.textContent=v;if(nl)nl.textContent=ANX[v]||'';
+  if(n===1){
+    const msgs=['That is a calm starting point — wonderful.','Pretty calm. A good place to begin.','A little uneasy — very understandable.','Some discomfort, but you showed up. That\'s real.','Noticeably hard — we\'ll go gently.','That\'s a lot right now. Small steps, no rush.','This is really hard right now. This app can help — no pressure.','That\'s a lot right now. Let\'s go slowly.','At 9, a calming tool first might really help.','A 10 is overwhelming. Please try the calm toolkit before going on.'];
+    const r=document.getElementById('anx1r'),rt=document.getElementById('anx1rt');
+    if(r)r.style.display='block';if(rt)rt.textContent=msgs[v-1];
+    const hi=document.getElementById('anx1hi');if(hi)hi.style.display=v>=9?'block':'none';
+    const nx=document.getElementById('anx1next');if(nx)nx.style.display='block';
+  }
+}
+
+// ══════════════════════════════════════
+// SAFE PLACE
+// ══════════════════════════════════════
+function togSafe(el,key){
+  el.classList.toggle('on');
+  if(!S.safePlaces.includes(key))S.safePlaces.push(key);else S.safePlaces=S.safePlaces.filter(k=>k!==key);save();
+  const pathSuffix=S.path==='B'?'-b':'-a';
+  const resp=document.getElementById('safe-resp'+pathSuffix);
+  const nxt=document.getElementById('safenext'+pathSuffix);
+  if(S.safePlaces.filter(k=>S.path==='B'?k.endsWith('-b'):!k.endsWith('-b')).length>=2){
+    if(resp)resp.style.display='block';if(nxt)nxt.style.display='block';
+  }
+}
+
+// ══════════════════════════════════════
+// FEARS
+// ══════════════════════════════════════
+function togGF(btn){btn.classList.toggle('on');document.getElementById('aguilt-resp').style.display='block';}
+function togFear(btn){
+  btn.classList.toggle('on');
+  document.getElementById('fear-resp-a').style.display='block';
+  document.getElementById('fearnext-a').style.display='block';
+}
+function togBGF(btn){btn.classList.toggle('on');document.getElementById('bguilt-resp').style.display='block';}
+function togBFear(btn){
+  btn.classList.toggle('on');
+  document.getElementById('bfear-resp').style.display='block';
+  document.getElementById('bfearnext').style.display='block';
+}
+
+// ══════════════════════════════════════
+// SUPPORT
+// ══════════════════════════════════════
+function pickSup(type,btn){
+  S.support=type;save();
+  document.querySelectorAll('#s-asupport .ch').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const msgs={
+    partner:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>Having someone at home is a real advantage.</strong> Ask them to simply be in the house — not in the kitchen — while you try a step. Their presence matters even from another room.</div>`,
+    family:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>Having people nearby genuinely helps.</strong> Even knowing someone is a text away can help your body settle. You might ask a trusted person to be available by phone for your first few kitchen attempts.</div>`,
+    solo:`<div class="card ct" style="font-size:.85rem;line-height:1.7"><strong>If you're on your own right now, here's what tends to help:</strong><br><br>• <strong>Phoenix SOAR</strong> — free, one-on-one support from someone who's actually been through a burn injury, by phone or video. You don't have to do this alone: <a href="https://resources.phoenix-society.org/phoenix-soar" target="_blank" style="color:var(--teal);font-weight:700">phoenix-society.org/phoenix-soar</a><br>• Keep your phone nearby during your first kitchen attempts<br>• Let one person know what you're trying: "I'm going to stand at the kitchen doorway today" — so someone is aware<br>• The 🌿 Pause button in this app is always there, any time</div>`,
+    varies:`<div class="card cs" style="font-size:.85rem;line-height:1.7"><strong>This app works both ways.</strong> On days you have support, use it. On solo days, the calming toolkit and Phoenix SOAR peer support are always available.</div>`
+  };
+  document.getElementById('sup-resp').innerHTML=msgs[type]||'';
+  document.getElementById('sup-resp').style.display='block';
+  document.getElementById('supnext').style.display='block';
+}
+
+// ══════════════════════════════════════
+// TRIGGERS
+// ══════════════════════════════════════
+function showTrigDeep(){
+  document.getElementById('trig-deep').style.display='block';
+  document.getElementById('trig-more').style.display='none';
+  document.getElementById('trig-deep').scrollIntoView({behavior:'smooth'});
+}
+
+// ══════════════════════════════════════
+// WORD SEARCH
+// ══════════════════════════════════════
+const WSW=['STRONG','COURAGE','STEADY','NOURISH','HEAL','SAFE','BRAVE','GROW'];
+const WSZ=10;
+let wsG=[],wsP=[],wsSel=false,wsStart=null;
+function buildWS(){
+  const g=Array.from({length:WSZ},()=>Array(WSZ).fill(''));
+  const dirs=[[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+  wsP=[];
+  for(const w of WSW){
+    let ok=false,t=0;
+    while(!ok&&t++<300){
+      const d=dirs[Math.floor(Math.random()*dirs.length)];
+      const r=Math.floor(Math.random()*WSZ),c=Math.floor(Math.random()*WSZ);
+      const cs=[];let v=true;
+      for(let i=0;i<w.length;i++){
+        const nr=r+d[0]*i,nc=c+d[1]*i;
+        if(nr<0||nr>=WSZ||nc<0||nc>=WSZ){v=false;break;}
+        if(g[nr][nc]&&g[nr][nc]!==w[i]){v=false;break;}
+        cs.push([nr,nc]);
+      }
+      if(v){cs.forEach(([nr,nc],i)=>g[nr][nc]=w[i]);wsP.push({word:w,cells:cs});ok=true;}
+    }
+  }
+  for(let r=0;r<WSZ;r++)for(let c=0;c<WSZ;c++)if(!g[r][c])g[r][c]='ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random()*26)];
+  wsG=g;
+  const cont=document.getElementById('ws-grid');if(!cont)return;
+  cont.innerHTML='';
+  for(let r=0;r<WSZ;r++)for(let c=0;c<WSZ;c++){
+    const el=document.createElement('div');
+    el.className='wsc'+(S.wsFound.includes(wsP.find(p=>p.cells.some(([pr,pc])=>pr===r&&pc===c))?.word)?' found':'');
+    el.textContent=g[r][c];el.dataset.r=r;el.dataset.c=c;
+    el.setAttribute('role','gridcell');el.setAttribute('aria-label',g[r][c]);
+    el.addEventListener('mousedown',()=>{wsStart=[+el.dataset.r,+el.dataset.c];wsSel=true;wsHL(wsStart,wsStart);});
+    el.addEventListener('mouseover',()=>{if(wsSel)wsHL(wsStart,[+el.dataset.r,+el.dataset.c]);});
+    el.addEventListener('mouseup',()=>{if(wsSel){wsSel=false;wsCk(wsStart,[+el.dataset.r,+el.dataset.c]);}});
+    el.addEventListener('touchstart',e=>{e.preventDefault();wsStart=wsTC(e.touches[0]);wsSel=true;},{passive:false});
+    el.addEventListener('touchmove',e=>{e.preventDefault();if(wsSel){const en=wsTC(e.touches[0]);if(en)wsHL(wsStart,en);}},{passive:false});
+    el.addEventListener('touchend',e=>{e.preventDefault();if(wsSel){wsSel=false;const en=wsTC(e.changedTouches[0]);if(en)wsCk(wsStart,en);}},{passive:false});
+    cont.appendChild(el);
+  }
+  const wl=document.getElementById('ws-list');if(!wl)return;
+  wl.innerHTML='';
+  WSW.forEach(w=>{const b=document.createElement('div');b.className='wb'+(S.wsFound.includes(w)?' found':'');b.id='wb-'+w;b.textContent=w;b.setAttribute('role','listitem');wl.appendChild(b);});
+  if(S.wsFound.length===WSW.length){const d=document.getElementById('ws-done'),n=document.getElementById('wsnext');if(d)d.style.display='block';if(n)n.style.display='block';}
+}
+function wsTC(t){const el=document.elementFromPoint(t.clientX,t.clientY);return el&&el.classList.contains('wsc')?[+el.dataset.r,+el.dataset.c]:null;}
+function wsCB(a,b){
+  if(!a||!b)return[];
+  const[r1,c1]=a,[r2,c2]=b,dr=r2-r1,dc=c2-c1,len=Math.max(Math.abs(dr),Math.abs(dc));
+  if(len===0)return[a];
+  if(dr!==0&&dc!==0&&Math.abs(dr)!==Math.abs(dc))return[];
+  const sr=dr===0?0:dr/Math.abs(dr),sc=dc===0?0:dc/Math.abs(dc),res=[];
+  for(let i=0;i<=len;i++)res.push([r1+sr*i,c1+sc*i]);
+  return res;
+}
+function wsHL(a,b){
+  document.querySelectorAll('.wsc:not(.found)').forEach(c=>c.classList.remove('sel'));
+  wsCB(a,b).forEach(([r,c])=>{const el=document.querySelector(`.wsc[data-r="${r}"][data-c="${c}"]`);if(el&&!el.classList.contains('found'))el.classList.add('sel');});
+}
+function wsCk(a,b){
+  const line=wsCB(a,b);
+  const str=line.map(([r,c])=>wsG[r][c]).join(''),rev=str.split('').reverse().join('');
+  document.querySelectorAll('.wsc.sel').forEach(c=>c.classList.remove('sel'));
+  for(const p of wsP){
+    if(p.cells.length!==line.length||S.wsFound.includes(p.word))continue;
+    const ps=p.cells.map(([r,c])=>wsG[r][c]).join('');
+    if(str===ps||rev===ps){
+      const lk=line.map(x=>x.join(',')).sort().join('|'),pk=p.cells.map(x=>x.join(',')).sort().join('|');
+      if(lk===pk){
+        S.wsFound.push(p.word);save();
+        p.cells.forEach(([r,c])=>{const el=document.querySelector(`.wsc[data-r="${r}"][data-c="${c}"]`);if(el){el.classList.remove('sel');el.classList.add('found');}});
+        const badge=document.getElementById('wb-'+p.word);if(badge)badge.classList.add('found');
+        earn(5,p.word+' found! +5 🪙');
+        if(S.wsFound.length===WSW.length){const d=document.getElementById('ws-done'),n=document.getElementById('wsnext');if(d)d.style.display='block';if(n)n.style.display='block';}
+        break;
+      }
+    }
+  }
+}
+
+// ══════════════════════════════════════
+// LADDERS
+// ══════════════════════════════════════
+const LA=[
+  {id:'la1',i:'🪑',t:'Sit near the kitchen',d:'Just be near the space — on the couch, at a table nearby. Read, scroll, have tea. Five minutes is a full win.',anx:'Very low',r:{hard:'Just being near the space took something. You stayed.',managed:'You were near your kitchen. That is the beginning.',ok:'Your body is already starting to learn this space is okay.'}},
+  {id:'la2',i:'👁️',t:'Stand at the doorway — or the kitchen\'s edge',d:'Look in without entering. If your kitchen is open-plan, stand where the space begins — the end of the counter, the change in flooring. Notice what you see. Breathe. Step back whenever you want.',anx:'Low',r:{hard:'You looked at the hard thing. That is brave.',managed:'You looked. That matters more than it sounds.',ok:'Already further than you think.'}},
+  {id:'la3',i:'👣',t:'Step inside — stay near the edge',d:'Enter and stay close to where you came in. Look around slowly. Touch the doorframe if you like. Two minutes is a full win.',anx:'Low–moderate',r:{hard:'You crossed the threshold. That\'s the hardest part.',managed:'You were in the kitchen. On your terms.',ok:'Inside your kitchen, breathing normally. Look at that.'}},
+  {id:'la4',i:'🚰',t:'Walk to the sink',d:'Turn on cold water. Let it run over your hands. Feel the temperature and pressure. This brings you right into the present moment.',anx:'Moderate',r:{hard:'Cold water is a proven grounding tool. You felt it.',managed:'Sink reached. Hands in water. You\'re taking it back.',ok:'Something ordinary feels ordinary again. That\'s the goal.'}},
+  {id:'la5',i:'🫖',t:'Boil the kettle only',d:'Fill it, turn it on, step back to wherever feels comfortable. Watch from across the room if needed. The kettle is enclosed heat — nothing splashes, nothing flames.',anx:'Moderate',r:{hard:'You turned something on and turned it off. You controlled that heat.',managed:'Kettle done. Low heat, managed by you.',ok:'Every time you do this it gets easier.'}},
+  {id:'la6',i:'🔍',t:'Look at the stove — all knobs off',d:'Walk to it. Stand in front. Check each knob: off, off, off. You are in control of this machine. Check as many times as you need.',anx:'Moderate–high',r:{hard:'You stood in front of the thing that hurt you. One of the most powerful things a person can do.',managed:'You checked. You verified. You were in charge.',ok:'You looked at it and it was just a machine. Because that\'s what it is.'}},
+  {id:'la7',i:'♨️',t:'Oven heat — door closed first',d:'Preheat the oven to a low temperature. Stand nearby with the door closed. Feel the warmth. Then open it with long oven mitts and step back. Note: if you have recent grafts or healing skin, check with your care team first.',anx:'High',r:{hard:'Oven heat is a real trigger for many survivors. You faced it.',managed:'Preheated, opened, stepped back. That\'s full mastery.',ok:'Oven heat, managed by you. A huge step.'}},
+  {id:'la8',i:'🔥',t:'One burner, very low — then off',d:'With someone nearby if you want. Turn on one burner at its lowest setting. Watch it for a moment from a safe distance. Turn it off. You made heat happen and you made it stop.',anx:'High',r:{hard:'You made fire happen and you made it stop. Extraordinary.',managed:'On. Off. Yours. This is you taking your kitchen back.',ok:'Heat in your kitchen, controlled by you.'}},
+  {id:'la9',i:'🥘',t:'Cook something simple',d:'Scrambled eggs. Soup. Toast. Something with minimal open flame. Use your timer. Use your mitts. Play music. Go slow. Celebrate when it\'s done.',anx:'Full return',r:{hard:'You cooked a meal. In your kitchen. You are still someone who does that.',managed:'Start to finish. Your hands still know what to do.',ok:'That is what this whole ladder was building toward.'}}
+];
+const LB=[
+  {id:'lb1',i:'🛋️',t:'Sit somewhere you can see the kitchen — from a distance',d:'You don\'t have to go near it. Just be in the same area. A couch, a chair nearby. Notice you\'re okay. Five minutes counts.',r:{hard:'Being in the same space and staying — that\'s real.',managed:'You were near the kitchen. That\'s the whole step.',ok:'Your nervous system is already starting to learn.'}},
+  {id:'lb2',i:'👁️',t:'Watch someone else in the kitchen — from far away',d:'Ask someone you trust to do something simple while you watch from a distance. Or watch a short cooking video. Notice: nothing bad is happening. The kitchen can be normal.',r:{hard:'You watched. You stayed. That\'s your body learning, one step at a time.',managed:'You saw the kitchen in use and you didn\'t leave.',ok:'Watching it be normal is teaching your brain it\'s safe.'}},
+  {id:'lb3',i:'🚶',t:'Stand at the kitchen doorway while someone\'s inside',d:'Someone you trust is cooking or just in the kitchen. You stand at the doorway. You don\'t have to go in. Just be at the edge.',r:{hard:'You stood at the edge while someone was in there. Brave.',managed:'You were at the door. You stayed.',ok:'The doorway felt manageable. That\'s progress.'}},
+  {id:'lb4',i:'🪑',t:'Sit in the kitchen while someone else is there',d:'Someone you trust is with you. You\'re both in the kitchen. You\'re not cooking. You\'re just present. That\'s the whole step.',r:{hard:'You were in the kitchen. The movie didn\'t take you away completely.',managed:'You sat there. That is huge.',ok:'You were present in the kitchen. That was the goal.'}},
+  {id:'lb5',i:'☕',t:'Do a cold task in the kitchen — on your own',d:'Get a glass of water. Open the fridge. Make a sandwich. No heat. Just you, in your kitchen, doing something ordinary.',r:{hard:'You were in the kitchen alone and you did something normal.',managed:'Cold task, done. The kitchen can be ordinary again.',ok:'Look at that. Just you and your kitchen, doing something simple.'}},
+  {id:'lb6',i:'🍽️',t:'Be present for a full meal — sitting there, eating together',d:'A meal is being cooked. You\'re at the table or nearby. You stay for the whole thing — from cooking smells to eating together. You don\'t have to cook. You just have to stay.',r:{hard:'You stayed for the whole meal. That\'s the whole goal.',managed:'From cooking to eating, you were there. That\'s it.',ok:'A full meal, together, in a kitchen that felt safe enough. That\'s everything.'}}
+];
+
+let pendingStep=null,pendingPath='A';
+function renderLadder(path){
+  const data=path==='A'?LA:LB;
+  const done=path==='A'?S.ladderADone:S.ladderBDone;
+  const cont=document.getElementById('ladder-'+path.toLowerCase());
+  if(!cont)return;
+  cont.innerHTML='';
+  data.forEach((step,i)=>{
+    const isDone=done.includes(step.id);
+    const isCur=!isDone&&(i===0||done.includes(data[i-1].id));
+    const locked=!isDone&&!isCur;
+    const div=document.createElement('div');
+    div.className='ls'+(isDone?' done':isCur?' cur':' locked');
+    div.innerHTML=`<div class="li">${step.i}</div><div class="lf"><h4>Step ${i+1}: ${step.t}</h4><p>${step.d}</p><p class="la" style="color:${isDone?'var(--ok)':'var(--muted)'}">${isDone?'✅ Done':step.anx?'How hard: '+step.anx:''}</p></div><div class="lc">${isDone?'✅':isCur?'👈':''}</div>`;
+    if(isCur)div.addEventListener('click',()=>openLM(step,path));
+    cont.appendChild(div);
+  });
+  const done_el=document.getElementById('ladder-done-'+path.toLowerCase());
+  if(done_el)done_el.style.display=done.length===data.length?'block':'none';
+}
+function openLM(step,path){
+  pendingStep=step;pendingPath=path;
+  document.getElementById('lm-title').textContent=step.i+' '+step.t;
+  document.getElementById('lm-desc').textContent=step.d;
+  document.getElementById('lm-resp').style.display='none';
+  document.getElementById('lm-done').style.display='none';
+  document.querySelectorAll('#lm-pnl .ch').forEach(b=>b.classList.remove('on'));
+  document.getElementById('lm-ov').classList.add('open');
+}
+function closeLM(e){if(e&&e.target!==document.getElementById('lm-ov'))return;document.getElementById('lm-ov').classList.remove('open');pendingStep=null;}
+function rateL(rating){
+  if(!pendingStep)return;
+  document.querySelectorAll('#lm-pnl .ch').forEach(b=>b.classList.remove('on'));
+  event.currentTarget.classList.add('on');
+  const r=document.getElementById('lm-resp');
+  r.textContent=pendingStep.r[rating]||'You did it.';
+  r.style.display='block';
+  document.getElementById('lm-done').style.display='block';
+}
+function completeL(){
+  if(!pendingStep)return;
+  if(pendingPath==='A')S.ladderADone.push(pendingStep.id);
+  else S.ladderBDone.push(pendingStep.id);
+  save();earn(12,'Step done! +12 🪙');
+  document.getElementById('lm-ov').classList.remove('open');
+  renderLadder(pendingPath);
+  const done=pendingPath==='A'?S.ladderADone:S.ladderBDone;
+  if(done.length===3)setTimeout(()=>showBreak(2),600);
+  if(done.length===7)setTimeout(()=>showBreak(3),600);
+  pendingStep=null;
+}
+
+// ══════════════════════════════════════
+// VISUALIZATION TIMER
+// ══════════════════════════════════════
+let vizInterval=null;
+function startVizTimer(secs){
+  clearInterval(vizInterval);
+  const num=document.getElementById('viz-timer-num');
+  const lbl=document.getElementById('viz-timer-lbl');
+  const more=document.getElementById('viz-more');
+  document.querySelectorAll('#viz-timer-box .tbtn').forEach(b=>b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  let t=secs;
+  if(num)num.textContent=fmt(t);
+  vizInterval=setInterval(()=>{
+    t--;
+    if(num)num.textContent=fmt(t);
+    if(t<=0){
+      clearInterval(vizInterval);
+      if(lbl)lbl.textContent='Time\'s up — or take more if you need it';
+      if(more)more.style.display='block';
+      if(num)num.style.color='var(--ok)';
+    }
+  },1000);
+}
+function resetVizTimer(){clearInterval(vizInterval);const n=document.getElementById('viz-timer-num');if(n){n.textContent='1:00';n.style.color='var(--teal)';}const l=document.getElementById('viz-timer-lbl');if(l)l.textContent='Take your time with the pictures above';const m=document.getElementById('viz-more');if(m)m.style.display='none';document.querySelectorAll('#viz-timer-box .tbtn').forEach(b=>b.classList.remove('active'));}
+
+let vizIntervalB=null;
+function startVizTimerB(secs){
+  clearInterval(vizIntervalB);
+  const num=document.getElementById('viz-timer-num-b');
+  const lbl=document.getElementById('viz-timer-lbl-b');
+  document.querySelectorAll('#viz-timer-box-b .tbtn').forEach(b=>b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  let t=secs;
+  if(num)num.textContent=fmt(t);
+  vizIntervalB=setInterval(()=>{
+    t--;
+    if(num)num.textContent=fmt(t);
+    if(t<=0){clearInterval(vizIntervalB);if(lbl)lbl.textContent='Time\'s up — or take more if you need it';if(num)num.style.color='var(--ok)';}
+  },1000);
+}
+function resetVizTimerB(){clearInterval(vizIntervalB);const n=document.getElementById('viz-timer-num-b');if(n){n.textContent='1:00';n.style.color='var(--teal)';}document.querySelectorAll('#viz-timer-box-b .tbtn').forEach(b=>b.classList.remove('active'));}
+function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+
+// ══════════════════════════════════════
+// CALMING TOOLKIT
+// ══════════════════════════════════════
+const CALM={
+  senses:`<div class="card ck"><div style="font-weight:800;margin-bottom:.45rem">👋 5-4-3-2-1 Senses</div><ul style="font-size:.85rem;line-height:2.1;padding-left:1.1rem"><li><strong>5 things you can SEE</strong> — look for small details</li><li><strong>4 things you can FEEL</strong> — fabric, floor, temperature</li><li><strong>3 things you can HEAR</strong> — near and far</li><li><strong>2 things you can SMELL</strong> — or remember a smell you love</li><li><strong>1 thing you can TASTE</strong></li></ul><div class="aff" style="margin-top:.65rem"><p>"You are here. You are safe. That was then. This is now."</p></div></div>`,
+  belly:`<div class="card cs"><div style="font-weight:800;margin-bottom:.45rem">🌬️ Belly breathing</div><p style="font-size:.85rem;margin-bottom:.55rem">Place one hand on your belly, one on your chest.</p><ul style="font-size:.85rem;line-height:2.1;padding-left:1.1rem"><li>Breathe in through your nose — let your <strong>belly</strong> push your hand out</li><li>Breathe out through your mouth — feel your belly fall</li><li>Your chest stays mostly still. Your belly does the work.</li><li>Count exhales: 1… 2… 3… 4… 5</li></ul><p style="font-size:.76rem;color:var(--muted);margin-top:.5rem;font-style:italic">This turns on your body's calm system. It works even when it doesn't feel like it is.</p></div>`,
+  box:`<div class="card cs"><div style="font-weight:800;margin-bottom:.38rem">⬜ Box breathing</div><p style="font-size:.78rem;color:var(--muted);margin-bottom:.65rem">If counting makes it harder, try belly breathing instead.</p></div><div class="bring" id="cr" onclick="startCR()">Tap</div><div style="text-align:center;font-size:.83rem;color:var(--muted);margin-top:-.4rem" id="cri">Tap to begin</div><div id="crd" style="display:none" class="card cs" style="margin-top:.65rem"><strong>🌿 Your nervous system just calmed down.</strong></div>`,
+  nature:`<div><div class="qb" style="margin-top:0">Choose your scene:</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.75rem"><button class="btn bsk" onclick="showNat('beach')" style="margin:0" aria-label="Beach scene">🌊 Beach</button><button class="btn bsk" onclick="showNat('mountain')" style="margin:0" aria-label="Mountain scene">🏔️ Mountain</button></div><div id="nat-d"></div><div id="nat-audio" style="display:none;margin-top:.6rem"></div></div>`,
+  scan:`<div class="card cw"><div style="font-weight:800;margin-bottom:.45rem">🧘 Body scan</div><ul style="font-size:.85rem;line-height:2.2;padding-left:1.1rem"><li><strong>Top of your head</strong> — any tension?</li><li><strong>Your jaw</strong> — let it drop slightly</li><li><strong>Your shoulders</strong> — let them fall away from your ears</li><li><strong>Your hands</strong> — unclench, spread your fingers</li><li><strong>Your belly</strong> — soften it if you can</li><li><strong>Your feet</strong> — feel the floor. You are here.</li></ul><p style="font-size:.76rem;color:var(--muted);margin-top:.45rem;font-style:italic">You don't have to fix the tension. Just noticing it is enough.</p></div>`,
+  talk:`<div class="card cp"><div style="font-weight:800;margin-bottom:.45rem">💬 Grounding self-talk</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;margin-bottom:.42rem;font-size:.86rem;line-height:1.7">"My name is <em>[your name]</em>. I am in <em>[your location]</em>. Today is <em>[today's date]</em>."</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;margin-bottom:.42px;font-size:.86rem;line-height:1.7">"What I'm feeling right now is from the past. I am safe in this moment."</div><div style="background:rgba(255,255,255,.7);border-radius:9px;padding:.75rem;font-size:.86rem;line-height:1.7">"I got through the hardest day. I am still here, right now."</div></div>`,
+  joy:`<div><div style="font-weight:800;margin-bottom:.65rem">😄 Something joyful</div><div class="co" onclick="showJoy('pup')"><div class="ch2">🐶 Puppies</div><div class="cd2">Because puppies fix almost everything.</div></div><div class="co" onclick="showJoy('cat')"><div class="ch2">🐱 Kittens</div><div class="cd2">Tiny, fluffy, zero problems.</div></div><div class="co" onclick="showJoy('quote')"><div class="ch2">💬 A great quote</div><div class="cd2">Words that lift.</div></div><div class="co" onclick="showJoy('funny')"><div class="ch2">😂 Something funny</div><div class="cd2">Laughter really is medicine.</div></div><div id="joy-d" style="margin-top:.65rem"></div></div>`
+};
+
+// Web Audio ambient sound
+let audioCtx=null,audioNodes=[],audioGain=null,soundOn=false,currentScene='';
+function getAudioCtx(){if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}return audioCtx;}
+function startAudio(scene){
+  stopAudio();
+  const ctx=getAudioCtx();if(!ctx)return;
+  currentScene=scene;soundOn=true;
+  audioGain=ctx.createGain();audioGain.gain.setValueAtTime(0.18,ctx.currentTime);audioGain.connect(ctx.destination);
+  const makeNoise=(freq,type,gainVal,detune=0)=>{
+    const osc=ctx.createOscillator();
+    const g=ctx.createGain();
+    osc.type=type;osc.frequency.setValueAtTime(freq,ctx.currentTime);
+    if(detune)osc.detune.setValueAtTime(detune,ctx.currentTime);
+    g.gain.setValueAtTime(gainVal,ctx.currentTime);
+    osc.connect(g);g.connect(audioGain);osc.start();
+    audioNodes.push(osc,g);return osc;
+  };
+  // Pink noise via filtered white noise
+  const bufSize=2*ctx.sampleRate;
+  const buf=ctx.createBuffer(1,bufSize,ctx.sampleRate);
+  const data=buf.getChannelData(0);
+  let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0;
+  for(let i=0;i<bufSize;i++){
+    const wn=Math.random()*2-1;
+    b0=0.99886*b0+wn*0.0555179;b1=0.99332*b1+wn*0.0750759;
+    b2=0.96900*b2+wn*0.1538520;b3=0.86650*b3+wn*0.3104856;
+    b4=0.55000*b4+wn*0.5329522;b5=-0.7616*b5-wn*0.0168980;
+    data[i]=(b0+b1+b2+b3+b4+b5+wn*0.5362)*0.11;
+  }
+  const noise=ctx.createBufferSource();noise.buffer=buf;noise.loop=true;
+  const filter=ctx.createBiquadFilter();
+  if(scene==='beach'){filter.type='lowpass';filter.frequency.setValueAtTime(600,ctx.currentTime);}
+  else{filter.type='bandpass';filter.frequency.setValueAtTime(400,ctx.currentTime);filter.Q.setValueAtTime(0.5,ctx.currentTime);}
+  noise.connect(filter);filter.connect(audioGain);noise.start();audioNodes.push(noise,filter);
+  // Gentle low tones
+  if(scene==='beach'){makeNoise(55,'sine',0.08);makeNoise(110,'sine',0.05);makeNoise(82,'sine',0.04,3);}
+  else{makeNoise(65,'sine',0.06);makeNoise(97,'sine',0.04);makeNoise(130,'sine',0.03);}
+  updateAudioBar();
+}
+function stopAudio(){audioNodes.forEach(n=>{try{n.stop&&n.stop();n.disconnect&&n.disconnect();}catch(e){}});audioNodes=[];soundOn=false;currentScene='';if(audioGain){try{audioGain.disconnect();}catch(e){}audioGain=null;}}
+function setAudioVol(v){if(audioGain&&audioCtx)audioGain.gain.setValueAtTime(+v,audioCtx.currentTime);}
+function updateAudioBar(){
+  const el=document.getElementById('nat-audio');if(!el)return;
+  el.style.display='block';
+  el.innerHTML=`<div class="audio-bar"><span class="al">${soundOn?'🔊 '+currentScene+' sounds playing':'🔇 Sound off'}</span><input type="range" class="av" min="0" max="0.4" step="0.01" value="${audioGain?audioGain.gain.value:0.18}" oninput="setAudioVol(this.value)" aria-label="Volume"><button onclick="toggleAudio('${currentScene}')" aria-label="${soundOn?'Mute sounds':'Play sounds'}">${soundOn?'Mute':'Play'}</button></div>`;
+}
+function toggleAudio(scene){if(soundOn)stopAudio();else startAudio(scene);updateAudioBar();}
+function showNat(type){
+  const el=document.getElementById('nat-d');if(!el)return;
+  el.innerHTML=type==='beach'?`<div class="nat nb"><div class="ne">🌊</div><div class="nt">Close your eyes.<br>Gentle waves. Warm air. Sand under your feet.<br><br>You are safe. You are here.</div></div>`:`<div class="nat nm"><div class="ne">🏔️</div><div class="nt">Close your eyes.<br>A cool breeze moves through tall trees.<br>Everything is still and green.<br><br>You are safe. You are here.</div></div>`;
+  startAudio(type);updateAudioBar();
+}
+function showJoy(key){
+  const el=document.getElementById('joy-d');if(!el)return;
+  const joy={
+    pup:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.35rem">🐶🐕🐾</div><p style="font-size:.83rem;line-height:1.65;color:var(--muted)">You earned this. <a href="https://www.youtube.com/results?search_query=cute+puppy+compilation" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Puppy videos">Watch puppy videos →</a></p></div>`,
+    cat:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.35rem">🐱🐈🐾</div><p style="font-size:.83rem;line-height:1.65;color:var(--muted)">Completely valid. <a href="https://www.youtube.com/results?search_query=cute+kitten+videos" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Kitten videos">Watch kitten videos →</a></p></div>`,
+    quote:showQ(),
+    funny:`<div class="card cy"><div style="font-weight:800;margin-bottom:.5rem">😂 A little kitchen humor</div><p style="font-size:.86rem;line-height:1.8;margin-bottom:.42rem">🍳 "I'm not a chef. I'm an artist. The kitchen is my studio. And sometimes the smoke alarm is my biggest fan."</p><p style="font-size:.86rem;line-height:1.8;margin-bottom:.42rem">👩‍🍳 "Cooking is like love. It should be entered into with abandon or not at all." — Harriet Van Horne</p><p style="font-size:.86rem;line-height:1.8">⏱️ "I set a timer for dinner. Then I set a timer for the timer. Then I forgot about both. That's basically how cooking works, right?"</p></div>`
+  };
+  el.innerHTML=joy[key]||'';
+}
+
+// Box breath
+let crA=false;
+function startCR(){if(crA)return;crA=true;runCR(0);}
+function runCR(round){
+  if(round>=3){const r=document.getElementById('cr');if(r){r.textContent='🌿 Done';r.className='bring';}const d=document.getElementById('crd');if(d)d.style.display='block';crA=false;return;}
+  const r=document.getElementById('cr'),i=document.getElementById('cri');
+  if(!r)return;
+  r.textContent='Inhale…';r.className='bring expand';if(i)i.textContent='In for 4…';
+  setTimeout(()=>{if(r){r.textContent='Hold';r.className='bring hold';}if(i)i.textContent='Hold for 4…';},4000);
+  setTimeout(()=>{if(r){r.textContent='Exhale…';r.className='bring shrink';}if(i)i.textContent='Out for 4…';},8000);
+  setTimeout(()=>{if(r){r.textContent='Hold';r.className='bring';}if(i)i.textContent='Hold for 4…';},12000);
+  setTimeout(()=>{crA=false;runCR(round+1);},16000);
+}
+
+function openCalm(){document.getElementById('calm-content').style.display='none';document.getElementById('calm-content').innerHTML='';document.getElementById('calm-ov').classList.add('open');}
+function showCalm(key){const el=document.getElementById('calm-content');el.innerHTML=CALM[key]||'';el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'start'});}
+function closeOv(id,e){if(e&&e.target!==document.getElementById(id))return;stopAudio();document.getElementById(id).classList.remove('open');}
+
+// ══════════════════════════════════════
+// QUOTES
+// ══════════════════════════════════════
+const QS=[
+  {q:"You may not control all the events that happen to you, but you can decide not to be reduced by them.",a:"Maya Angelou"},
+  {q:"Out of suffering have emerged the strongest souls.",a:"Kahlil Gibran"},
+  {q:"Courage doesn't always roar. Sometimes it's the quiet voice saying 'I will try again tomorrow.'",a:"Mary Anne Radmacher"},
+  {q:"In the middle of difficulty lies opportunity.",a:"Albert Einstein"},
+  {q:"What lies within us is far greater than what lies behind or before us.",a:"Ralph Waldo Emerson"},
+  {q:"You are braver than you believe, stronger than you seem.",a:"A.A. Milne"},
+  {q:"The wound is the place where the Light enters you.",a:"Rumi"},
+  {q:"Rock bottom became the solid foundation on which I rebuilt my life.",a:"J.K. Rowling"},
+  {q:"Healing is not linear. But it is real.",a:"Unknown"},
+  {q:"You got through the hardest day. Everything after is yours.",a:"Unknown"}
+];
+let qI=0;
+function showQ(){const q=QS[qI%QS.length];qI++;return `<div class="qcard"><p>${q.q}</p><div class="qa">— ${q.a}</div></div>`;}
+
+// ══════════════════════════════════════
+// FUN BREAKS
+// ══════════════════════════════════════
+const BRK={
+  1:{h:`<div style="font-weight:800;font-size:1rem;margin-bottom:.25rem">🎉 You earned a break!</div><p class="sub">Your plan is ready. Choose your reward:</p>
+    <div class="co" onclick="showBX('trivia')"><div class="ch2">🍳 Kitchen trivia</div><div class="cd2">A fun fact about the long human history of kitchens.</div></div>
+    <div class="co" onclick="showBX('v1')"><div class="ch2">💬 A survivor's words</div><div class="cd2">Something real from someone who's been through this.</div></div>
+    <div class="co" onclick="showBX('j1')"><div class="ch2">📓 One word</div><div class="cd2">Write one word that describes how you feel right now.</div></div>
+    <div class="co" onclick="showBX('q')"><div class="ch2">✨ A great quote</div><div class="cd2">Words that lift.</div></div>`,next:'s-aptg'},
+  2:{h:`<div style="font-weight:800;font-size:1rem;margin-bottom:.25rem">🌟 Halfway up the ladder!</div><p class="sub">Three steps done. Real progress. Your choice:</p>
+    <div class="co" onclick="showBX('mem')"><div class="ch2">🍽️ A food memory</div><div class="cd2">A meal from your life that meant something.</div></div>
+    <div class="co" onclick="showBX('beach')"><div class="ch2">🌊 Nature moment + sound</div><div class="cd2">One quiet minute somewhere peaceful — with ambient sound.</div></div>
+    <div class="co" onclick="showBX('v2')"><div class="ch2">💬 Another survivor's voice</div><div class="cd2">Someone else who came back to their kitchen.</div></div>
+    <div class="co" onclick="showBX('pup')"><div class="ch2">🐶 Puppies</div><div class="cd2">Because you've earned it.</div></div>`,next:null},
+  3:{h:`<div style="font-weight:800;font-size:1rem;margin-bottom:.25rem">🏆 Almost at the top!</div><p class="sub">You faced the stove. You deserve this:</p>
+    <div class="co" onclick="showBX('proud')"><div class="ch2">🌱 Three things I'm proud of</div><div class="cd2">Name them. Write them. Own them.</div></div>
+    <div class="co" onclick="showBX('v3')"><div class="ch2">💬 Someone who got all the way back</div><div class="cd2">Their words, from the other side.</div></div>
+    <div class="co" onclick="showBX('mtn')"><div class="ch2">🏔️ Mountain moment + sound</div><div class="cd2">One quiet minute in the mountains — with ambient sound.</div></div>
+    <div class="co" onclick="showBX('cat')"><div class="ch2">🐱 Kittens</div><div class="cd2">Completely valid reward.</div></div>`,next:null}
+};
+const BX={
+  trivia:`<div class="card cy"><strong>Did you know? 🍳</strong><p style="font-size:.85rem;line-height:1.75;margin-top:.38rem">The word "kitchen" comes from the Latin <em>coquina</em> — a place of transformation. Kitchens have been the center of human life for over 10,000 years. <strong>You belong in yours.</strong></p></div>`,
+  v1:`<div class="qcard"><p>"The first time I made pasta after my injury, I cried. Not because it was hard. Because it tasted exactly the same as it always did. My hands still knew what to do."</p><div class="qa">— Burn survivor, shared with permission</div></div>`,
+  v2:`<div class="qcard"><p>"Someone told me: the kitchen was never trying to hurt you. It was just being a kitchen. That reframe changed everything for me."</p><div class="qa">— Burn survivor, shared with permission</div></div>`,
+  v3:`<div class="qcard"><p>"Two years later, I teach my kids to cook. Every Sunday. My hands remembered before my brain did."</p><div class="qa">— Burn survivor, shared with permission</div></div>`,
+  j1:`<div class="qb">Write one word that describes how you feel right now.</div><textarea placeholder="Just one word is enough..." rows="2" style="margin-top:.4rem" aria-label="One word journal"></textarea><p style="font-size:.75rem;color:var(--muted);margin-top:.28rem">Just for you.</p>`,
+  q:'',
+  mem:`<div class="qb">What's a meal from your life that meant something? Who made it? Where were you?</div><textarea placeholder="Any memory, any meal..." rows="3" style="margin-top:.4rem" aria-label="Food memory"></textarea><div class="card cw" style="margin-top:.55rem;font-size:.83rem;line-height:1.6">That memory is still yours. The ability to create those moments is still yours too.</div>`,
+  beach:`<div class="nat nb"><div class="ne">🌊</div><div class="nt">Close your eyes.<br>Gentle waves. Warm air. Sand.<br><br>You are safe. You are here.</div></div><div id="bx-audio" style="margin-top:.55rem"></div>`,
+  mtn:`<div class="nat nm"><div class="ne">🏔️</div><div class="nt">Close your eyes.<br>Cool mountain breeze. Tall trees.<br><br>You are safe. You are here.</div></div><div id="bx-audio" style="margin-top:.55rem"></div>`,
+  pup:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.32rem">🐶🐕🐾</div><p style="font-size:.83rem;color:var(--muted)">You earned this. <a href="https://www.youtube.com/results?search_query=cute+puppy+compilation" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Puppy videos">Watch puppy videos →</a></p></div>`,
+  cat:`<div class="card cy" style="text-align:center"><div style="font-size:3rem;margin-bottom:.32rem">🐱🐈🐾</div><p style="font-size:.83rem;color:var(--muted)">Completely valid. <a href="https://www.youtube.com/results?search_query=cute+kitten+videos" target="_blank" style="color:var(--teal);font-weight:700" aria-label="Kitten videos">Watch kitten videos →</a></p></div>`,
+  proud:`<div class="qb">Three things from this journey you're proud of:</div><textarea placeholder="1. I showed up&#10;2. &#10;3. " rows="4" style="margin-top:.4rem" aria-label="Proud of list"></textarea><div class="aff" style="margin-top:.65rem"><p>"You don't have to be grateful for what happened. You are allowed to be proud of how you're handling it." 🌱</p></div>`
+};
+
+let curBreak=null;
+function showBreak(num){
+  curBreak=BRK[num];
+  document.getElementById('break-content').innerHTML=curBreak.h;
+  document.getElementById('break-extra').style.display='none';
+  document.getElementById('break-extra').innerHTML='';
+  document.getElementById('break-mc').classList.add('open');
+}
+function showBX(key){
+  const el=document.getElementById('break-extra');
+  el.innerHTML=key==='q'?showQ():(BX[key]||'');
+  el.style.display='block';
+  // Start audio for nature breaks
+  if(key==='beach')setTimeout(()=>{startAudio('beach');const a=document.getElementById('bx-audio');if(a)a.innerHTML=`<div class="audio-bar"><span class="al">🔊 Ocean sounds</span><input type="range" class="av" min="0" max="0.4" step="0.01" value="0.18" oninput="setAudioVol(this.value)" aria-label="Volume"><button onclick="toggleAudio('beach')" aria-label="Mute">Mute</button></div>`;},100);
+  if(key==='mtn')setTimeout(()=>{startAudio('mountain');const a=document.getElementById('bx-audio');if(a)a.innerHTML=`<div class="audio-bar"><span class="al">🔊 Mountain sounds</span><input type="range" class="av" min="0" max="0.4" step="0.01" value="0.18" oninput="setAudioVol(this.value)" aria-label="Volume"><button onclick="toggleAudio('mountain')" aria-label="Mute">Mute</button></div>`;},100);
+}
+function continueBreak(){stopAudio();document.getElementById('break-mc').classList.remove('open');if(curBreak&&curBreak.next)goTo(curBreak.next);}
+
+// ══════════════════════════════════════
+// CELEBRATION
+// ══════════════════════════════════════
+function buildCel(){
+  document.getElementById('d-start').textContent=S.anx1;
+  document.getElementById('d-end').textContent=S.anx2;
+  document.getElementById('final-coins').textContent=S.coins;
+  const delta=S.anx1-S.anx2;
+  document.getElementById('d-msg').textContent=delta>2?`Down ${delta} points. That shift is real — your body learned something today.`:delta>0?`Even a small shift matters. You came in unsettled and you're still here.`:delta===0?`Your number held steady — and you did the work anyway. That takes something.`:`Numbers go up and down. What matters is you showed up and kept going.`;
+}
+function buildBCel(){document.getElementById('bfinal-coins').textContent=S.coins;}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+buildWS();
+renderLadder('A');
+renderLadder('B');
+setAnx(1,S.anx1||5);
+setAnx(2,S.anx2||5);
+['anx1next','anx1r','anx1hi'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+document.getElementById('cc').textContent=S.coins;
+document.getElementById('pf').style.width=Math.min(S.coins/300*100,100)+'%';
+document.getElementById('lv').textContent='Lv '+(S.coins<60?1:S.coins<130?2:S.coins<220?3:4);
+
+// Restore session
+if(S.screen&&S.screen!=='s-welcome'&&document.getElementById(S.screen)){
+  document.getElementById('bar').classList.add('on');
+  // Restore reentry acknowledgment if returning mid-session
+  const ack = (typeof REENTRY_ACK !== 'undefined') && REENTRY_ACK[S.reentry||'none'];
+  const ackEl = document.getElementById('reentry-ack');
+  if(ack && ackEl){ackEl.innerHTML=`<div class="card ct" style="margin-bottom:.1rem"><div style="font-weight:800;font-size:.92rem;margin-bottom:.38rem">🌿 ${ack.title}</div><p style="font-size:.86rem;line-height:1.75;">${ack.body}</p></div>`;ackEl.style.display='block';}
+  const lnote = (typeof REENTRY_LADDER_NOTE !== 'undefined') && REENTRY_LADDER_NOTE[S.reentry||'none'];
+  const lnoteEl = document.getElementById('ladder-reentry-note');
+  if(lnote && lnoteEl){lnoteEl.innerHTML=`<div class="card cy" style="font-size:.84rem;line-height:1.65;">💡 ${lnote}</div>`;lnoteEl.style.display='block';}
+  goTo(S.screen);
+}
+document.getElementById('lm-ov').addEventListener('click',e=>{if(e.target===document.getElementById('lm-ov'))closeLM(e);});
+</script>
+</body>
+</html>
